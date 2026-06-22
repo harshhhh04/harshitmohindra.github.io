@@ -577,27 +577,91 @@
 
 .education{
   padding:120px 8%;
-}
+  }
+  
+  .education-grid{
+  
 
-.education-card{
-  max-width:700px;
-  background:rgba(15,15,15,0.7);
-  border:1px solid rgba(255,255,255,0.08);
+  display:grid;
+  
+  grid-template-columns:
+      repeat(3,1fr);
+  
+  gap:30px;
+
+  
+  }
+  
+  .education-card{
+  
+
+  background:
+      rgba(15,15,15,0.7);
+  
+  border:
+      1px solid rgba(255,255,255,0.08);
+  
   border-radius:28px;
+  
   padding:32px;
+  
   backdrop-filter:blur(12px);
-}
+  
+  transition:
+      all 0.35s ease;
 
-.education-role{
+  
+  }
+  
+  .education-card:hover{
+  
+
+  transform:
+      translateY(-8px);
+  
+  border-color:
+      rgba(255,255,255,0.18);
+  
+  box-shadow:
+      0 0 40px rgba(255,255,255,0.05);
+
+  
+  }
+  
+  .education-role{
+  
+
   color:#9ca3af;
+  
   font-size:0.9rem;
+  
   letter-spacing:1px;
-}
 
-.education-card h3{
+  
+  }
+  
+  .education-card h3{
+  
+
   font-size:2rem;
+  
   margin:14px 0;
-}
+
+  
+  }
+  
+  .education-card p{
+  
+  
+  color:#b3b3b3;
+  
+  line-height:1.7;
+  
+  margin-bottom:24px;
+ 
+  
+  }
+  
 
   
 .tech-stack{
