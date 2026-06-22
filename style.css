@@ -575,6 +575,30 @@
   opacity:1;
 }
 
+.education{
+  padding:120px 8%;
+}
+
+.education-card{
+  max-width:700px;
+  background:rgba(15,15,15,0.7);
+  border:1px solid rgba(255,255,255,0.08);
+  border-radius:28px;
+  padding:32px;
+  backdrop-filter:blur(12px);
+}
+
+.education-role{
+  color:#9ca3af;
+  font-size:0.9rem;
+  letter-spacing:1px;
+}
+
+.education-card h3{
+  font-size:2rem;
+  margin:14px 0;
+}
+
   
 .tech-stack{
   display:flex;
