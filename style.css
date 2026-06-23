@@ -425,6 +425,14 @@
 .experience{
   padding:120px 8%;
 }
+.experience-date{
+  display:block;
+  color:#9ca3af;
+  font-size:0.95rem;
+  margin-top:-4px;
+  margin-bottom:20px;
+  font-weight:500;
+}
 
 .section-title{
   font-size:3rem;
