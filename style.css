@@ -691,7 +691,7 @@ font-size:0.85rem;
   gap:20px;
 }
   
-.skill-box{
+.skill-card{
   padding:16px 24px;
   border:1px solid #2d2d2d;
   border-radius:14px;
@@ -704,14 +704,26 @@ font-size:0.85rem;
 }
 
 
-.contact-links{
-  display:flex;
-  gap:24px;
+.contact-links {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+  flex-wrap: wrap;
 }
 
-.contact-links a{
-  color:white;
-  text-decoration:none;
+.contact-links a {
+  padding: 0.8rem 1.4rem;
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 999px;
+  text-decoration: none;
+  color: #fff;
+  transition: all 0.25s ease;
+}
+
+.contact-links a:hover {
+  transform: translateY(-2px);
+  border-color: rgba(255,255,255,0.3);
+  background: rgba(255,255,255,0.04);
 }
 
 @media(max-width:768px){
