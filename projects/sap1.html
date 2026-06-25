@@ -151,7 +151,62 @@
       border: 1px solid rgba(255, 255, 255, 0.04);
       border-radius: 28px;
       backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
+      position: relative;
+    }
+
+    .execution-status-card {
+      position: absolute;
+      top: 40px;
+      right: 40px;
+      width: 260px;
+      background: rgba(10, 10, 10, 0.85);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 20px;
+      padding: 24px;
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
+      z-index: 10;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .exec-card-title {
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: #8f8f8f;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      margin-bottom: 16px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      padding-bottom: 8px;
+    }
+
+    .exec-field {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .exec-field:last-child {
+      margin-bottom: 0;
+    }
+
+    .exec-label {
+      font-size: 0.8rem;
+      color: #7d7d7d;
+      font-weight: 500;
+    }
+
+    .exec-value {
+      font-size: 0.8rem;
+      color: #ffffff;
+      font-weight: 600;
+    }
+
+    .font-mono {
+      font-family: 'Courier New', Courier, monospace;
+      color: #f59e0b;
     }
 
     .interactive-header {
@@ -483,6 +538,10 @@
       gap: 40px;
     }
 
+    .detail-col {
+      min-width: 0;
+    }
+
     @media (max-width: 900px) {
       .detail-grid {
         grid-template-columns: 1fr;
@@ -564,6 +623,14 @@
 
     /* Responsive fallbacks */
     @media (max-width: 768px) {
+      .execution-status-card {
+        position: relative;
+        top: 0;
+        right: 0;
+        width: 100%;
+        margin-bottom: 24px;
+        box-sizing: border-box;
+      }
       .horizontal-row {
         flex-direction: column;
         gap: 15px;
@@ -646,8 +713,8 @@
           <span class="fact-value">2 Weeks</span>
         </div>
         <div class="fact-item">
-          <span class="fact-label">Team Size</span>
-          <span class="fact-value">2 (Implemented independently)</span>
+          <span class="fact-label">Team</span>
+          <span class="fact-value">2 Engineers<br>Individual RTL Implementation</span>
         </div>
         <div class="fact-item">
           <span class="fact-label">Role</span>
@@ -702,9 +769,9 @@
         Beyond completing the project, building SAP-1 established a strong foundation for studying Microprocessors and Microcontrollers, allowing me to approach later coursework with practical implementation experience instead of relying solely on theoretical understanding.
       </p>
 
-      <h2>Interactive Architecture Diagram</h2>
+      <h2>Interactive Architecture</h2>
       <p>
-        Hover over any block in the hardware diagram to view its active outputs and highlight its physical connections. Press the <strong>Execute SAP-1</strong> button to visualize the instruction fetch-decode-execute cycle step-by-step. Click any component card to jump directly to its hardware logic, RTL implementation, and timing analysis.
+        Explore the processor by clicking individual hardware modules or execute a sample program to visualize instruction flow through the CPU.
       </p>
 
       <div class="interactive-architecture-sec">
@@ -716,13 +783,38 @@
           </div>
         </div>
 
+        <!-- Floating Execution Status Card -->
+        <div class="execution-status-card" id="execution-status-card" style="display: none;">
+          <div class="exec-card-title">Execution Status</div>
+          <div class="exec-field">
+            <span class="exec-label">Instruction:</span>
+            <span class="exec-value font-mono" id="status-instruction">-</span>
+          </div>
+          <div class="exec-field">
+            <span class="exec-label">Cycle:</span>
+            <span class="exec-value font-mono" id="status-cycle">-</span>
+          </div>
+          <div class="exec-field">
+            <span class="exec-label">Stage:</span>
+            <span class="exec-value font-mono" id="status-stage">-</span>
+          </div>
+          <div class="exec-field">
+            <span class="exec-label">Bus Owner:</span>
+            <span class="exec-value font-mono" id="status-bus">-</span>
+          </div>
+          <div class="exec-field">
+            <span class="exec-label">Accumulator:</span>
+            <span class="exec-value font-mono" id="status-acc">-</span>
+          </div>
+        </div>
+
         <div class="architecture-flow" id="arch-flow">
           <!-- Clock Node -->
           <div class="flow-row">
-            <div class="arch-node clock-node" id="node-clock">
+            <a href="#details-clock" class="arch-node clock-node clickable-node" id="node-clock">
               <div class="node-title">Clock Generator</div>
               <div class="node-subtitle">5Hz microcode pulse generator</div>
-            </div>
+            </a>
           </div>
           <div class="arrow-down" id="arrow-clock-pc"></div>
 
@@ -737,14 +829,14 @@
 
           <!-- MAR ---- RAM ---- IR Row -->
           <div class="flow-row horizontal-row">
-            <a href="#details-mem" class="arch-node clickable-node" id="node-mar">
+            <a href="#details-mar" class="arch-node clickable-node" id="node-mar">
               <div class="node-title">MAR</div>
               <div class="node-subtitle">Address Latch</div>
             </a>
             
             <div class="horiz-arrow" id="arrow-mar-ram"></div>
             
-            <a href="#details-mem" class="arch-node clickable-node" id="node-ram">
+            <a href="#details-ram" class="arch-node clickable-node" id="node-ram">
               <div class="node-title">RAM (Memory)</div>
               <div class="node-subtitle">16-Byte Program/Data</div>
             </a>
@@ -821,6 +913,47 @@
       <!-- Component Details Grid Sections -->
       <section class="component-details-sec">
         <h2>Component Details</h2>
+        <!-- Clock Generator -->
+        <div class="component-detail-card" id="details-clock">
+          <h3>Clock Generator</h3>
+          <div class="detail-grid">
+            <div class="detail-col">
+              <h4>Purpose</h4>
+              <p>Generates the synchronous master clock pulses that drive register transitions across all modules. Handles program execution halts dynamically.</p>
+              <h4>How It Works</h4>
+              <p>Routes the primary clock source <code>clk_in</code> to the system output line <code>clk_out</code>. When the controller asserts the active-high halt signal <code>hlt</code> (triggered by a software <code>HLT</code> instruction), the output clock line is clamped to <code>1'b0</code>, instantly stopping all synchronous modules.</p>
+              <h4>Inputs & Outputs</h4>
+              <ul>
+                <li><code>hlt</code> (Input): Halt command from the control unit</li>
+                <li><code>clk_in</code> (Input): Primary physical oscillator input</li>
+                <li><code>clk_out</code> (Output): Gated clock pulse distributed to all modules</li>
+              </ul>
+            </div>
+            <div class="detail-col">
+              <h4>RTL Logic (Verilog)</h4>
+              <div class="code-container">
+                <pre><code><span class="code-kw">module</span> clock(
+    <span class="code-kw">input</span> hlt, <span class="code-comment">// halt signal</span>
+    <span class="code-kw">input</span> clk_in,
+
+    <span class="code-kw">output</span> clk_out
+);
+
+    <span class="code-kw">assign</span> clk_out = hlt ? <span class="code-op">1'b0</span> : clk_in;
+
+<span class="code-kw">endmodule</span></code></pre>
+              </div>
+              <h4>Simulation Waveform Placeholder</h4>
+              <div class="project-image-placeholder" style="margin: 15px 0 0; aspect-ratio: 16/5; font-size: 0.8rem;">
+                Clock Output Gating Waveform – Add Screenshot
+              </div>
+            </div>
+          </div>
+          <div class="detail-footer">
+            <h4>Design Notes</h4>
+            <p>Rather than using complex state logic to stop instruction execution, the clock gating design uses a single multiplexer assignment. This hardware-level halt effectively stops execution immediately without requiring registers to support custom enable bits.</p>
+          </div>
+        </div>
 
         <!-- Program Counter -->
         <div class="component-detail-card" id="details-pc">
@@ -828,54 +961,139 @@
           <div class="detail-grid">
             <div class="detail-col">
               <h4>Purpose</h4>
-              <p>Tracks the memory address of the next instruction to fetch and execute, maintaining program flow step-by-step.</p>
-              <h4>Implementation</h4>
-              <p>A 4-bit synchronous counter built with D-flip-flops that increments on the rising edge of the clock when the increment signal (EP) is high. It can reset to 0000 when CLR is asserted.</p>
+              <p>Tracks the memory address of the next instruction to fetch and execute in the sequence of program execution.</p>
+              <h4>How It Works</h4>
+              <p>Maintains a 4-bit address value. On the rising edge of the clock, if the increment control signal <code>inc</code> is asserted, the count increments by one. The count asynchronously clears to <code>4'b0</code> when the active-high reset signal <code>rst</code> is asserted.</p>
+              <h4>Inputs & Outputs</h4>
+              <ul>
+                <li><code>clk</code> (Input): Gated master clock</li>
+                <li><code>rst</code> (Input): Asynchronous reset</li>
+                <li><code>inc</code> (Input): Active-high increment signal from Controller</li>
+                <li><code>out</code> (Output) [7:0]: 8-bit bus output containing the 4-bit PC count value</li>
+              </ul>
             </div>
             <div class="detail-col">
               <h4>RTL Logic (Verilog)</h4>
               <div class="code-container">
-                <pre><code><span class="code-kw">module</span> program_counter(
-    <span class="code-kw">input</span> clk, clr, cp,
-    <span class="code-kw">output</span> <span class="code-type">reg</span> [<span class="code-op">3</span>:<span class="code-op">0</span>] count
+                <pre><code><span class="code-kw">module</span> pc(
+    <span class="code-kw">input</span> clk,
+    <span class="code-kw">input</span> rst,
+    <span class="code-kw">input</span> inc,
+
+    <span class="code-kw">output</span>[<span class="code-op">7</span>:<span class="code-op">0</span>] out
 );
-    <span class="code-kw">always</span> @(<span class="code-kw">posedge</span> clk <span class="code-kw">or</span> <span class="code-kw">posedge</span> clr) <span class="code-kw">begin</span>
-        <span class="code-kw">if</span> (clr) count &lt;= <span class="code-op">4'b0000</span>;
-        <span class="code-kw">else</span> <span class="code-kw">if</span> (cp) count &lt;= count + <span class="code-op">1'b1</span>;
+	
+    <span class="code-type">reg</span>[<span class="code-op">3</span>:<span class="code-op">0</span>] pc;
+	
+    <span class="code-kw">always</span> @ (<span class="code-kw">posedge</span> clk, <span class="code-kw">posedge</span> rst)
+    <span class="code-kw">begin</span>
+        <span class="code-kw">if</span> (rst)
+        <span class="code-kw">begin</span>
+            pc &lt;= <span class="code-op">4'b0</span>;
+        <span class="code-kw">end</span> <span class="code-kw">else</span> <span class="code-kw">if</span> (inc)
+        <span class="code-kw">begin</span>
+            pc &lt;= pc + <span class="code-op">1</span>;
+        <span class="code-kw">end</span>
     <span class="code-kw">end</span>
+
+    <span class="code-kw">assign</span> out = pc;
+
 <span class="code-kw">endmodule</span></code></pre>
+              </div>
+              <h4>Simulation Waveform Placeholder</h4>
+              <div class="project-image-placeholder" style="margin: 15px 0 0; aspect-ratio: 16/5; font-size: 0.8rem;">
+                PC Reset and Increment Timing Waveform – Add Screenshot
               </div>
             </div>
           </div>
+          <div class="detail-footer">
+            <h4>Design Notes</h4>
+            <p>Since the SAP-1 memory model is 16 bytes, the physical program counter is 4 bits wide. However, the output line is assigned to an 8-bit width to match the shared W-Bus width, relying on Verilog's implicit zero-extension during assignment.</p>
+          </div>
         </div>
 
-        <!-- Memory & MAR -->
-        <div class="component-detail-card" id="details-mem">
-          <h3>Memory & MAR (RAM)</h3>
+        <!-- Memory Address Register -->
+        <div class="component-detail-card" id="details-mar">
+          <h3>Memory Address Register (MAR)</h3>
           <div class="detail-grid">
             <div class="detail-col">
               <h4>Purpose</h4>
-              <p>Latches addresses from the W-Bus and provides 16 bytes of SRAM to hold code instructions and user data variables.</p>
-              <h4>Implementation</h4>
-              <p>The Memory Address Register (MAR) stores the active RAM address when the load address signal (LM) is low. The RAM module reads/writes data to the W-Bus based on the CE (chip enable) control wire.</p>
+              <p>Caches target memory addresses during execution phases to ensure memory read addresses remain stable.</p>
+              <h4>How It Works</h4>
+              <p>Operates inside the unified <code>memory</code> module. On the rising clock edge, if the control signal <code>load</code> (MAR Load) is active, the register latches the lower 4 bits of the W-Bus (<code>bus[3:0]</code>). The latched value is used to address the RAM array.</p>
+              <h4>Inputs & Outputs</h4>
+              <ul>
+                <li><code>clk</code> (Input): System clock</li>
+                <li><code>rst</code> (Input): Asynchronous reset</li>
+                <li><code>load</code> (Input): Active-high address load signal (driven by <code>ctrl_word[8]</code>)</li>
+                <li><code>bus</code> (Input) [7:0]: Data bus containing target addresses</li>
+              </ul>
             </div>
             <div class="detail-col">
               <h4>RTL Logic (Verilog)</h4>
               <div class="code-container">
-                <pre><code><span class="code-kw">module</span> memory_mar(
-    <span class="code-kw">input</span> clk, lm_n,
-    <span class="code-kw">input</span> [<span class="code-op">3</span>:<span class="code-op">0</span>] bus_in,
-    <span class="code-kw">output</span> [<span class="code-op">7</span>:<span class="code-op">0</span>] ram_out
-);
-    <span class="code-type">reg</span> [<span class="code-op">3</span>:<span class="code-op">0</span>] mar_address;
-    <span class="code-type">reg</span> [<span class="code-op">7</span>:<span class="code-op">0</span>] ram [<span class="code-op">15</span>:<span class="code-op">0</span>];
-    <span class="code-kw">always</span> @(<span class="code-kw">posedge</span> clk) <span class="code-kw">begin</span>
-        <span class="code-kw">if</span> (~lm_n) mar_address &lt;= bus_in;
+                <pre><code><span class="code-comment">// MAR Latch Block inside memory module</span>
+<span class="code-type">reg</span>[<span class="code-op">3</span>:<span class="code-op">0</span>] mar;
+
+<span class="code-kw">always</span> @ (<span class="code-kw">posedge</span> clk, <span class="code-kw">posedge</span> rst)
+<span class="code-kw">begin</span>
+    <span class="code-kw">if</span> (rst)
+    <span class="code-kw">begin</span>
+        mar &lt;= <span class="code-op">4'b0</span>;
+    <span class="code-kw">end</span> <span class="code-kw">else</span> <span class="code-kw">if</span> (load)
+    <span class="code-kw">begin</span>
+        mar &lt;= bus[<span class="code-op">3</span>:<span class="code-op">0</span>];
     <span class="code-kw">end</span>
-    <span class="code-kw">assign</span> ram_out = ram[mar_address];
-<span class="code-kw">endmodule</span></code></pre>
+<span class="code-kw">end</span></code></pre>
+              </div>
+              <h4>Simulation Waveform Placeholder</h4>
+              <div class="project-image-placeholder" style="margin: 15px 0 0; aspect-ratio: 16/5; font-size: 0.8rem;">
+                MAR Bus Address Latching Waveform – Add Screenshot
               </div>
             </div>
+          </div>
+          <div class="detail-footer">
+            <h4>Design Notes</h4>
+            <p>The MAR is critical because it decouples RAM input addresses from active fluctuations on the shared W-Bus. It takes the computer 2 cycles to read from memory: the 1st cycle loads the address into MAR, and the 2nd cycle uses that address to retrieve RAM contents.</p>
+          </div>
+        </div>
+
+        <!-- RAM -->
+        <div class="component-detail-card" id="details-ram">
+          <h3>RAM (Random Access Memory)</h3>
+          <div class="detail-grid">
+            <div class="detail-col">
+              <h4>Purpose</h4>
+              <p>Provides read-only storage containing program code instructions and memory variables.</p>
+              <h4>How It Works</h4>
+              <p>Declares a 16x8-bit memory block. At startup, it reads program bytes from the external binary file <code>program.bin</code>. It reads memory asynchronously, indexing the array with the latched 4-bit MAR address and driving its data lines onto the W-Bus during memory enable states.</p>
+              <h4>Inputs & Outputs</h4>
+              <ul>
+                <li><code>mar</code> (Internal Reference) [3:0]: Active lookup address index</li>
+                <li><code>out</code> (Output) [7:0]: Memory contents at MAR index</li>
+              </ul>
+            </div>
+            <div class="detail-col">
+              <h4>RTL Logic (Verilog)</h4>
+              <div class="code-container">
+                <pre><code><span class="code-comment">// Memory array definition and asynchronous lookup</span>
+<span class="code-type">reg</span>[<span class="code-op">7</span>:<span class="code-op">0</span>] ram[<span class="code-op">0</span>:<span class="code-op">15</span>];		<span class="code-comment">// 16 8-bit wide elements</span>
+
+<span class="code-kw">initial</span> <span class="code-kw">begin</span>
+    $readmemh(<span class="code-comment">"program.bin"</span>, ram);
+<span class="code-kw">end</span>
+
+<span class="code-kw">assign</span> out = ram[mar];</code></pre>
+              </div>
+              <h4>Simulation Waveform Placeholder</h4>
+              <div class="project-image-placeholder" style="margin: 15px 0 0; aspect-ratio: 16/5; font-size: 0.8rem;">
+                RAM Array Read Data Timing Waveform – Add Screenshot
+              </div>
+            </div>
+          </div>
+          <div class="detail-footer">
+            <h4>Design Notes</h4>
+            <p>Memory initialization utilizes Verilog's standard compiler task <code>$readmemh</code>. This loads binary instruction code directly into the simulated RAM array during compile initialization, simplifying simulation test sequences.</p>
           </div>
         </div>
 
@@ -885,28 +1103,56 @@
           <div class="detail-grid">
             <div class="detail-col">
               <h4>Purpose</h4>
-              <p>Acts as the execution buffer, holding the active instruction byte during decoding and execution cycles.</p>
-              <h4>Implementation</h4>
-              <p>Loads data from W-Bus when LI is low. The upper 4 bits are mapped to opcode pins output to the controller, while the lower 4 bits contain the memory address operand.</p>
+              <p>Holds the current 8-bit instruction fetched from memory during execution cycles.</p>
+              <h4>How It Works</h4>
+              <p>On the rising edge of the clock, if the control signal <code>load</code> is active, the register stores the 8-bit data byte from the W-Bus. The stored byte is used to generate outputs for instruction decoding.</p>
+              <h4>Inputs & Outputs</h4>
+              <ul>
+                <li><code>clk</code> (Input): System clock</li>
+                <li><code>rst</code> (Input): Asynchronous reset</li>
+                <li><code>load</code> (Input): Load instruction control (driven by <code>ctrl_word[6]</code>)</li>
+                <li><code>bus</code> (Input) [7:0]: Shared system data bus</li>
+                <li><code>out</code> (Output) [7:0]: Latched instruction byte</li>
+              </ul>
             </div>
             <div class="detail-col">
               <h4>RTL Logic (Verilog)</h4>
               <div class="code-container">
-                <pre><code><span class="code-kw">module</span> instruction_register(
-    <span class="code-kw">input</span> clk, li_n,
-    <span class="code-kw">input</span> [<span class="code-op">7</span>:<span class="code-op">0</span>] bus_in,
-    <span class="code-kw">output</span> <span class="code-type">reg</span> [<span class="code-op">3</span>:<span class="code-op">0</span>] opcode,
-    <span class="code-kw">output</span> <span class="code-type">reg</span> [<span class="code-op">3</span>:<span class="code-op">0</span>] operand
+                <pre><code><span class="code-kw">module</span> ir(
+    <span class="code-kw">input</span> clk, 
+    <span class="code-kw">input</span> rst,
+    <span class="code-kw">input</span> load,
+    <span class="code-kw">input</span>[<span class="code-op">7</span>:<span class="code-op">0</span>] bus,
+
+    <span class="code-kw">output</span>[<span class="code-op">7</span>:<span class="code-op">0</span>] out
 );
-    <span class="code-kw">always</span> @(<span class="code-kw">posedge</span> clk) <span class="code-kw">begin</span>
-        <span class="code-kw">if</span> (~li_n) <span class="code-kw">begin</span>
-            opcode &lt;= bus_in[<span class="code-op">7</span>:<span class="code-op">4</span>];
-            operand &lt;= bus_in[<span class="code-op">3</span>:<span class="code-op">0</span>];
-        <span class="code-kw">end</span>
+
+<span class="code-type">reg</span>[<span class="code-op">7</span>:<span class="code-op">0</span>] ir;
+
+<span class="code-kw">always</span> @ (<span class="code-kw">posedge</span> clk, <span class="code-kw">posedge</span> rst)
+<span class="code-kw">begin</span>
+    <span class="code-kw">if</span> (rst)
+    <span class="code-kw">begin</span>
+        ir &lt;= <span class="code-op">8'b0</span>;
+    <span class="code-kw">end</span> <span class="code-kw">else</span> <span class="code-kw">if</span> (load)
+    <span class="code-kw">begin</span>
+        ir &lt;= bus;
     <span class="code-kw">end</span>
+<span class="code-kw">end</span>
+
+<span class="code-kw">assign</span> out = ir;
+
 <span class="code-kw">endmodule</span></code></pre>
               </div>
+              <h4>Simulation Waveform Placeholder</h4>
+              <div class="project-image-placeholder" style="margin: 15px 0 0; aspect-ratio: 16/5; font-size: 0.8rem;">
+                IR Latch and Opcode Output Waveform – Add Screenshot
+              </div>
             </div>
+          </div>
+          <div class="detail-footer">
+            <h4>Design Notes</h4>
+            <p>In the top module, the IR output is split: the high nibble (<code>ir_out[7:4]</code>) routes directly to the controller module to determine active opcodes, while the low nibble (<code>ir_out[3:0]</code>) contains operand memory addresses to put back onto the W-Bus.</p>
           </div>
         </div>
 
@@ -917,28 +1163,42 @@
             <div class="detail-col">
               <h4>Purpose</h4>
               <p>Decodes instructions and sets the control lines to direct the flow of data between all other registers.</p>
-              <h4>Implementation</h4>
-              <p>Utilizes a 6-stage ring counter (T1 to T6). T1-T3 manage the Fetch Cycle (load PC to MAR, increment PC, and load RAM content to IR). T4-T6 decode the opcode and assert execution-phase signals (like load accumulator or perform ALU sum).</p>
+              <h4>How It Works</h4>
+              <p>Includes a 3-bit stage register incrementing from 0 to 5 on every clock pulse. At each stage, it sets a 12-bit control word (<code>ctrl_word</code>) based on the instruction opcode. Stages 0-2 handle Fetch, while stages 3-5 route control signals for execution.</p>
+              <h4>Inputs & Outputs</h4>
+              <ul>
+                <li><code>clk</code> (Input): System clock</li>
+                <li><code>rst</code> (Input): Asynchronous reset</li>
+                <li><code>opcode</code> (Input) [3:0]: Upper nibble from the IR</li>
+                <li><code>out</code> (Output) [11:0]: 12-bit active control word</li>
+                <li><code>stage</code> (Output) [2:0]: Active cycle stage pointer</li>
+              </ul>
             </div>
             <div class="detail-col">
               <h4>RTL Logic (Verilog)</h4>
               <div class="code-container">
-                <pre><code><span class="code-kw">module</span> controller(
-    <span class="code-kw">input</span> [<span class="code-op">3</span>:<span class="code-op">0</span>] opcode,
-    <span class="code-kw">input</span> [<span class="code-op">2</span>:<span class="code-op">0</span>] t_state,
-    <span class="code-kw">output</span> <span class="code-type">reg</span> [<span class="code-op">11</span>:<span class="code-op">0</span>] ctrl_word
-);
-    <span class="code-kw">always</span> @(*) <span class="code-kw">begin</span>
-        <span class="code-kw">case</span> (t_state)
-            <span class="code-op">3'd1</span>: ctrl_word = <span class="code-op">12'b010111100011</span>; <span class="code-comment">// T1: PC to MAR</span>
-            <span class="code-op">3'd2</span>: ctrl_word = <span class="code-op">12'b101011100011</span>; <span class="code-comment">// T2: PC Increment</span>
-            <span class="code-op">3'd3</span>: ctrl_word = <span class="code-op">12'b010101010011</span>; <span class="code-comment">// T3: RAM to IR</span>
-            <span class="code-comment">// T4-T6 states decoded here...
-        </span><span class="code-kw">endcase</span>
+                <pre><code><span class="code-comment">// Stage Counter segment in controller module</span>
+<span class="code-kw">always</span> @(<span class="code-kw">posedge</span> clk <span class="code-kw">or</span> <span class="code-kw">posedge</span> rst) <span class="code-kw">begin</span>
+    <span class="code-kw">if</span> (rst) <span class="code-kw">begin</span>
+        stage &lt;= <span class="code-op">0</span>;
+    <span class="code-kw">end</span> <span class="code-kw">else</span> <span class="code-kw">begin</span>
+        <span class="code-kw">if</span> (stage == <span class="code-op">5</span>) <span class="code-kw">begin</span>
+            stage &lt;= <span class="code-op">0</span>;
+        <span class="code-kw">end</span> <span class="code-kw">else</span> <span class="code-kw">begin</span>
+            stage &lt;= stage + <span class="code-op">1</span>;
+        <span class="code-kw">end</span>
     <span class="code-kw">end</span>
-<span class="code-kw">endmodule</span></code></pre>
+<span class="code-kw">end</span></code></pre>
+              </div>
+              <h4>Simulation Waveform Placeholder</h4>
+              <div class="project-image-placeholder" style="margin: 15px 0 0; aspect-ratio: 16/5; font-size: 0.8rem;">
+                Control Word Output and Ring Counter Waveform – Add Screenshot
               </div>
             </div>
+          </div>
+          <div class="detail-footer">
+            <h4>Design Notes</h4>
+            <p>The control word mapping matches these signal values: <code>ctrl_word[11]</code> (SIG_HLT), <code>[10]</code> (SIG_PC_INC), <code>[9]</code> (SIG_PC_EN), <code>[8]</code> (SIG_MEM_LOAD), <code>[7]</code> (SIG_MEM_EN), <code>[6]</code> (SIG_IR_LOAD), <code>[5]</code> (SIG_IR_EN), <code>[4]</code> (SIG_A_LOAD), <code>[3]</code> (SIG_A_EN), <code>[2]</code> (SIG_B_LOAD), <code>[1]</code> (SIG_ADDER_SUB), and <code>[0]</code> (SIG_ADDER_EN).</p>
           </div>
         </div>
 
@@ -949,25 +1209,55 @@
             <div class="detail-col">
               <h4>Purpose</h4>
               <p>Primary accumulator register that acts as the source and destination for ALU operations.</p>
-              <h4>Implementation</h4>
-              <p>Loads data from W-Bus when LA is low. If EA (Enable Accumulator) is high, it writes its content onto the W-Bus, distributing it back to registers or the output panel.</p>
+              <h4>How It Works</h4>
+              <p>On the rising edge of the clock, if the control signal <code>load</code> is active, the register latches the 8-bit value from the W-Bus. The output is continuously routed to the ALU inputs and can also drive the W-Bus.</p>
+              <h4>Inputs & Outputs</h4>
+              <ul>
+                <li><code>clk</code> (Input): System clock</li>
+                <li><code>rst</code> (Input): Asynchronous reset</li>
+                <li><code>load</code> (Input): Load control signal (driven by <code>ctrl_word[4]</code>)</li>
+                <li><code>bus</code> (Input) [7:0]: Input data bus</li>
+                <li><code>out</code> (Output) [7:0]: Stored register contents</li>
+              </ul>
             </div>
             <div class="detail-col">
               <h4>RTL Logic (Verilog)</h4>
               <div class="code-container">
-                <pre><code><span class="code-kw">module</span> register_a(
-    <span class="code-kw">input</span> clk, la_n, ea,
-    <span class="code-kw">input</span> [<span class="code-op">7</span>:<span class="code-op">0</span>] bus_in,
-    <span class="code-kw">output</span> <span class="code-type">reg</span> [<span class="code-op">7</span>:<span class="code-op">0</span>] a_out,
-    <span class="code-kw">output</span> [<span class="code-op">7</span>:<span class="code-op">0</span>] bus_out
+                <pre><code><span class="code-kw">module</span> reg_a(
+    <span class="code-kw">input</span> clk,
+    <span class="code-kw">input</span> rst,
+    <span class="code-kw">input</span> load,
+    <span class="code-kw">input</span>[<span class="code-op">7</span>:<span class="code-op">0</span>] bus,
+
+    <span class="code-kw">output</span>[<span class="code-op">7</span>:<span class="code-op">0</span>] out
 );
-    <span class="code-kw">always</span> @(<span class="code-kw">posedge</span> clk) <span class="code-kw">begin</span>
-        <span class="code-kw">if</span> (~la_n) a_out &lt;= bus_in;
+
+<span class="code-type">reg</span>[<span class="code-op">7</span>:<span class="code-op">0</span>] reg_a;
+
+<span class="code-kw">always</span> @ (<span class="code-kw">posedge</span> clk, <span class="code-kw">posedge</span> rst)
+<span class="code-kw">begin</span>
+    <span class="code-kw">if</span> (rst)
+    <span class="code-kw">begin</span>
+        reg_a &lt;= <span class="code-op">8'b0</span>;
+    <span class="code-kw">end</span> <span class="code-kw">else</span> <span class="code-kw">if</span> (load)
+    <span class="code-kw">begin</span>
+        reg_a &lt;= bus;
     <span class="code-kw">end</span>
-    <span class="code-kw">assign</span> bus_out = ea ? a_out : <span class="code-op">8'bz</span>;
+<span class="code-kw">end</span>
+
+<span class="code-kw">assign</span> out = reg_a;
+
 <span class="code-kw">endmodule</span></code></pre>
               </div>
+              <h4>Simulation Waveform Placeholder</h4>
+              <div class="project-image-placeholder" style="margin: 15px 0 0; aspect-ratio: 16/5; font-size: 0.8rem;">
+                Accumulator Latch and Read Operations Waveform – Add Screenshot
+              </div>
             </div>
+          </div>
+          <div class="detail-footer">
+            <h4>Design Notes</h4>
+            <p>Register A acts as the target for all arithmetic execution write-back phases. In Stage 5 of ADD and SUB instructions, the ALU outputs are loaded back into Register A by asserting the load signal.</p>
           </div>
         </div>
 
@@ -977,55 +1267,100 @@
           <div class="detail-grid">
             <div class="detail-col">
               <h4>Purpose</h4>
-              <p>Temporary helper register storing second operands during addition and subtraction instructions.</p>
-              <h4>Implementation</h4>
-              <p>Loads data from W-Bus when LB is low, feeding the operands directly to the ALU without outputting back to the W-Bus.</p>
+              <p>Helper register storing the second operand during addition and subtraction instructions.</p>
+              <h4>How It Works</h4>
+              <p>Identical to Register A in latching behavior. Loads data from the W-Bus on the rising clock edge when the control signal <code>load</code> is active. Its output is continuously routed to the ALU inputs.</p>
+              <h4>Inputs & Outputs</h4>
+              <ul>
+                <li><code>clk</code> (Input): System clock</li>
+                <li><code>rst</code> (Input): Asynchronous reset</li>
+                <li><code>load</code> (Input): Load control signal (driven by <code>ctrl_word[2]</code>)</li>
+                <li><code>bus</code> (Input) [7:0]: Input data bus</li>
+                <li><code>out</code> (Output) [7:0]: Stored operand contents</li>
+              </ul>
             </div>
             <div class="detail-col">
               <h4>RTL Logic (Verilog)</h4>
               <div class="code-container">
-                <pre><code><span class="code-kw">module</span> register_b(
-    <span class="code-kw">input</span> clk, lb_n,
-    <span class="code-kw">input</span> [<span class="code-op">7</span>:<span class="code-op">0</span>] bus_in,
-    <span class="code-kw">output</span> <span class="code-type">reg</span> [<span class="code-op">7</span>:<span class="code-op">0</span>] b_out
+                <pre><code><span class="code-kw">module</span> reg_b(
+    <span class="code-kw">input</span> clk,
+    <span class="code-kw">input</span> rst,
+    <span class="code-kw">input</span> load,
+    <span class="code-kw">input</span>[<span class="code-op">7</span>:<span class="code-op">0</span>] bus,
+
+    <span class="code-kw">output</span>[<span class="code-op">7</span>:<span class="code-op">0</span>] out
 );
-    <span class="code-kw">always</span> @(<span class="code-kw">posedge</span> clk) <span class="code-kw">begin</span>
-        <span class="code-kw">if</span> (~lb_n) b_out &lt;= bus_in;
+
+<span class="code-type">reg</span>[<span class="code-op">7</span>:<span class="code-op">0</span>] reg_b;
+
+<span class="code-kw">always</span> @ (<span class="code-kw">posedge</span> clk, <span class="code-kw">posedge</span> rst)
+<span class="code-kw">begin</span>
+    <span class="code-kw">if</span> (rst)
+    <span class="code-kw">begin</span>
+        reg_b &lt;= <span class="code-op">8'b0</span>;
+    <span class="code-kw">end</span> <span class="code-kw">else</span> <span class="code-kw">if</span> (load)
+    <span class="code-kw">begin</span>
+        reg_b &lt;= bus;
     <span class="code-kw">end</span>
+<span class="code-kw">end</span>
+
+<span class="code-kw">assign</span> out = reg_b;
+
 <span class="code-kw">endmodule</span></code></pre>
+              </div>
+              <h4>Simulation Waveform Placeholder</h4>
+              <div class="project-image-placeholder" style="margin: 15px 0 0; aspect-ratio: 16/5; font-size: 0.8rem;">
+                Register B Latch and Data Routing Waveform – Add Screenshot
               </div>
             </div>
           </div>
+          <div class="detail-footer">
+            <h4>Design Notes</h4>
+            <p>Unlike Register A, Register B does not connect to output drivers on the shared W-Bus in this top module design. Its outputs are routed directly to the ALU adder port, reducing bus arbitration logic.</p>
+          </div>
         </div>
 
-        <!-- ALU -->
+        <!-- Arithmetic Logic Unit -->
         <div class="component-detail-card" id="details-alu">
           <h3>Arithmetic Logic Unit (ALU)</h3>
           <div class="detail-grid">
             <div class="detail-col">
               <h4>Purpose</h4>
-              <p>Performs basic arithmetic operations (addition and subtraction) on data values.</p>
-              <h4>Implementation</h4>
-              <p>An asynchronous hardware block that outputs Register A + Register B when control wire SU is low, and performs A - B when SU is high. Active outputs are enabled to the bus when EU is active.</p>
+              <p>Performs core addition and subtraction operations on operand data inputs.</p>
+              <h4>How It Works</h4>
+              <p>Implements combinational arithmetic. It continuously computes <code>a - b</code> when the control line <code>sub</code> is active (high), and <code>a + b</code> when <code>sub</code> is inactive (low).</p>
+              <h4>Inputs & Outputs</h4>
+              <ul>
+                <li><code>a</code> (Input) [7:0]: Left side operand (from Register A)</li>
+                <li><code>b</code> (Input) [7:0]: Right side operand (from Register B)</li>
+                <li><code>sub</code> (Input): Add/Subtract mode select line (driven by <code>ctrl_word[1]</code>)</li>
+                <li><code>out</code> (Output) [7:0]: Computed arithmetic output</li>
+              </ul>
             </div>
             <div class="detail-col">
               <h4>RTL Logic (Verilog)</h4>
               <div class="code-container">
-                <pre><code><span class="code-kw">module</span> alu(
-    <span class="code-kw">input</span> [<span class="code-op">7</span>:<span class="code-op">0</span>] a, b,
-    <span class="code-kw">input</span> su, eu,
-    <span class="code-kw">output</span> [<span class="code-op">7</span>:<span class="code-op">0</span>] bus_out
+                <pre><code><span class="code-kw">module</span> adder(
+    <span class="code-kw">input</span>[<span class="code-op">7</span>:<span class="code-op">0</span>] a,
+    <span class="code-kw">input</span>[<span class="code-op">7</span>:<span class="code-op">0</span>] b,
+    <span class="code-kw">input</span> sub,
+
+    <span class="code-kw">output</span>[<span class="code-op">7</span>:<span class="code-op">0</span>] out
 );
-    <span class="code-kw">wire</span> [<span class="code-op">7</span>:<span class="code-op">0</span>] result;
-    <span class="code-kw">assign</span> result = su ? (a - b) : (a + b);
-    <span class="code-kw">assign</span> bus_out = eu ? result : <span class="code-op">8'bz</span>;
+	
+    <span class="code-kw">assign</span> out = sub ? (a - b): (a + b);
+
 <span class="code-kw">endmodule</span></code></pre>
+              </div>
+              <h4>Simulation Waveform Placeholder</h4>
+              <div class="project-image-placeholder" style="margin: 15px 0 0; aspect-ratio: 16/5; font-size: 0.8rem;">
+                ALU Arithmetic Out addition/subtraction Waveform – Add Screenshot
               </div>
             </div>
           </div>
           <div class="detail-footer">
-            <h4>Interesting Challenge</h4>
-            <p>Initially, subtraction produced incorrect values because subtraction was computed using simple unsigned values. Corrected the design by using two's complement sign-extended values to handle sign logic properly across all states.</p>
+            <h4>Design Notes</h4>
+            <p>The ALU is completely asynchronous and does not require clock inputs. It computes results continuously based on changes at registers A and B. Its output is latched back into Register A during execution stage 5 when the control word asserts <code>SIG_ADDER_EN</code>.</p>
           </div>
         </div>
 
@@ -1035,24 +1370,34 @@
           <div class="detail-grid">
             <div class="detail-col">
               <h4>Purpose</h4>
-              <p>Receives arithmetic outputs to display results to external circuits or monitors.</p>
-              <h4>Implementation</h4>
-              <p>Loads data from W-Bus when LO is low. It continuously displays its 8-bit register state directly to output lines.</p>
+              <p>Latches and displays calculated execution values for output monitoring.</p>
+              <h4>How It Works</h4>
+              <p>In this specific implementation, separate Output Register modules are simplified. The final program output state is read directly from the Register A (Accumulator) line in the top-level wire mapping.</p>
+              <h4>Inputs & Outputs</h4>
+              <ul>
+                <li><code>reg_a_out</code> (Simulation Probe) [7:0]: Accumulator register output data</li>
+              </ul>
             </div>
             <div class="detail-col">
               <h4>RTL Logic (Verilog)</h4>
               <div class="code-container">
-                <pre><code><span class="code-kw">module</span> output_register(
-    <span class="code-kw">input</span> clk, lo_n,
-    <span class="code-kw">input</span> [<span class="code-op">7</span>:<span class="code-op">0</span>] bus_in,
-    <span class="code-kw">output</span> <span class="code-type">reg</span> [<span class="code-op">7</span>:<span class="code-op">0</span>] display_out
+                <pre><code><span class="code-comment">// Top-level testbench monitoring signals</span>
+uut (
+    .CLK(CLK),
+    .rst(rst)
 );
-    <span class="code-kw">always</span> @(<span class="code-kw">posedge</span> clk) <span class="code-kw">begin</span>
-        <span class="code-kw">if</span> (~lo_n) display_out &lt;= bus_in;
-    <span class="code-kw">end</span>
-<span class="code-kw">endmodule</span></code></pre>
+
+<span class="code-kw">assign</span> reg_a_out = uut.reg_a_out;</code></pre>
+              </div>
+              <h4>Simulation Waveform Placeholder</h4>
+              <div class="project-image-placeholder" style="margin: 15px 0 0; aspect-ratio: 16/5; font-size: 0.8rem;">
+                Final Calculation Output State Waveform – Add Screenshot
               </div>
             </div>
+          </div>
+          <div class="detail-footer">
+            <h4>Design Notes</h4>
+            <p>To reduce overhead, Register A serves as the primary observation point. The testbench monitors <code>reg_a_out</code> to verify calculations (e.g. <code>3 + 4 - 2 = 5</code>) before execution halts.</p>
           </div>
         </div>
       </section>
@@ -1157,34 +1502,271 @@
     function runDemo() {
       const btn = document.getElementById('run-demo-btn');
       const status = document.getElementById('demo-status');
+      const card = document.getElementById('execution-status-card');
       
       if (demoInterval) {
         clearInterval(demoInterval);
         demoInterval = null;
         btn.textContent = 'Execute SAP-1';
         status.textContent = 'Demo stopped.';
+        card.style.display = 'none';
         resetAllStyles();
         return;
       }
 
       btn.textContent = 'Stop Execution';
+      card.style.display = 'block';
       let step = 0;
       const steps = [
-        { text: "Clock Pulse triggered", activeNodes: ["node-clock"], activeArrows: ["arrow-clock-pc"] },
-        { text: "Fetch Cycle: PC address sent towards Memory Address Register", activeNodes: ["node-pc", "node-mar"], activeArrows: ["arrow-pc-ram"] },
-        { text: "Fetch Cycle: MAR addresses RAM, memory outputs data to W-Bus", activeNodes: ["node-mar", "node-ram"], activeArrows: ["arrow-mar-ram"] },
-        { text: "Fetch Cycle: RAM instruction loaded into Instruction Register", activeNodes: ["node-ram", "node-ir"], activeArrows: ["arrow-ram-ir"] },
-        { text: "Decode Cycle: IR opcode input to Controller", activeNodes: ["node-ir", "node-ctrl"], activeArrows: ["arrow-ir-ctrl"] },
-        { text: "Execute: Enable operands in Register A & Register B", activeNodes: ["node-ctrl", "node-rega", "node-regb"], activeArrows: ["line-vertical-short", "line-horizontal", "line-down-left", "line-down-right"] },
-        { text: "Execute: ALU arithmetic operation performed", activeNodes: ["node-rega", "node-regb", "node-alu"], activeArrows: ["line-up-left", "line-up-right", "line-horizontal-merge", "arrow-down-center"] },
-        { text: "Execute: Output Register latches ALU result", activeNodes: ["node-alu", "node-out"], activeArrows: ["arrow-alu-out"] }
+        // LDA $D (Cycles 1-6)
+        { 
+          inst: "LDA $D", 
+          cycle: 1, 
+          stage: "Fetch (T1)", 
+          bus: "Program Counter", 
+          acc: "00000000",
+          text: "Fetch: PC value is put onto the bus and loaded into MAR", 
+          activeNodes: ["node-clock", "node-pc", "node-mar"], 
+          activeArrows: ["arrow-clock-pc", "arrow-pc-ram"] 
+        },
+        { 
+          inst: "LDA $D", 
+          cycle: 2, 
+          stage: "Fetch (T2)", 
+          bus: "None", 
+          acc: "00000000",
+          text: "Fetch: Program Counter is incremented by 1", 
+          activeNodes: ["node-clock", "node-pc"], 
+          activeArrows: ["arrow-clock-pc"] 
+        },
+        { 
+          inst: "LDA $D", 
+          cycle: 3, 
+          stage: "Fetch (T3)", 
+          bus: "Memory (RAM)", 
+          acc: "00000000",
+          text: "Fetch: Instruction at MAR address in RAM is loaded into Instruction Register", 
+          activeNodes: ["node-clock", "node-ram", "node-ir"], 
+          activeArrows: ["arrow-clock-pc", "arrow-ram-ir"] 
+        },
+        { 
+          inst: "LDA $D", 
+          cycle: 4, 
+          stage: "Execute (T4)", 
+          bus: "Instruction Register", 
+          acc: "00000000",
+          text: "Execute LDA: IR operand address (lower 4 bits) loaded into MAR", 
+          activeNodes: ["node-clock", "node-ir", "node-mar", "node-ctrl"], 
+          activeArrows: ["arrow-ir-ctrl", "arrow-mar-ram"] 
+        },
+        { 
+          inst: "LDA $D", 
+          cycle: 5, 
+          stage: "Execute (T5)", 
+          bus: "Memory (RAM)", 
+          acc: "00000000",
+          text: "Execute LDA: RAM value at address $D is loaded into Register A (Accumulator)", 
+          activeNodes: ["node-clock", "node-ram", "node-rega", "node-ctrl"], 
+          activeArrows: ["line-vertical-short", "line-horizontal", "line-down-left"] 
+        },
+        { 
+          inst: "LDA $D", 
+          cycle: 6, 
+          stage: "Execute (T6)", 
+          bus: "None", 
+          acc: "00000011",
+          text: "Execute LDA: Idle stage, LDA operation completes", 
+          activeNodes: ["node-clock", "node-ctrl"], 
+          activeArrows: [] 
+        },
+
+        // ADD $E (Cycles 7-12)
+        { 
+          inst: "ADD $E", 
+          cycle: 7, 
+          stage: "Fetch (T1)", 
+          bus: "Program Counter", 
+          acc: "00000011",
+          text: "Fetch: PC value is put onto the bus and loaded into MAR", 
+          activeNodes: ["node-clock", "node-pc", "node-mar"], 
+          activeArrows: ["arrow-clock-pc", "arrow-pc-ram"] 
+        },
+        { 
+          inst: "ADD $E", 
+          cycle: 8, 
+          stage: "Fetch (T2)", 
+          bus: "None", 
+          acc: "00000011",
+          text: "Fetch: Program Counter is incremented by 1", 
+          activeNodes: ["node-clock", "node-pc"], 
+          activeArrows: ["arrow-clock-pc"] 
+        },
+        { 
+          inst: "ADD $E", 
+          cycle: 9, 
+          stage: "Fetch (T3)", 
+          bus: "Memory (RAM)", 
+          acc: "00000011",
+          text: "Fetch: Instruction at MAR address in RAM is loaded into Instruction Register", 
+          activeNodes: ["node-clock", "node-ram", "node-ir"], 
+          activeArrows: ["arrow-clock-pc", "arrow-ram-ir"] 
+        },
+        { 
+          inst: "ADD $E", 
+          cycle: 10, 
+          stage: "Execute (T4)", 
+          bus: "Instruction Register", 
+          acc: "00000011",
+          text: "Execute ADD: IR operand address (lower 4 bits) loaded into MAR", 
+          activeNodes: ["node-clock", "node-ir", "node-mar", "node-ctrl"], 
+          activeArrows: ["arrow-ir-ctrl", "arrow-mar-ram"] 
+        },
+        { 
+          inst: "ADD $E", 
+          cycle: 11, 
+          stage: "Execute (T5)", 
+          bus: "Memory (RAM)", 
+          acc: "00000011",
+          text: "Execute ADD: RAM value at address $E is loaded into Register B", 
+          activeNodes: ["node-clock", "node-ram", "node-regb", "node-ctrl"], 
+          activeArrows: ["line-vertical-short", "line-horizontal", "line-down-right"] 
+        },
+        { 
+          inst: "ADD $E", 
+          cycle: 12, 
+          stage: "Execute (T6)", 
+          bus: "ALU", 
+          acc: "00000111",
+          text: "Execute ADD: ALU sum (Register A + Register B) is loaded back into Register A", 
+          activeNodes: ["node-clock", "node-rega", "node-regb", "node-alu", "node-ctrl"], 
+          activeArrows: ["line-up-left", "line-up-right", "line-horizontal-merge", "arrow-down-center"] 
+        },
+
+        // SUB $F (Cycles 13-18)
+        { 
+          inst: "SUB $F", 
+          cycle: 13, 
+          stage: "Fetch (T1)", 
+          bus: "Program Counter", 
+          acc: "00000111",
+          text: "Fetch: PC value is put onto the bus and loaded into MAR", 
+          activeNodes: ["node-clock", "node-pc", "node-mar"], 
+          activeArrows: ["arrow-clock-pc", "arrow-pc-ram"] 
+        },
+        { 
+          inst: "SUB $F", 
+          cycle: 14, 
+          stage: "Fetch (T2)", 
+          bus: "None", 
+          acc: "00000111",
+          text: "Fetch: Program Counter is incremented by 1", 
+          activeNodes: ["node-clock", "node-pc"], 
+          activeArrows: ["arrow-clock-pc"] 
+        },
+        { 
+          inst: "SUB $F", 
+          cycle: 15, 
+          stage: "Fetch (T3)", 
+          bus: "Memory (RAM)", 
+          acc: "00000111",
+          text: "Fetch: Instruction at MAR address in RAM is loaded into Instruction Register", 
+          activeNodes: ["node-clock", "node-ram", "node-ir"], 
+          activeArrows: ["arrow-clock-pc", "arrow-ram-ir"] 
+        },
+        { 
+          inst: "SUB $F", 
+          cycle: 16, 
+          stage: "Execute (T4)", 
+          bus: "Instruction Register", 
+          acc: "00000111",
+          text: "Execute SUB: IR operand address (lower 4 bits) loaded into MAR", 
+          activeNodes: ["node-clock", "node-ir", "node-mar", "node-ctrl"], 
+          activeArrows: ["arrow-ir-ctrl", "arrow-mar-ram"] 
+        },
+        { 
+          inst: "SUB $F", 
+          cycle: 17, 
+          stage: "Execute (T5)", 
+          bus: "Memory (RAM)", 
+          acc: "00000111",
+          text: "Execute SUB: RAM value at address $F is loaded into Register B", 
+          activeNodes: ["node-clock", "node-ram", "node-regb", "node-ctrl"], 
+          activeArrows: ["line-vertical-short", "line-horizontal", "line-down-right"] 
+        },
+        { 
+          inst: "SUB $F", 
+          cycle: 18, 
+          stage: "Execute (T6)", 
+          bus: "ALU", 
+          acc: "00000101",
+          text: "Execute SUB: ALU difference (Register A - Register B) is loaded back into Register A", 
+          activeNodes: ["node-clock", "node-rega", "node-regb", "node-alu", "node-ctrl"], 
+          activeArrows: ["line-up-left", "line-up-right", "line-horizontal-merge", "arrow-down-center"] 
+        },
+
+        // HLT (Cycles 19-22)
+        { 
+          inst: "HLT", 
+          cycle: 19, 
+          stage: "Fetch (T1)", 
+          bus: "Program Counter", 
+          acc: "00000101",
+          text: "Fetch: PC value is put onto the bus and loaded into MAR", 
+          activeNodes: ["node-clock", "node-pc", "node-mar"], 
+          activeArrows: ["arrow-clock-pc", "arrow-pc-ram"] 
+        },
+        { 
+          inst: "HLT", 
+          cycle: 20, 
+          stage: "Fetch (T2)", 
+          bus: "None", 
+          acc: "00000101",
+          text: "Fetch: Program Counter is incremented by 1", 
+          activeNodes: ["node-clock", "node-pc"], 
+          activeArrows: ["arrow-clock-pc"] 
+        },
+        { 
+          inst: "HLT", 
+          cycle: 21, 
+          stage: "Fetch (T3)", 
+          bus: "Memory (RAM)", 
+          acc: "00000101",
+          text: "Fetch: Instruction at MAR address in RAM is loaded into Instruction Register", 
+          activeNodes: ["node-clock", "node-ram", "node-ir"], 
+          activeArrows: ["arrow-clock-pc", "arrow-ram-ir"] 
+        },
+        { 
+          inst: "HLT", 
+          cycle: 22, 
+          stage: "Execute (T4)", 
+          bus: "None", 
+          acc: "00000101",
+          text: "Execute HLT: Halt control signal is asserted, halting the computer master clock", 
+          activeNodes: ["node-clock", "node-ctrl"], 
+          activeArrows: [] 
+        }
       ];
 
       const runStep = () => {
         resetAllStyles();
+        if (step >= steps.length) {
+          clearInterval(demoInterval);
+          demoInterval = null;
+          btn.textContent = 'Execute SAP-1';
+          status.textContent = 'Program execution halted (HLT).';
+          return;
+        }
+
         const current = steps[step];
-        status.textContent = `Cycle Step ${step + 1}: ${current.text}`;
+        status.textContent = `Cycle Step ${current.cycle}: ${current.text}`;
         
+        // Update Floating status card fields
+        document.getElementById('status-instruction').textContent = current.inst;
+        document.getElementById('status-cycle').textContent = current.cycle;
+        document.getElementById('status-stage').textContent = current.stage;
+        document.getElementById('status-bus').textContent = current.bus;
+        document.getElementById('status-acc').textContent = current.acc;
+
         // Fade out all elements
         document.querySelectorAll('.arch-node').forEach(n => n.classList.add('faded'));
         document.querySelectorAll('.arrow-down, .horiz-arrow, .line-vertical-short, .line-horizontal, .line-down-arrow, .line-up-branch, .line-horizontal-merge, .arrow-down-center').forEach(el => el.classList.add('faded'));
@@ -1207,7 +1789,7 @@
           }
         });
 
-        step = (step + 1) % steps.length;
+        step++;
       };
 
       runStep();
