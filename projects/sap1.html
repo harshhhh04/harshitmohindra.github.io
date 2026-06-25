@@ -84,6 +84,64 @@
       object-fit: cover;
       border-radius: 20px;
     }
+
+    .quick-facts-container {
+      background: rgba(18, 18, 18, 0.4);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 24px;
+      padding: 32px 40px;
+      margin: 40px 0;
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+    }
+
+    .quick-facts-title {
+      font-size: 0.75rem;
+      font-weight: 600;
+      margin-bottom: 24px;
+      color: #8f8f8f;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+    }
+
+    .quick-facts-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px 48px;
+    }
+
+    @media (max-width: 640px) {
+      .quick-facts-grid {
+        grid-template-columns: 1fr;
+        gap: 18px;
+      }
+      .quick-facts-container {
+        padding: 24px 28px;
+      }
+    }
+
+    .fact-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+      padding-bottom: 10px;
+      gap: 16px;
+    }
+
+    .fact-label {
+      font-size: 0.85rem;
+      color: #8f8f8f;
+      font-weight: 500;
+      flex-shrink: 0;
+    }
+
+    .fact-value {
+      font-size: 0.9rem;
+      color: #e0e0e0;
+      font-weight: 400;
+      text-align: right;
+    }
   </style>
 </head>
 
@@ -108,6 +166,44 @@
 
     <p class="project-meta">Digital Design • Assembly • Architecture</p>
 
+    <div class="quick-facts-container">
+      <div class="quick-facts-title">Quick Facts</div>
+      <div class="quick-facts-grid">
+        <div class="fact-item">
+          <span class="fact-label">Duration</span>
+          <span class="fact-value">2 Weeks</span>
+        </div>
+        <div class="fact-item">
+          <span class="fact-label">Team Size</span>
+          <span class="fact-value">2 (Implemented independently)</span>
+        </div>
+        <div class="fact-item">
+          <span class="fact-label">Role</span>
+          <span class="fact-value">Digital Design & RTL Design Engineer</span>
+        </div>
+        <div class="fact-item">
+          <span class="fact-label">Language</span>
+          <span class="fact-value">Verilog HDL</span>
+        </div>
+        <div class="fact-item">
+          <span class="fact-label">Development Tools</span>
+          <span class="fact-value">Xilinx Vivado</span>
+        </div>
+        <div class="fact-item">
+          <span class="fact-label">Verification</span>
+          <span class="fact-value">Functional Simulation & Testbench</span>
+        </div>
+        <div class="fact-item">
+          <span class="fact-label">Target Platform</span>
+          <span class="fact-value">Xilinx FPGA (Simulation Verified)</span>
+        </div>
+        <div class="fact-item">
+          <span class="fact-label">Project Status</span>
+          <span class="fact-value">Completed</span>
+        </div>
+      </div>
+    </div>
+
     <div class="project-image-placeholder">
       <!-- Add hero image: <img src="../project-assets/sap1/hero.jpg" alt="SAP-1 Computer"> -->
       Hero image – add to project-assets/sap1/
@@ -121,6 +217,20 @@
         fundamental arithmetic and assembly operations. This project demonstrates core
         computer architecture concepts including instruction fetch-decode-execute cycles,
         bus architecture, and register-based data movement.
+      </p>
+
+      <h2>Why I Built This</h2>
+      <p>
+        While learning digital logic, I realized that understanding individual components such as logic gates, multiplexers, and registers only provided a fragmented view of how a processor actually works. I wanted to bridge that gap by building a complete system where every module interacted to execute real instructions.
+      </p>
+      <p>
+        The SAP-1 computer was the perfect opportunity to move beyond theory and implement a processor entirely in Verilog. Instead of treating computer architecture as a collection of textbook diagrams, I designed and integrated the fundamental hardware blocks responsible for instruction execution, data movement, arithmetic operations, and memory access. This project allowed me to experience how a processor operates at the RTL (Register Transfer Level), where timing, control signals, and module interactions become as important as the logic itself.
+      </p>
+      <p>
+        One of the most rewarding aspects of the project was watching the processor execute instructions through simulation. Seeing registers transfer data, the control unit sequence operations, and the ALU produce results made concepts that once existed only on paper become tangible. The experience fundamentally changed how I approached computer architecture and gave me a much deeper appreciation for the engineering behind modern processors.
+      </p>
+      <p>
+        Beyond completing the project, building SAP-1 established a strong foundation for studying Microprocessors and Microcontrollers, allowing me to approach later coursework with practical implementation experience instead of relying solely on theoretical understanding.
       </p>
 
       <h2>Architecture</h2>
