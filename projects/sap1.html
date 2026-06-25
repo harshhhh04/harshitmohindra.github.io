@@ -210,6 +210,49 @@
       width: 100%;
     }
 
+    .horizontal-row {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      gap: 16px;
+      width: 100%;
+    }
+
+    .horizontal-row .arch-node {
+      width: 190px;
+    }
+
+    .horiz-arrow {
+      width: 40px;
+      height: 2px;
+      background: rgba(255, 255, 255, 0.08);
+      position: relative;
+      align-self: center;
+      transition: all 0.3s ease;
+    }
+
+    .horiz-arrow::after {
+      content: '';
+      position: absolute;
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      border-top: 4px solid transparent;
+      border-bottom: 4px solid transparent;
+      border-left: 5px solid rgba(255, 255, 255, 0.08);
+      transition: all 0.3s ease;
+    }
+
+    .horiz-arrow.arrow-glow {
+      background: #ffffff !important;
+      box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+    }
+
+    .horiz-arrow.arrow-glow::after {
+      border-left-color: #ffffff !important;
+    }
+
     .flow-row {
       display: flex;
       justify-content: center;
@@ -520,6 +563,33 @@
     }
 
     /* Responsive fallbacks */
+    @media (max-width: 768px) {
+      .horizontal-row {
+        flex-direction: column;
+        gap: 15px;
+      }
+      .horizontal-row .arch-node {
+        width: 280px !important;
+      }
+      .horiz-arrow {
+        width: 2px !important;
+        height: 25px !important;
+      }
+      .horiz-arrow::after {
+        right: 50% !important;
+        bottom: 0 !important;
+        top: auto !important;
+        transform: translateX(50%) !important;
+        border-left: 4px solid transparent !important;
+        border-right: 4px solid transparent !important;
+        border-top: 5px solid rgba(255, 255, 255, 0.08) !important;
+        border-left-color: transparent !important;
+      }
+      .horiz-arrow.arrow-glow::after {
+        border-top-color: #ffffff !important;
+      }
+    }
+
     @media (max-width: 600px) {
       .split-row {
         flex-direction: column;
@@ -663,24 +733,30 @@
               <div class="node-subtitle">4-bit Instruction Pointer</div>
             </a>
           </div>
-          <div class="arrow-down" id="arrow-pc-mem"></div>
+          <div class="arrow-down" id="arrow-pc-ram"></div>
 
-          <!-- Memory & MAR -->
-          <div class="flow-row">
-            <a href="#details-mem" class="arch-node clickable-node" id="node-mem">
-              <div class="node-title">Memory & MAR (RAM)</div>
-              <div class="node-subtitle">16-Byte RAM & Address Latch</div>
+          <!-- MAR ---- RAM ---- IR Row -->
+          <div class="flow-row horizontal-row">
+            <a href="#details-mem" class="arch-node clickable-node" id="node-mar">
+              <div class="node-title">MAR</div>
+              <div class="node-subtitle">Address Latch</div>
             </a>
-          </div>
-          <div class="arrow-down" id="arrow-mem-ir"></div>
-
-          <!-- Instruction Register -->
-          <div class="flow-row">
+            
+            <div class="horiz-arrow" id="arrow-mar-ram"></div>
+            
+            <a href="#details-mem" class="arch-node clickable-node" id="node-ram">
+              <div class="node-title">RAM (Memory)</div>
+              <div class="node-subtitle">16-Byte Program/Data</div>
+            </a>
+            
+            <div class="horiz-arrow" id="arrow-ram-ir"></div>
+            
             <a href="#details-ir" class="arch-node clickable-node" id="node-ir">
               <div class="node-title">Instruction Register (IR)</div>
-              <div class="node-subtitle">Stores Opcode & Operand</div>
+              <div class="node-subtitle">Instruction Latch</div>
             </a>
           </div>
+
           <div class="arrow-down" id="arrow-ir-ctrl"></div>
 
           <!-- Controller / Sequencer -->
@@ -1011,8 +1087,9 @@
     // Interactive Architecture Highlight Logic
     const connections = {
       'node-clock': { arrows: ['arrow-clock-pc'], next: ['node-pc'] },
-      'node-pc': { arrows: ['arrow-pc-mem'], next: ['node-mem'] },
-      'node-mem': { arrows: ['arrow-mem-ir'], next: ['node-ir'] },
+      'node-pc': { arrows: ['arrow-pc-ram'], next: ['node-mar'] },
+      'node-mar': { arrows: ['arrow-mar-ram'], next: ['node-ram'] },
+      'node-ram': { arrows: ['arrow-ram-ir'], next: ['node-ir'] },
       'node-ir': { arrows: ['arrow-ir-ctrl'], next: ['node-ctrl'] },
       'node-ctrl': { 
         arrows: ['line-vertical-short', 'line-horizontal', 'line-down-left', 'line-down-right', 'arrow-ctrl-rega'], 
@@ -1026,7 +1103,6 @@
 
     document.querySelectorAll('.arch-node').forEach(node => {
       node.addEventListener('mouseenter', () => {
-        // If demo is running, don't interrupt it
         if (demoInterval) return;
 
         const id = node.id;
@@ -1035,7 +1111,7 @@
         document.querySelectorAll('.arch-node').forEach(n => {
           if (n.id !== id) n.classList.add('faded');
         });
-        document.querySelectorAll('.arrow-down, .line-vertical-short, .line-horizontal, .line-down-arrow, .line-up-branch, .line-horizontal-merge, .arrow-down-center').forEach(el => {
+        document.querySelectorAll('.arrow-down, .horiz-arrow, .line-vertical-short, .line-horizontal, .line-down-arrow, .line-up-branch, .line-horizontal-merge, .arrow-down-center').forEach(el => {
           el.classList.add('faded');
         });
 
@@ -1069,7 +1145,7 @@
     });
 
     function resetAllStyles() {
-      document.querySelectorAll('.arch-node, .arrow-down, .line-vertical-short, .line-horizontal, .line-down-arrow, .line-up-branch, .line-horizontal-merge, .arrow-down-center').forEach(el => {
+      document.querySelectorAll('.arch-node, .arrow-down, .horiz-arrow, .line-vertical-short, .line-horizontal, .line-down-arrow, .line-up-branch, .line-horizontal-merge, .arrow-down-center').forEach(el => {
         el.classList.remove('faded');
         el.classList.remove('highlight-glow');
         el.classList.remove('arrow-glow');
@@ -1095,8 +1171,9 @@
       let step = 0;
       const steps = [
         { text: "Clock Pulse triggered", activeNodes: ["node-clock"], activeArrows: ["arrow-clock-pc"] },
-        { text: "Fetch Cycle: PC output to Memory MAR", activeNodes: ["node-pc", "node-mem"], activeArrows: ["arrow-pc-mem"] },
-        { text: "Fetch Cycle: RAM data loaded into Instruction Register", activeNodes: ["node-mem", "node-ir"], activeArrows: ["arrow-mem-ir"] },
+        { text: "Fetch Cycle: PC address sent towards Memory Address Register", activeNodes: ["node-pc", "node-mar"], activeArrows: ["arrow-pc-ram"] },
+        { text: "Fetch Cycle: MAR addresses RAM, memory outputs data to W-Bus", activeNodes: ["node-mar", "node-ram"], activeArrows: ["arrow-mar-ram"] },
+        { text: "Fetch Cycle: RAM instruction loaded into Instruction Register", activeNodes: ["node-ram", "node-ir"], activeArrows: ["arrow-ram-ir"] },
         { text: "Decode Cycle: IR opcode input to Controller", activeNodes: ["node-ir", "node-ctrl"], activeArrows: ["arrow-ir-ctrl"] },
         { text: "Execute: Enable operands in Register A & Register B", activeNodes: ["node-ctrl", "node-rega", "node-regb"], activeArrows: ["line-vertical-short", "line-horizontal", "line-down-left", "line-down-right"] },
         { text: "Execute: ALU arithmetic operation performed", activeNodes: ["node-rega", "node-regb", "node-alu"], activeArrows: ["line-up-left", "line-up-right", "line-horizontal-merge", "arrow-down-center"] },
@@ -1110,7 +1187,7 @@
         
         // Fade out all elements
         document.querySelectorAll('.arch-node').forEach(n => n.classList.add('faded'));
-        document.querySelectorAll('.arrow-down, .line-vertical-short, .line-horizontal, .line-down-arrow, .line-up-branch, .line-horizontal-merge, .arrow-down-center').forEach(el => el.classList.add('faded'));
+        document.querySelectorAll('.arrow-down, .horiz-arrow, .line-vertical-short, .line-horizontal, .line-down-arrow, .line-up-branch, .line-horizontal-merge, .arrow-down-center').forEach(el => el.classList.add('faded'));
 
         // Glow active nodes
         current.activeNodes.forEach(nodeId => {
