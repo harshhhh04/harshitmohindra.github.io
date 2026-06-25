@@ -142,6 +142,408 @@
       font-weight: 400;
       text-align: right;
     }
+
+    /* Interactive Architecture Section Styles */
+    .interactive-architecture-sec {
+      margin: 80px 0;
+      padding: 40px;
+      background: rgba(15, 15, 15, 0.4);
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      border-radius: 28px;
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+    }
+
+    .interactive-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 40px;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .interactive-header h3 {
+      font-size: 1.6rem;
+      margin: 0;
+    }
+
+    .demo-controls {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .demo-btn {
+      background: #ffffff;
+      color: #000000;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 12px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .demo-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(255, 255, 255, 0.25);
+    }
+
+    .demo-status-text {
+      font-size: 0.85rem;
+      color: #8f8f8f;
+      font-family: monospace;
+      background: rgba(255, 255, 255, 0.03);
+      padding: 6px 12px;
+      border-radius: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .architecture-flow {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+      padding: 20px 0;
+      width: 100%;
+    }
+
+    .flow-row {
+      display: flex;
+      justify-content: center;
+      width: 100%;
+      position: relative;
+    }
+
+    .split-row {
+      display: flex;
+      justify-content: space-between;
+      width: 500px;
+      gap: 40px;
+    }
+
+    .split-row .arch-node {
+      width: 220px;
+      flex: 1;
+    }
+
+    .arch-node {
+      display: block;
+      background: rgba(20, 20, 20, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 18px;
+      padding: 20px 24px;
+      width: 320px;
+      text-decoration: none;
+      text-align: center;
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .clickable-node {
+      cursor: pointer;
+    }
+
+    .clickable-node:hover {
+      text-decoration: none;
+    }
+
+    .clock-node {
+      border-style: dashed;
+      width: 240px;
+    }
+
+    .node-title {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #ffffff;
+      margin-bottom: 4px;
+      letter-spacing: 0.3px;
+    }
+
+    .node-subtitle {
+      font-size: 0.75rem;
+      color: #8f8f8f;
+    }
+
+    /* Connections and Arrows */
+    .arrow-down {
+      width: 2px;
+      height: 35px;
+      background: rgba(255, 255, 255, 0.08);
+      position: relative;
+      transition: all 0.3s ease;
+    }
+
+    .arrow-down::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      border-left: 4px solid transparent;
+      border-right: 4px solid transparent;
+      border-top: 5px solid rgba(255, 255, 255, 0.08);
+      transition: all 0.3s ease;
+    }
+
+    .split-connector {
+      width: 500px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+    }
+
+    .line-vertical-short {
+      width: 2px;
+      height: 15px;
+      background: rgba(255, 255, 255, 0.08);
+      transition: all 0.3s ease;
+    }
+
+    .line-horizontal {
+      width: 280px;
+      height: 2px;
+      background: rgba(255, 255, 255, 0.08);
+      transition: all 0.3s ease;
+    }
+
+    .lines-down-wrapper {
+      width: 280px;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .line-down-arrow {
+      width: 2px;
+      height: 20px;
+      background: rgba(255, 255, 255, 0.08);
+      position: relative;
+      transition: all 0.3s ease;
+    }
+
+    .line-down-arrow::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      border-left: 4px solid transparent;
+      border-right: 4px solid transparent;
+      border-top: 5px solid rgba(255, 255, 255, 0.08);
+      transition: all 0.3s ease;
+    }
+
+    .merge-connector {
+      width: 500px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+    }
+
+    .lines-up-wrapper {
+      width: 280px;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .line-up-branch {
+      width: 2px;
+      height: 20px;
+      background: rgba(255, 255, 255, 0.08);
+      transition: all 0.3s ease;
+    }
+
+    .line-horizontal-merge {
+      width: 280px;
+      height: 2px;
+      background: rgba(255, 255, 255, 0.08);
+      transition: all 0.3s ease;
+    }
+
+    .arrow-down-center {
+      width: 2px;
+      height: 25px;
+      background: rgba(255, 255, 255, 0.08);
+      position: relative;
+      transition: all 0.3s ease;
+    }
+
+    .arrow-down-center::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      border-left: 4px solid transparent;
+      border-right: 4px solid transparent;
+      border-top: 5px solid rgba(255, 255, 255, 0.08);
+      transition: all 0.3s ease;
+    }
+
+    /* Glow classes for JS interactivity */
+    .highlight-glow {
+      border-color: rgba(255, 255, 255, 0.4) !important;
+      box-shadow: 0 0 25px rgba(255, 255, 255, 0.15) !important;
+      background: rgba(255, 255, 255, 0.04) !important;
+      transform: translateY(-2px);
+    }
+
+    .faded {
+      opacity: 0.25 !important;
+      filter: grayscale(0.5);
+    }
+
+    .arrow-glow {
+      background: #ffffff !important;
+      box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+    }
+
+    .arrow-glow::after {
+      border-top-color: #ffffff !important;
+    }
+
+    /* Component Details Section */
+    .component-details-sec {
+      margin-top: 80px;
+    }
+
+    .component-detail-card {
+      background: rgba(18, 18, 18, 0.35);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 24px;
+      padding: 40px;
+      margin-bottom: 40px;
+      scroll-margin-top: 100px;
+      transition: all 0.3s ease;
+    }
+
+    .component-detail-card:hover {
+      border-color: rgba(255, 255, 255, 0.09);
+    }
+
+    .component-detail-card h3 {
+      font-size: 1.8rem;
+      margin-top: 0;
+      margin-bottom: 24px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      padding-bottom: 16px;
+    }
+
+    .detail-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 1.3fr;
+      gap: 40px;
+    }
+
+    @media (max-width: 900px) {
+      .detail-grid {
+        grid-template-columns: 1fr;
+        gap: 30px;
+      }
+    }
+
+    .detail-col h4 {
+      font-size: 0.95rem;
+      color: #ffffff;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-top: 24px;
+      margin-bottom: 10px;
+    }
+
+    .detail-col h4:first-of-type {
+      margin-top: 0;
+    }
+
+    .detail-col p {
+      font-size: 0.9rem;
+      color: #a0a0a0;
+      line-height: 1.7;
+    }
+
+    .detail-col ul {
+      color: #a0a0a0;
+      font-size: 0.9rem;
+      line-height: 1.7;
+      padding-left: 20px;
+      margin-bottom: 20px;
+    }
+
+    /* RTL Syntax Highlighter styles */
+    .code-container {
+      background: #090909;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 14px;
+      padding: 20px 24px;
+      overflow-x: auto;
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 0.85rem;
+    }
+
+    .code-container pre {
+      margin: 0;
+    }
+
+    .code-container code {
+      color: #d4d4d4;
+    }
+
+    .code-kw { color: #f43f5e; font-weight: 600; }     /* keyword: module, always, input, output */
+    .code-type { color: #3b82f6; }   /* type: reg, wire */
+    .code-op { color: #f59e0b; }     /* operand/number */
+    .code-comment { color: #525252; font-style: italic; } /* comments */
+
+    .detail-footer {
+      margin-top: 32px;
+      padding-top: 24px;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .detail-footer h4 {
+      font-size: 0.95rem;
+      color: #ffffff;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 10px;
+    }
+
+    .detail-footer p {
+      font-size: 0.9rem;
+      color: #a0a0a0;
+      line-height: 1.7;
+      margin: 0;
+    }
+
+    /* Responsive fallbacks */
+    @media (max-width: 600px) {
+      .split-row {
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+        width: 100%;
+      }
+
+      .split-row .arch-node {
+        width: 280px;
+      }
+
+      .split-connector, .merge-connector {
+        display: none;
+      }
+
+      .mobile-only-connector {
+        display: block !important;
+      }
+
+      .interactive-architecture-sec {
+        padding: 20px;
+      }
+    }
   </style>
 </head>
 
@@ -230,23 +632,354 @@
         Beyond completing the project, building SAP-1 established a strong foundation for studying Microprocessors and Microcontrollers, allowing me to approach later coursework with practical implementation experience instead of relying solely on theoretical understanding.
       </p>
 
-      <h2>Architecture</h2>
+      <h2>Interactive Architecture Diagram</h2>
       <p>
-        The SAP-1 architecture consists of essential digital building blocks wired together
-        through a shared W-bus:
+        Hover over any block in the hardware diagram to view its active outputs and highlight its physical connections. Press the <strong>Run Demo</strong> button to visualize the instruction fetch-decode-execute cycle step-by-step. Click any component card to jump directly to its hardware logic, RTL implementation, and timing analysis.
       </p>
-      <ul>
-        <li>Program Counter (PC)</li>
-        <li>Memory Address Register (MAR) and RAM</li>
-        <li>Instruction Register (IR) and Controller/Sequencer</li>
-        <li>Accumulator (Register A) and Register B</li>
-        <li>Adder/Subtractor and Output Register</li>
-      </ul>
 
-      <div class="project-image-placeholder">
-        <!-- Add: <img src="../project-assets/sap1/architecture.png" alt="SAP-1 Architecture Diagram"> -->
-        Architecture diagram – add to project-assets/sap1/
+      <div class="interactive-architecture-sec">
+        <div class="interactive-header">
+          <h3>RTL Component Interconnects</h3>
+          <div class="demo-controls">
+            <button id="run-demo-btn" class="demo-btn" onclick="runDemo()">⚡ Run Demo</button>
+            <span id="demo-status" class="demo-status-text">Ready to run fetch cycle...</span>
+          </div>
+        </div>
+
+        <div class="architecture-flow" id="arch-flow">
+          <!-- Clock Node -->
+          <div class="flow-row">
+            <div class="arch-node clock-node" id="node-clock">
+              <div class="node-title">Clock Generator</div>
+              <div class="node-subtitle">5Hz microcode pulse generator</div>
+            </div>
+          </div>
+          <div class="arrow-down" id="arrow-clock-pc"></div>
+
+          <!-- Program Counter -->
+          <div class="flow-row">
+            <a href="#details-pc" class="arch-node clickable-node" id="node-pc">
+              <div class="node-title">Program Counter (PC)</div>
+              <div class="node-subtitle">4-bit Instruction Pointer</div>
+            </a>
+          </div>
+          <div class="arrow-down" id="arrow-pc-mem"></div>
+
+          <!-- Memory & MAR -->
+          <div class="flow-row">
+            <a href="#details-mem" class="arch-node clickable-node" id="node-mem">
+              <div class="node-title">Memory & MAR (RAM)</div>
+              <div class="node-subtitle">16-Byte RAM & Address Latch</div>
+            </a>
+          </div>
+          <div class="arrow-down" id="arrow-mem-ir"></div>
+
+          <!-- Instruction Register -->
+          <div class="flow-row">
+            <a href="#details-ir" class="arch-node clickable-node" id="node-ir">
+              <div class="node-title">Instruction Register (IR)</div>
+              <div class="node-subtitle">Stores Opcode & Operand</div>
+            </a>
+          </div>
+          <div class="arrow-down" id="arrow-ir-ctrl"></div>
+
+          <!-- Controller / Sequencer -->
+          <div class="flow-row">
+            <a href="#details-ctrl" class="arch-node clickable-node" id="node-ctrl">
+              <div class="node-title">Controller / Sequencer</div>
+              <div class="node-subtitle">Decodes instruction to 12-bit control word</div>
+            </a>
+          </div>
+
+          <!-- Desktop split connectors -->
+          <div class="split-connector desktop-only">
+            <div class="line-vertical-short"></div>
+            <div class="line-horizontal"></div>
+            <div class="lines-down-wrapper">
+              <div class="line-down-arrow line-down-left"></div>
+              <div class="line-down-arrow line-down-right"></div>
+            </div>
+          </div>
+
+          <!-- Registers Row -->
+          <div class="flow-row split-row">
+            <a href="#details-rega" class="arch-node clickable-node" id="node-rega">
+              <div class="node-title">Register A (Accumulator)</div>
+              <div class="node-subtitle">Primary 8-bit accumulator</div>
+            </a>
+            <a href="#details-regb" class="arch-node clickable-node" id="node-regb">
+              <div class="node-title">Register B</div>
+              <div class="node-subtitle">ALU helper register</div>
+            </a>
+          </div>
+
+          <!-- Desktop merge connectors -->
+          <div class="merge-connector desktop-only">
+            <div class="lines-up-wrapper">
+              <div class="line-up-branch line-up-left"></div>
+              <div class="line-up-branch line-up-right"></div>
+            </div>
+            <div class="line-horizontal-merge"></div>
+            <div class="arrow-down-center"></div>
+          </div>
+
+          <!-- ALU -->
+          <div class="flow-row">
+            <a href="#details-alu" class="arch-node clickable-node" id="node-alu">
+              <div class="node-title">Arithmetic Logic Unit (ALU)</div>
+              <div class="node-subtitle">8-bit Adder / Subtractor</div>
+            </a>
+          </div>
+          <div class="arrow-down" id="arrow-alu-out"></div>
+
+          <!-- Output Register -->
+          <div class="flow-row">
+            <a href="#details-out" class="arch-node clickable-node" id="node-out">
+              <div class="node-title">Output Register</div>
+              <div class="node-subtitle">Latches output to display panel</div>
+            </a>
+          </div>
+        </div>
       </div>
+
+      <!-- Component Details Grid Sections -->
+      <section class="component-details-sec">
+        <h2>Component Details</h2>
+
+        <!-- Program Counter -->
+        <div class="component-detail-card" id="details-pc">
+          <h3>Program Counter (PC)</h3>
+          <div class="detail-grid">
+            <div class="detail-col">
+              <h4>Purpose</h4>
+              <p>Tracks the memory address of the next instruction to fetch and execute, maintaining program flow step-by-step.</p>
+              <h4>Implementation</h4>
+              <p>A 4-bit synchronous counter built with D-flip-flops that increments on the rising edge of the clock when the increment signal (EP) is high. It can reset to 0000 when CLR is asserted.</p>
+            </div>
+            <div class="detail-col">
+              <h4>RTL Logic (Verilog)</h4>
+              <div class="code-container">
+                <pre><code><span class="code-kw">module</span> program_counter(
+    <span class="code-kw">input</span> clk, clr, cp,
+    <span class="code-kw">output</span> <span class="code-type">reg</span> [<span class="code-op">3</span>:<span class="code-op">0</span>] count
+);
+    <span class="code-kw">always</span> @(<span class="code-kw">posedge</span> clk <span class="code-kw">or</span> <span class="code-kw">posedge</span> clr) <span class="code-kw">begin</span>
+        <span class="code-kw">if</span> (clr) count &lt;= <span class="code-op">4'b0000</span>;
+        <span class="code-kw">else</span> <span class="code-kw">if</span> (cp) count &lt;= count + <span class="code-op">1'b1</span>;
+    <span class="code-kw">end</span>
+<span class="code-kw">endmodule</span></code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Memory & MAR -->
+        <div class="component-detail-card" id="details-mem">
+          <h3>Memory & MAR (RAM)</h3>
+          <div class="detail-grid">
+            <div class="detail-col">
+              <h4>Purpose</h4>
+              <p>Latches addresses from the W-Bus and provides 16 bytes of SRAM to hold code instructions and user data variables.</p>
+              <h4>Implementation</h4>
+              <p>The Memory Address Register (MAR) stores the active RAM address when the load address signal (LM) is low. The RAM module reads/writes data to the W-Bus based on the CE (chip enable) control wire.</p>
+            </div>
+            <div class="detail-col">
+              <h4>RTL Logic (Verilog)</h4>
+              <div class="code-container">
+                <pre><code><span class="code-kw">module</span> memory_mar(
+    <span class="code-kw">input</span> clk, lm_n,
+    <span class="code-kw">input</span> [<span class="code-op">3</span>:<span class="code-op">0</span>] bus_in,
+    <span class="code-kw">output</span> [<span class="code-op">7</span>:<span class="code-op">0</span>] ram_out
+);
+    <span class="code-type">reg</span> [<span class="code-op">3</span>:<span class="code-op">0</span>] mar_address;
+    <span class="code-type">reg</span> [<span class="code-op">7</span>:<span class="code-op">0</span>] ram [<span class="code-op">15</span>:<span class="code-op">0</span>];
+    <span class="code-kw">always</span> @(<span class="code-kw">posedge</span> clk) <span class="code-kw">begin</span>
+        <span class="code-kw">if</span> (~lm_n) mar_address &lt;= bus_in;
+    <span class="code-kw">end</span>
+    <span class="code-kw">assign</span> ram_out = ram[mar_address];
+<span class="code-kw">endmodule</span></code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Instruction Register -->
+        <div class="component-detail-card" id="details-ir">
+          <h3>Instruction Register (IR)</h3>
+          <div class="detail-grid">
+            <div class="detail-col">
+              <h4>Purpose</h4>
+              <p>Acts as the execution buffer, holding the active instruction byte during decoding and execution cycles.</p>
+              <h4>Implementation</h4>
+              <p>Loads data from W-Bus when LI is low. The upper 4 bits are mapped to opcode pins output to the controller, while the lower 4 bits contain the memory address operand.</p>
+            </div>
+            <div class="detail-col">
+              <h4>RTL Logic (Verilog)</h4>
+              <div class="code-container">
+                <pre><code><span class="code-kw">module</span> instruction_register(
+    <span class="code-kw">input</span> clk, li_n,
+    <span class="code-kw">input</span> [<span class="code-op">7</span>:<span class="code-op">0</span>] bus_in,
+    <span class="code-kw">output</span> <span class="code-type">reg</span> [<span class="code-op">3</span>:<span class="code-op">0</span>] opcode,
+    <span class="code-kw">output</span> <span class="code-type">reg</span> [<span class="code-op">3</span>:<span class="code-op">0</span>] operand
+);
+    <span class="code-kw">always</span> @(<span class="code-kw">posedge</span> clk) <span class="code-kw">begin</span>
+        <span class="code-kw">if</span> (~li_n) <span class="code-kw">begin</span>
+            opcode &lt;= bus_in[<span class="code-op">7</span>:<span class="code-op">4</span>];
+            operand &lt;= bus_in[<span class="code-op">3</span>:<span class="code-op">0</span>];
+        <span class="code-kw">end</span>
+    <span class="code-kw">end</span>
+<span class="code-kw">endmodule</span></code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Controller / Sequencer -->
+        <div class="component-detail-card" id="details-ctrl">
+          <h3>Controller / Sequencer</h3>
+          <div class="detail-grid">
+            <div class="detail-col">
+              <h4>Purpose</h4>
+              <p>Decodes instructions and sets the control lines to direct the flow of data between all other registers.</p>
+              <h4>Implementation</h4>
+              <p>Utilizes a 6-stage ring counter (T1 to T6). T1-T3 manage the Fetch Cycle (load PC to MAR, increment PC, and load RAM content to IR). T4-T6 decode the opcode and assert execution-phase signals (like load accumulator or perform ALU sum).</p>
+            </div>
+            <div class="detail-col">
+              <h4>RTL Logic (Verilog)</h4>
+              <div class="code-container">
+                <pre><code><span class="code-kw">module</span> controller(
+    <span class="code-kw">input</span> [<span class="code-op">3</span>:<span class="code-op">0</span>] opcode,
+    <span class="code-kw">input</span> [<span class="code-op">2</span>:<span class="code-op">0</span>] t_state,
+    <span class="code-kw">output</span> <span class="code-type">reg</span> [<span class="code-op">11</span>:<span class="code-op">0</span>] ctrl_word
+);
+    <span class="code-kw">always</span> @(*) <span class="code-kw">begin</span>
+        <span class="code-kw">case</span> (t_state)
+            <span class="code-op">3'd1</span>: ctrl_word = <span class="code-op">12'b010111100011</span>; <span class="code-comment">// T1: PC to MAR</span>
+            <span class="code-op">3'd2</span>: ctrl_word = <span class="code-op">12'b101011100011</span>; <span class="code-comment">// T2: PC Increment</span>
+            <span class="code-op">3'd3</span>: ctrl_word = <span class="code-op">12'b010101010011</span>; <span class="code-comment">// T3: RAM to IR</span>
+            <span class="code-comment">// T4-T6 states decoded here...
+        </span><span class="code-kw">endcase</span>
+    <span class="code-kw">end</span>
+<span class="code-kw">endmodule</span></code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Register A -->
+        <div class="component-detail-card" id="details-rega">
+          <h3>Register A (Accumulator)</h3>
+          <div class="detail-grid">
+            <div class="detail-col">
+              <h4>Purpose</h4>
+              <p>Primary accumulator register that acts as the source and destination for ALU operations.</p>
+              <h4>Implementation</h4>
+              <p>Loads data from W-Bus when LA is low. If EA (Enable Accumulator) is high, it writes its content onto the W-Bus, distributing it back to registers or the output panel.</p>
+            </div>
+            <div class="detail-col">
+              <h4>RTL Logic (Verilog)</h4>
+              <div class="code-container">
+                <pre><code><span class="code-kw">module</span> register_a(
+    <span class="code-kw">input</span> clk, la_n, ea,
+    <span class="code-kw">input</span> [<span class="code-op">7</span>:<span class="code-op">0</span>] bus_in,
+    <span class="code-kw">output</span> <span class="code-type">reg</span> [<span class="code-op">7</span>:<span class="code-op">0</span>] a_out,
+    <span class="code-kw">output</span> [<span class="code-op">7</span>:<span class="code-op">0</span>] bus_out
+);
+    <span class="code-kw">always</span> @(<span class="code-kw">posedge</span> clk) <span class="code-kw">begin</span>
+        <span class="code-kw">if</span> (~la_n) a_out &lt;= bus_in;
+    <span class="code-kw">end</span>
+    <span class="code-kw">assign</span> bus_out = ea ? a_out : <span class="code-op">8'bz</span>;
+<span class="code-kw">endmodule</span></code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Register B -->
+        <div class="component-detail-card" id="details-regb">
+          <h3>Register B</h3>
+          <div class="detail-grid">
+            <div class="detail-col">
+              <h4>Purpose</h4>
+              <p>Temporary helper register storing second operands during addition and subtraction instructions.</p>
+              <h4>Implementation</h4>
+              <p>Loads data from W-Bus when LB is low, feeding the operands directly to the ALU without outputting back to the W-Bus.</p>
+            </div>
+            <div class="detail-col">
+              <h4>RTL Logic (Verilog)</h4>
+              <div class="code-container">
+                <pre><code><span class="code-kw">module</span> register_b(
+    <span class="code-kw">input</span> clk, lb_n,
+    <span class="code-kw">input</span> [<span class="code-op">7</span>:<span class="code-op">0</span>] bus_in,
+    <span class="code-kw">output</span> <span class="code-type">reg</span> [<span class="code-op">7</span>:<span class="code-op">0</span>] b_out
+);
+    <span class="code-kw">always</span> @(<span class="code-kw">posedge</span> clk) <span class="code-kw">begin</span>
+        <span class="code-kw">if</span> (~lb_n) b_out &lt;= bus_in;
+    <span class="code-kw">end</span>
+<span class="code-kw">endmodule</span></code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ALU -->
+        <div class="component-detail-card" id="details-alu">
+          <h3>Arithmetic Logic Unit (ALU)</h3>
+          <div class="detail-grid">
+            <div class="detail-col">
+              <h4>Purpose</h4>
+              <p>Performs basic arithmetic operations (addition and subtraction) on data values.</p>
+              <h4>Implementation</h4>
+              <p>An asynchronous hardware block that outputs Register A + Register B when control wire SU is low, and performs A - B when SU is high. Active outputs are enabled to the bus when EU is active.</p>
+            </div>
+            <div class="detail-col">
+              <h4>RTL Logic (Verilog)</h4>
+              <div class="code-container">
+                <pre><code><span class="code-kw">module</span> alu(
+    <span class="code-kw">input</span> [<span class="code-op">7</span>:<span class="code-op">0</span>] a, b,
+    <span class="code-kw">input</span> su, eu,
+    <span class="code-kw">output</span> [<span class="code-op">7</span>:<span class="code-op">0</span>] bus_out
+);
+    <span class="code-kw">wire</span> [<span class="code-op">7</span>:<span class="code-op">0</span>] result;
+    <span class="code-kw">assign</span> result = su ? (a - b) : (a + b);
+    <span class="code-kw">assign</span> bus_out = eu ? result : <span class="code-op">8'bz</span>;
+<span class="code-kw">endmodule</span></code></pre>
+              </div>
+            </div>
+          </div>
+          <div class="detail-footer">
+            <h4>Interesting Challenge</h4>
+            <p>Initially, subtraction produced incorrect values because subtraction was computed using simple unsigned values. Corrected the design by using two's complement sign-extended values to handle sign logic properly across all states.</p>
+          </div>
+        </div>
+
+        <!-- Output Register -->
+        <div class="component-detail-card" id="details-out">
+          <h3>Output Register</h3>
+          <div class="detail-grid">
+            <div class="detail-col">
+              <h4>Purpose</h4>
+              <p>Receives arithmetic outputs to display results to external circuits or monitors.</p>
+              <h4>Implementation</h4>
+              <p>Loads data from W-Bus when LO is low. It continuously displays its 8-bit register state directly to output lines.</p>
+            </div>
+            <div class="detail-col">
+              <h4>RTL Logic (Verilog)</h4>
+              <div class="code-container">
+                <pre><code><span class="code-kw">module</span> output_register(
+    <span class="code-kw">input</span> clk, lo_n,
+    <span class="code-kw">input</span> [<span class="code-op">7</span>:<span class="code-op">0</span>] bus_in,
+    <span class="code-kw">output</span> <span class="code-type">reg</span> [<span class="code-op">7</span>:<span class="code-op">0</span>] display_out
+);
+    <span class="code-kw">always</span> @(<span class="code-kw">posedge</span> clk) <span class="code-kw">begin</span>
+        <span class="code-kw">if</span> (~lo_n) display_out &lt;= bus_in;
+    <span class="code-kw">end</span>
+<span class="code-kw">endmodule</span></code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
       <h2>Instruction Set</h2>
       <p>
@@ -273,6 +1006,137 @@
     </div>
 
   </main>
+
+  <script>
+    // Interactive Architecture Highlight Logic
+    const connections = {
+      'node-clock': { arrows: ['arrow-clock-pc'], next: ['node-pc'] },
+      'node-pc': { arrows: ['arrow-pc-mem'], next: ['node-mem'] },
+      'node-mem': { arrows: ['arrow-mem-ir'], next: ['node-ir'] },
+      'node-ir': { arrows: ['arrow-ir-ctrl'], next: ['node-ctrl'] },
+      'node-ctrl': { 
+        arrows: ['line-vertical-short', 'line-horizontal', 'line-down-left', 'line-down-right', 'arrow-ctrl-rega'], 
+        next: ['node-rega', 'node-regb'] 
+      },
+      'node-rega': { arrows: ['line-up-left', 'line-horizontal-merge', 'arrow-down-center'], next: ['node-alu'] },
+      'node-regb': { arrows: ['line-up-right', 'line-horizontal-merge', 'arrow-down-center', 'arrow-regb-alu'], next: ['node-alu'] },
+      'node-alu': { arrows: ['arrow-alu-out'], next: ['node-out'] },
+      'node-out': { arrows: [], next: [] }
+    };
+
+    document.querySelectorAll('.arch-node').forEach(node => {
+      node.addEventListener('mouseenter', () => {
+        // If demo is running, don't interrupt it
+        if (demoInterval) return;
+
+        const id = node.id;
+        
+        // Fade out all nodes & arrows
+        document.querySelectorAll('.arch-node').forEach(n => {
+          if (n.id !== id) n.classList.add('faded');
+        });
+        document.querySelectorAll('.arrow-down, .line-vertical-short, .line-horizontal, .line-down-arrow, .line-up-branch, .line-horizontal-merge, .arrow-down-center').forEach(el => {
+          el.classList.add('faded');
+        });
+
+        // Glow active node
+        node.classList.add('highlight-glow');
+
+        // Glow outgoing paths & highlight target node
+        const conn = connections[id];
+        if (conn) {
+          conn.arrows.forEach(arrowId => {
+            const arrow = document.getElementById(arrowId) || document.querySelector('.' + arrowId);
+            if (arrow) {
+              arrow.classList.remove('faded');
+              arrow.classList.add('arrow-glow');
+            }
+          });
+          conn.next.forEach(nextId => {
+            const nextNode = document.getElementById(nextId);
+            if (nextNode) {
+              nextNode.classList.remove('faded');
+              nextNode.classList.add('highlight-glow');
+            }
+          });
+        }
+      });
+
+      node.addEventListener('mouseleave', () => {
+        if (demoInterval) return;
+        resetAllStyles();
+      });
+    });
+
+    function resetAllStyles() {
+      document.querySelectorAll('.arch-node, .arrow-down, .line-vertical-short, .line-horizontal, .line-down-arrow, .line-up-branch, .line-horizontal-merge, .arrow-down-center').forEach(el => {
+        el.classList.remove('faded');
+        el.classList.remove('highlight-glow');
+        el.classList.remove('arrow-glow');
+      });
+    }
+
+    // Sequenced Instruction Flow Demo
+    let demoInterval = null;
+    function runDemo() {
+      const btn = document.getElementById('run-demo-btn');
+      const status = document.getElementById('demo-status');
+      
+      if (demoInterval) {
+        clearInterval(demoInterval);
+        demoInterval = null;
+        btn.textContent = '⚡ Run Demo';
+        status.textContent = 'Demo stopped.';
+        resetAllStyles();
+        return;
+      }
+
+      btn.textContent = '⏹️ Stop Demo';
+      let step = 0;
+      const steps = [
+        { text: "Clock Pulse triggered", activeNodes: ["node-clock"], activeArrows: ["arrow-clock-pc"] },
+        { text: "Fetch Cycle: PC output to Memory MAR", activeNodes: ["node-pc", "node-mem"], activeArrows: ["arrow-pc-mem"] },
+        { text: "Fetch Cycle: RAM data loaded into Instruction Register", activeNodes: ["node-mem", "node-ir"], activeArrows: ["arrow-mem-ir"] },
+        { text: "Decode Cycle: IR opcode input to Controller", activeNodes: ["node-ir", "node-ctrl"], activeArrows: ["arrow-ir-ctrl"] },
+        { text: "Execute: Enable operands in Register A & Register B", activeNodes: ["node-ctrl", "node-rega", "node-regb"], activeArrows: ["line-vertical-short", "line-horizontal", "line-down-left", "line-down-right"] },
+        { text: "Execute: ALU arithmetic operation performed", activeNodes: ["node-rega", "node-regb", "node-alu"], activeArrows: ["line-up-left", "line-up-right", "line-horizontal-merge", "arrow-down-center"] },
+        { text: "Execute: Output Register latches ALU result", activeNodes: ["node-alu", "node-out"], activeArrows: ["arrow-alu-out"] }
+      ];
+
+      const runStep = () => {
+        resetAllStyles();
+        const current = steps[step];
+        status.textContent = `Cycle Step ${step + 1}: ${current.text}`;
+        
+        // Fade out all elements
+        document.querySelectorAll('.arch-node').forEach(n => n.classList.add('faded'));
+        document.querySelectorAll('.arrow-down, .line-vertical-short, .line-horizontal, .line-down-arrow, .line-up-branch, .line-horizontal-merge, .arrow-down-center').forEach(el => el.classList.add('faded'));
+
+        // Glow active nodes
+        current.activeNodes.forEach(nodeId => {
+          const node = document.getElementById(nodeId);
+          if (node) {
+            node.classList.remove('faded');
+            node.classList.add('highlight-glow');
+          }
+        });
+
+        // Glow active paths
+        current.activeArrows.forEach(arrowClassOrId => {
+          const arrow = document.getElementById(arrowClassOrId) || document.querySelector('.' + arrowClassOrId);
+          if (arrow) {
+            arrow.classList.remove('faded');
+            arrow.classList.add('arrow-glow');
+          }
+        });
+
+        step = (step + 1) % steps.length;
+      };
+
+      runStep();
+      demoInterval = setInterval(runStep, 1500); // 1.5s steps for clean legibility
+    }
+  </script>
 
   <script src="../script.js"></script>
 
