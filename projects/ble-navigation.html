@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BLE Indoor Navigation – Harshit Mohindra</title>
+  <meta name="description" content="BLE-based indoor navigation system using Bluetooth Low Energy beacons for positioning and wayfinding, built by Harshit Mohindra." />
+
+  <link rel="stylesheet" href="../style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    .project-page {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 140px 8% 100px;
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: #9ca3af;
+      text-decoration: none;
+      font-size: 0.95rem;
+      margin-bottom: 40px;
+      transition: color 0.3s ease;
+    }
+
+    .back-link:hover {
+      color: white;
+    }
+
+    .project-page h1 {
+      font-size: 3rem;
+      line-height: 1.15;
+      margin-bottom: 16px;
+    }
+
+    .project-meta {
+      color: #7d7d7d;
+      font-size: 0.95rem;
+      margin-bottom: 48px;
+      letter-spacing: 0.5px;
+    }
+
+    .project-body h2 {
+      font-size: 1.6rem;
+      margin: 48px 0 20px;
+    }
+
+    .project-body p {
+      color: #b3b3b3;
+      line-height: 1.85;
+      margin-bottom: 20px;
+    }
+
+    .project-body ul {
+      color: #b3b3b3;
+      line-height: 1.85;
+      margin-bottom: 20px;
+      padding-left: 24px;
+    }
+
+    .project-image-placeholder {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      border-radius: 20px;
+      background: rgba(18, 18, 18, 0.75);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      margin: 32px 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #4a4a4a;
+      font-size: 0.9rem;
+    }
+
+    .project-image-placeholder img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 20px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <nav class="navbar">
+    <a href="../index.html" class="logo" style="text-decoration:none;color:white;">HM</a>
+    <ul class="nav-links">
+      <li><a href="../index.html#experience">Experience</a></li>
+      <li><a href="../index.html#education">Education</a></li>
+      <li><a href="../index.html#projects">Projects</a></li>
+      <li><a href="../index.html#skills">Skills</a></li>
+      <li><a href="../index.html#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <main class="project-page">
+
+    <a href="../index.html#projects" class="back-link">← Back to Projects</a>
+
+    <h1>BLE Indoor Navigation</h1>
+
+    <p class="project-meta">BLE • Nordic nRF • Embedded Systems • Positioning</p>
+
+    <div class="project-image-placeholder">
+      <!-- Add hero image when available -->
+      Hero image – add to project-assets/
+    </div>
+
+    <div class="project-body">
+
+      <h2>Overview</h2>
+      <p>
+        Developed an indoor navigation system leveraging Bluetooth Low Energy (BLE) beacons
+        for real-time positioning and wayfinding in GPS-denied environments. The system uses
+        RSSI-based trilateration to estimate user position relative to deployed beacons.
+      </p>
+
+      <h2>System Architecture</h2>
+      <p>
+        The system consists of multiple BLE beacon nodes deployed across the indoor space
+        and a mobile receiver that scans for beacon signals:
+      </p>
+      <ul>
+        <li>BLE beacon deployment and configuration</li>
+        <li>RSSI signal processing and filtering</li>
+        <li>Trilateration algorithm for position estimation</li>
+        <li>Path planning and navigation guidance</li>
+      </ul>
+
+      <h2>Signal Processing</h2>
+      <p>
+        Raw RSSI values are inherently noisy due to multipath propagation and environmental
+        interference. The system employs Kalman filtering and moving average techniques to
+        smooth signal readings before feeding them into the positioning algorithm.
+      </p>
+
+      <h2>Applications</h2>
+      <p>
+        Indoor navigation is critical in environments like hospitals, airports, shopping malls,
+        and warehouses where GPS signals are unavailable. This BLE-based approach provides
+        a cost-effective, low-power solution for sub-room-level positioning accuracy.
+      </p>
+
+      <div class="tech-stack" style="margin-top: 48px;">
+        <span>BLE</span>
+        <span>Nordic nRF</span>
+        <span>Embedded C</span>
+        <span>Signal Processing</span>
+        <span>Trilateration</span>
+        <span>Kalman Filter</span>
+      </div>
+
+    </div>
+
+  </main>
+
+  <script src="../script.js"></script>
+
+</body>
+</html>

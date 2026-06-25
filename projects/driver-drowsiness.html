@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Driver Drowsiness Detection – Harshit Mohindra</title>
+  <meta name="description" content="Real-time driver fatigue detection system using OpenCV and facial landmark analysis integrated with vehicle safety logic, built by Harshit Mohindra." />
+
+  <link rel="stylesheet" href="../style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    .project-page {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 140px 8% 100px;
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: #9ca3af;
+      text-decoration: none;
+      font-size: 0.95rem;
+      margin-bottom: 40px;
+      transition: color 0.3s ease;
+    }
+
+    .back-link:hover {
+      color: white;
+    }
+
+    .project-page h1 {
+      font-size: 3rem;
+      line-height: 1.15;
+      margin-bottom: 16px;
+    }
+
+    .project-meta {
+      color: #7d7d7d;
+      font-size: 0.95rem;
+      margin-bottom: 48px;
+      letter-spacing: 0.5px;
+    }
+
+    .project-body h2 {
+      font-size: 1.6rem;
+      margin: 48px 0 20px;
+    }
+
+    .project-body p {
+      color: #b3b3b3;
+      line-height: 1.85;
+      margin-bottom: 20px;
+    }
+
+    .project-body ul {
+      color: #b3b3b3;
+      line-height: 1.85;
+      margin-bottom: 20px;
+      padding-left: 24px;
+    }
+
+    .project-image-placeholder {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      border-radius: 20px;
+      background: rgba(18, 18, 18, 0.75);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      margin: 32px 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #4a4a4a;
+      font-size: 0.9rem;
+    }
+
+    .project-image-placeholder img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 20px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <nav class="navbar">
+    <a href="../index.html" class="logo" style="text-decoration:none;color:white;">HM</a>
+    <ul class="nav-links">
+      <li><a href="../index.html#experience">Experience</a></li>
+      <li><a href="../index.html#education">Education</a></li>
+      <li><a href="../index.html#projects">Projects</a></li>
+      <li><a href="../index.html#skills">Skills</a></li>
+      <li><a href="../index.html#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <main class="project-page">
+
+    <a href="../index.html#projects" class="back-link">← Back to Projects</a>
+
+    <h1>Driver Drowsiness Detection</h1>
+
+    <p class="project-meta">Python • OpenCV • Arduino • Computer Vision</p>
+
+    <div class="project-image-placeholder">
+      <!-- Add hero image: <img src="../project-assets/drowsiness/hero.jpg" alt="Drowsiness Detection System"> -->
+      Hero image – add to project-assets/drowsiness/
+    </div>
+
+    <div class="project-body">
+
+      <h2>Overview</h2>
+      <p>
+        Built a real-time fatigue detection system that uses computer vision and facial
+        landmark analysis to detect driver drowsiness. The system monitors eye aspect ratio
+        (EAR) and mouth aspect ratio (MAR) to determine fatigue levels and triggers
+        alerts through an Arduino-controlled hardware interface.
+      </p>
+
+      <h2>How It Works</h2>
+      <p>
+        A camera captures the driver's face in real-time. OpenCV with dlib's 68-point facial
+        landmark detector extracts key facial features. The system continuously computes:
+      </p>
+      <ul>
+        <li>Eye Aspect Ratio (EAR) – detects prolonged eye closure</li>
+        <li>Mouth Aspect Ratio (MAR) – detects yawning</li>
+        <li>Head pose estimation – detects head drooping</li>
+        <li>Temporal analysis – distinguishes blinks from drowsiness</li>
+      </ul>
+
+      <h2>Hardware Integration</h2>
+      <p>
+        When drowsiness is detected beyond a configurable threshold, the Python application
+        sends serial commands to an Arduino board which activates a buzzer alarm and can
+        interface with vehicle safety systems (e.g., seat vibration, dashboard warning).
+      </p>
+
+      <div class="project-image-placeholder">
+        <!-- Add: <img src="../project-assets/drowsiness/system-diagram.png" alt="System Diagram"> -->
+        System diagram – add to project-assets/drowsiness/
+      </div>
+
+      <h2>Results</h2>
+      <p>
+        The system achieves reliable detection with minimal false positives under varying
+        lighting conditions. Frame processing runs at 30+ FPS on standard hardware,
+        making it practical for real-world deployment.
+      </p>
+
+      <div class="tech-stack" style="margin-top: 48px;">
+        <span>Python</span>
+        <span>OpenCV</span>
+        <span>dlib</span>
+        <span>Arduino</span>
+        <span>Serial Communication</span>
+        <span>Computer Vision</span>
+      </div>
+
+    </div>
+
+  </main>
+
+  <script src="../script.js"></script>
+
+</body>
+</html>

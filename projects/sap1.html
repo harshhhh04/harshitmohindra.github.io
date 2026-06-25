@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SAP-1 Computer – Harshit Mohindra</title>
+  <meta name="description" content="SAP-1 (Simple As Possible) Computer – an educational CPU architecture implementing arithmetic and assembly operations, built by Harshit Mohindra." />
+
+  <link rel="stylesheet" href="../style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    .project-page {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 140px 8% 100px;
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: #9ca3af;
+      text-decoration: none;
+      font-size: 0.95rem;
+      margin-bottom: 40px;
+      transition: color 0.3s ease;
+    }
+
+    .back-link:hover {
+      color: white;
+    }
+
+    .project-page h1 {
+      font-size: 3rem;
+      line-height: 1.15;
+      margin-bottom: 16px;
+    }
+
+    .project-meta {
+      color: #7d7d7d;
+      font-size: 0.95rem;
+      margin-bottom: 48px;
+      letter-spacing: 0.5px;
+    }
+
+    .project-body h2 {
+      font-size: 1.6rem;
+      margin: 48px 0 20px;
+    }
+
+    .project-body p {
+      color: #b3b3b3;
+      line-height: 1.85;
+      margin-bottom: 20px;
+    }
+
+    .project-body ul {
+      color: #b3b3b3;
+      line-height: 1.85;
+      margin-bottom: 20px;
+      padding-left: 24px;
+    }
+
+    .project-image-placeholder {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      border-radius: 20px;
+      background: rgba(18, 18, 18, 0.75);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      margin: 32px 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #4a4a4a;
+      font-size: 0.9rem;
+    }
+
+    .project-image-placeholder img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 20px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <nav class="navbar">
+    <a href="../index.html" class="logo" style="text-decoration:none;color:white;">HM</a>
+    <ul class="nav-links">
+      <li><a href="../index.html#experience">Experience</a></li>
+      <li><a href="../index.html#education">Education</a></li>
+      <li><a href="../index.html#projects">Projects</a></li>
+      <li><a href="../index.html#skills">Skills</a></li>
+      <li><a href="../index.html#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <main class="project-page">
+
+    <a href="../index.html#projects" class="back-link">← Back to Projects</a>
+
+    <h1>SAP-1 Computer</h1>
+
+    <p class="project-meta">Digital Design • Assembly • Architecture</p>
+
+    <div class="project-image-placeholder">
+      <!-- Add hero image: <img src="../project-assets/sap1/hero.jpg" alt="SAP-1 Computer"> -->
+      Hero image – add to project-assets/sap1/
+    </div>
+
+    <div class="project-body">
+
+      <h2>Overview</h2>
+      <p>
+        Built a Simple-As-Possible (SAP-1) educational CPU architecture that implements
+        fundamental arithmetic and assembly operations. This project demonstrates core
+        computer architecture concepts including instruction fetch-decode-execute cycles,
+        bus architecture, and register-based data movement.
+      </p>
+
+      <h2>Architecture</h2>
+      <p>
+        The SAP-1 architecture consists of essential digital building blocks wired together
+        through a shared W-bus:
+      </p>
+      <ul>
+        <li>Program Counter (PC)</li>
+        <li>Memory Address Register (MAR) and RAM</li>
+        <li>Instruction Register (IR) and Controller/Sequencer</li>
+        <li>Accumulator (Register A) and Register B</li>
+        <li>Adder/Subtractor and Output Register</li>
+      </ul>
+
+      <div class="project-image-placeholder">
+        <!-- Add: <img src="../project-assets/sap1/architecture.png" alt="SAP-1 Architecture Diagram"> -->
+        Architecture diagram – add to project-assets/sap1/
+      </div>
+
+      <h2>Instruction Set</h2>
+      <p>
+        The processor supports a minimal but complete instruction set including LDA (Load),
+        ADD, SUB, OUT (Output), and HLT (Halt). Each instruction is 8 bits wide — 4-bit opcode
+        and 4-bit operand — allowing up to 16 memory addresses.
+      </p>
+
+      <h2>Key Takeaways</h2>
+      <p>
+        This project deepened understanding of how hardware executes software at the
+        lowest level — from clock cycles driving state machines to how control signals
+        orchestrate data flow across registers and the ALU.
+      </p>
+
+      <div class="tech-stack" style="margin-top: 48px;">
+        <span>Digital Design</span>
+        <span>Assembly</span>
+        <span>Architecture</span>
+        <span>Logic Gates</span>
+        <span>Microcode</span>
+      </div>
+
+    </div>
+
+  </main>
+
+  <script src="../script.js"></script>
+
+</body>
+</html>
