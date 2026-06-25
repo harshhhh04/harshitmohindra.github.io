@@ -704,14 +704,14 @@
 
       <h2>Interactive Architecture Diagram</h2>
       <p>
-        Hover over any block in the hardware diagram to view its active outputs and highlight its physical connections. Press the <strong>Run Demo</strong> button to visualize the instruction fetch-decode-execute cycle step-by-step. Click any component card to jump directly to its hardware logic, RTL implementation, and timing analysis.
+        Hover over any block in the hardware diagram to view its active outputs and highlight its physical connections. Press the <strong>Execute SAP-1</strong> button to visualize the instruction fetch-decode-execute cycle step-by-step. Click any component card to jump directly to its hardware logic, RTL implementation, and timing analysis.
       </p>
 
       <div class="interactive-architecture-sec">
         <div class="interactive-header">
           <h3>RTL Component Interconnects</h3>
           <div class="demo-controls">
-            <button id="run-demo-btn" class="demo-btn" onclick="runDemo()">⚡ Run Demo</button>
+            <button id="run-demo-btn" class="demo-btn" onclick="runDemo()">Execute SAP-1</button>
             <span id="demo-status" class="demo-status-text">Ready to run fetch cycle...</span>
           </div>
         </div>
@@ -1161,13 +1161,13 @@
       if (demoInterval) {
         clearInterval(demoInterval);
         demoInterval = null;
-        btn.textContent = '⚡ Run Demo';
+        btn.textContent = 'Execute SAP-1';
         status.textContent = 'Demo stopped.';
         resetAllStyles();
         return;
       }
 
-      btn.textContent = '⏹️ Stop Demo';
+      btn.textContent = 'Stop Execution';
       let step = 0;
       const steps = [
         { text: "Clock Pulse triggered", activeNodes: ["node-clock"], activeArrows: ["arrow-clock-pc"] },
