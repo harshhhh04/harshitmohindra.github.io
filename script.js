@@ -218,4 +218,49 @@ document.addEventListener('DOMContentLoaded', () => {
     revealObserver.observe(el);
   });
 
+
+  // 7. MOBILE HAMBURGER MENU
+  const hamburger = document.getElementById('nav-hamburger');
+  const drawer = document.getElementById('nav-drawer');
+
+  function openDrawer() {
+    hamburger.classList.add('open');
+    hamburger.setAttribute('aria-expanded', 'true');
+    drawer.classList.add('open');
+    drawer.setAttribute('aria-hidden', 'false');
+  }
+
+  function closeDrawer() {
+    hamburger.classList.remove('open');
+    hamburger.setAttribute('aria-expanded', 'false');
+    drawer.classList.remove('open');
+    drawer.setAttribute('aria-hidden', 'true');
+  }
+
+  if (hamburger && drawer) {
+    hamburger.addEventListener('click', (e) => {
+      e.stopPropagation();
+      hamburger.classList.contains('open') ? closeDrawer() : openDrawer();
+    });
+
+    // Close when a drawer link is clicked (navigates to anchor)
+    drawer.querySelectorAll('a').forEach((link) => {
+      link.addEventListener('click', closeDrawer);
+    });
+
+    // Close when clicking outside the navbar
+    document.addEventListener('click', (e) => {
+      if (!navbar.contains(e.target)) {
+        closeDrawer();
+      }
+    });
+
+    // Close on resize back to desktop
+    window.addEventListener('resize', () => {
+      if (window.innerWidth > 768) {
+        closeDrawer();
+      }
+    }, { passive: true });
+  }
+
 });

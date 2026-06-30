@@ -31,13 +31,30 @@
     <a href="#home" class="logo" style="text-decoration: none; color: inherit; cursor: pointer;">HM</a>
 
     <ul class="nav-links">
-      <li><a href="#experience">Experience</a></li>
-      <li><a href="#education">Education</a></li>
+      <li data-mobile-hidden><a href="#experience">Experience</a></li>
+      <li data-mobile-hidden><a href="#education">Education</a></li>
       <li><a href="#projects">Projects</a></li>
-      <li><a href="#skills">Skills</a></li>
-      <li><a href="#contact">Contact</a></li>
+      <li data-mobile-hidden><a href="#skills">Skills</a></li>
+      <li data-mobile-hidden><a href="#contact">Contact</a></li>
     </ul>
+
+    <!-- Hamburger button — mobile only -->
+    <button class="nav-hamburger" id="nav-hamburger" aria-label="Open menu" aria-expanded="false">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
     
+    <!-- Sliding mobile drawer -->
+    <div class="nav-drawer" id="nav-drawer" aria-hidden="true">
+      <ul class="nav-drawer-links">
+        <li><a href="#experience">Experience</a></li>
+        <li><a href="#education">Education</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+
     <!-- Sliding active background pill for nav links -->
     <div class="nav-active-indicator" id="nav-indicator"></div>
   </nav>

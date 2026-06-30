@@ -1350,25 +1350,139 @@
     }
   }
   
+  /* ==========================================================================
+     HAMBURGER NAV — BASE STYLES (hidden on desktop, shown on mobile)
+     ========================================================================== */
+
+  /* Desktop: hamburger and drawer are hidden */
+  .nav-hamburger {
+    display: none;
+  }
+
+  .nav-drawer {
+    display: none;
+  }
+
   /* Standard Mobile View (768px and down) */
   @media (max-width: 768px) {
     .navbar {
-      padding: 10px 24px;
+      padding: 10px 20px;
       width: 90%;
       top: 16px;
+      /* Allow drawer to hang below without clipping */
+      overflow: visible;
     }
-    
+
+    /* Hide the mobile-hidden nav items */
+    .nav-links li[data-mobile-hidden] {
+      display: none;
+    }
+
+    /* Visible inline link (Projects) retains original pill style */
     .nav-links {
-      gap: 4px;
+      gap: 0;
     }
-  
+
     .nav-links a {
-      font-size: 0.8rem;
-      padding: 6px 12px;
+      font-size: 0.84rem;
+      padding: 7px 14px;
     }
-    
+
+    /* ---- Hamburger button ---- */
+    .nav-hamburger {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 5px;
+      background: none;
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      padding: 8px 10px;
+      cursor: pointer;
+      transition: border-color 0.25s ease;
+    }
+
+    .nav-hamburger:hover {
+      border-color: var(--border-hover);
+    }
+
+    .nav-hamburger span {
+      display: block;
+      width: 18px;
+      height: 1.5px;
+      background: var(--text-secondary);
+      border-radius: 2px;
+      transition: background 0.25s ease, transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.2s ease;
+      transform-origin: center;
+    }
+
+    /* Animated X state when open */
+    .nav-hamburger.open span:nth-child(1) {
+      transform: translateY(6.5px) rotate(45deg);
+      background: var(--text-primary);
+    }
+    .nav-hamburger.open span:nth-child(2) {
+      opacity: 0;
+    }
+    .nav-hamburger.open span:nth-child(3) {
+      transform: translateY(-6.5px) rotate(-45deg);
+      background: var(--text-primary);
+    }
+
+    /* ---- Mobile drawer ---- */
+    .nav-drawer {
+      display: block;
+      position: absolute;
+      top: calc(100% + 10px);
+      left: 0;
+      right: 0;
+      background: rgba(10, 10, 10, 0.75);
+      backdrop-filter: blur(24px) saturate(180%);
+      -webkit-backdrop-filter: blur(24px) saturate(180%);
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
+      padding: 8px;
+      /* Hidden by default */
+      opacity: 0;
+      transform: translateY(-8px);
+      pointer-events: none;
+      transition:
+        opacity 0.28s cubic-bezier(0.16, 1, 0.3, 1),
+        transform 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+      z-index: 999;
+    }
+
+    .nav-drawer.open {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+
+    .nav-drawer-links {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .nav-drawer-links a {
+      display: block;
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 0.88rem;
+      font-weight: 500;
+      font-family: var(--font-sans);
+      padding: 12px 16px;
+      border-radius: 12px;
+      transition: color 0.2s ease, background 0.2s ease;
+    }
+
+    .nav-drawer-links a:hover {
+      color: var(--text-primary);
+      background: rgba(255, 255, 255, 0.05);
+    }
+
     .nav-active-indicator {
-      display: none; /* Disable indicator on mobile to simplify layout */
+      display: none;
     }
   
     .hero {
@@ -1466,23 +1580,14 @@
   /* Very Small Mobile View (480px and down) */
   @media (max-width: 480px) {
     .navbar {
-      flex-direction: column;
-      gap: 12px;
-      padding: 12px 20px;
-      border-radius: 20px;
-      top: 12px;
+      padding: 8px 16px;
       width: 95%;
-    }
-    
-    .nav-links {
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 6px;
+      top: 12px;
     }
     
     .nav-links a {
-      font-size: 0.74rem;
-      padding: 8px 12px;
+      font-size: 0.8rem;
+      padding: 6px 10px;
     }
     
     .hero-title {
