@@ -1282,6 +1282,31 @@
     transition-delay: 0.3s;
   }
   
+  /* Keyboard Accessibility Focus Outlines */
+  a:focus-visible,
+  button:focus-visible,
+  .btn:focus-visible,
+  .contact-link-pill:focus-visible,
+  .skill-pill:focus-visible {
+    outline: 2px solid var(--text-primary);
+    outline-offset: 4px;
+  }
+
+  /* Verilog/RTL Code Blocks Scrollability */
+  pre {
+    overflow-x: auto;
+    white-space: pre;
+    word-wrap: normal;
+  }
+  .code-container pre {
+    white-space: pre;
+    overflow-x: auto;
+  }
+  .code-container code {
+    display: block;
+    width: max-content;
+  }
+  
   /* ==========================================================================
      MOBILE & TABLET RESPONSIVE OVERRIDES
      ========================================================================== */
@@ -1401,6 +1426,21 @@
       font-size: 1.8rem;
     }
     
+    .case-study-item.has-image {
+      grid-template-columns: 1fr;
+      gap: 24px;
+      max-width: 100%;
+    }
+    
+    .case-study-links {
+      flex-wrap: wrap;
+    }
+    
+    .btn,
+    .contact-link-pill {
+      padding: 14px 24px;
+    }
+    
     .contact-box {
       padding: 36px 24px;
     }
@@ -1426,13 +1466,23 @@
   /* Very Small Mobile View (480px and down) */
   @media (max-width: 480px) {
     .navbar {
+      flex-direction: column;
+      gap: 12px;
+      padding: 12px 20px;
+      border-radius: 20px;
+      top: 12px;
       width: 95%;
-      padding: 8px 16px;
+    }
+    
+    .nav-links {
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 6px;
     }
     
     .nav-links a {
       font-size: 0.74rem;
-      padding: 6px 8px;
+      padding: 8px 12px;
     }
     
     .hero-title {
