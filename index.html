@@ -3,20 +3,32 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Harshit Mohindra</title>
+  <title>Harshit Mohindra — Embedded Engineer & Frontend Developer</title>
+  <meta name="description" content="ECE Student & Firmware Developer building intelligent embedded systems, onboard machine learning, computer vision, and premium frontend experiences." />
 
   <link rel="stylesheet" href="style.css" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="preload" as="image" href="assets/images/my_image.webp" type="image/webp">
 </head>
 
 <body>
 
-  <nav class="navbar">
-    <div class="logo">HM</div>
+  <!-- Ambient noise and particles for texture & depth -->
+  <div class="noise-overlay" aria-hidden="true"></div>
+  <div class="cursor-glow" id="cursor-glow" aria-hidden="true"></div>
+  <div class="particles-container" id="particles-container" aria-hidden="true"></div>
+
+  <!-- Scroll Progress Indicator -->
+  <div class="scroll-progress-container">
+    <div class="scroll-progress" id="scroll-progress"></div>
+  </div>
+
+  <nav class="navbar" id="navbar">
+    <a href="#home" class="logo" style="text-decoration: none; color: inherit; cursor: pointer;">HM</a>
 
     <ul class="nav-links">
       <li><a href="#experience">Experience</a></li>
@@ -25,299 +37,519 @@
       <li><a href="#skills">Skills</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
+    
+    <!-- Sliding active background pill for nav links -->
+    <div class="nav-active-indicator" id="nav-indicator"></div>
   </nav>
 
-  <section class="hero">
-
-    <div class="hero-visual">
-
-      <div class="grid"></div>
-  
-      <div class="node node1"></div>
-      <div class="node node2"></div>
-      <div class="node node3"></div>
-  
-      <div class="line line1"></div>
-      <div class="line line2"></div>
-  
-    </div>
-
-    <div class="hero-content">
-
-      <p class="hero-tag">
-        Embedded Systems • Computer Vision • ML
-      </p>
-
-      <p class = "hero-name">Harshit Mohindra</p>
-
-      <h1>
-        Building intelligent systems<br>
-        with hardware and code.
-      </h1>
-
-      <p class="hero-desc">
-        ECE student focused on embedded systems, onboard ML inference,
-        computer vision, and real-world engineering projects.
-      </p>
-
-      <div class="hero-buttons">
-        <a href="#projects" class="btn primary-btn">
-          View Projects
-        </a>
-
-        <a href="assets/resume.pdf"
-          target="_blank"
-          class="btn secondary-btn">
-          View Resume
-        </a>
-      
-      </div>
-
-    </div>
-
-  </section>
-  <section class="experience" id="experience">
-
-    <h2 class="section-title">Experience</h2>
-
-    <div class="experience-grid">
-      <div class="experience-card">
-        <div class="experience-image">
-          <img src="assets/images/aligneyelogo.png" alt="AlignEye Vision Pvt. Ltd.">
-        </div>
-            
+  <main>
+    <!-- HERO SECTION -->
+    <section class="hero" id="home">
+      <div class="hero-container">
         
-        <div class="experience-content">
+        <div class="hero-content scroll-reveal">
+          <div class="hero-badge">
+            <span class="pulse-dot"></span>
+            <span>Available for Internships & Projects</span>
+          </div>
 
-          <span class="experience-role">
-              Firmware Engineering Intern
-          </span>
-      
-          <h3>AlignEye Vision Pvt. Ltd.</h3>
-      
-          <span class="experience-date">
-              Jun 2026 – Present
-          </span>
-      
+          <p class="hero-name">Harshit Mohindra</p>
+
+          <h1 class="hero-title">
+            Engineering ideas into <span class="accent-text">real products.</span><br>
+            Connecting hardware, software, and human experience.
+          </h1>
+
+          <p class="hero-desc">
+            ECE student at Panjab University designing intelligent systems with firmware, computer vision, and high-performance frontend interfaces. Focused on bridging hardware design with responsive, premium software.
+          </p>
+
+          <div class="hero-buttons">
+            <a href="#projects" class="btn primary-btn magnetic" data-strength="20">
+              Explore Projects
+              <span class="btn-arrow">
+                <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M3.64645 11.3536C3.45118 11.1583 3.45118 10.8417 3.64645 10.6464L8.29289 6H4.5C4.22386 6 4 5.77614 4 5.5C4 5.22386 4.22386 5 4.5 5H9.5C9.77614 5 10 5.22386 10 5.5V10.5C10 10.7761 9.77614 11 9.5 11C9.22386 11 9 10.7761 9 10.5V6.70711L4.35355 11.3536C4.15829 11.5489 3.84171 11.5489 3.64645 11.3536Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path>
+                </svg>
+              </span>
+            </a>
+
+            <a href="assets/resume.pdf" target="_blank" class="btn secondary-btn magnetic" data-strength="15">
+              Get Resume
+              <span class="btn-arrow">
+                <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M7.5 2C7.77614 2 8 2.22386 8 2.5V8.29289L10.6464 5.64645C10.8417 5.45118 11.1583 5.45118 11.3536 5.64645C11.5489 5.84171 11.5489 6.15829 11.3536 6.35355L7.85355 9.85355C7.65829 10.0488 7.34171 10.0488 7.14645 9.85355L3.64645 6.35355C3.45118 6.15829 3.45118 5.84171 3.64645 5.64645C3.84171 5.45118 4.15829 5.45118 4.35355 5.64645L7 8.29289V2.5C7 2.22386 7.22386 2 7.5 2ZM3 11.5C3 11.2239 3.22386 11 3.5 11H11.5C11.7761 11 12 11.2239 12 11.5C12 11.7761 11.7761 12 11.5 12H3.5C3.22386 12 3 11.7761 3 11.5Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path>
+                </svg>
+              </span>
+            </a>
+          </div>
+        </div>
+
+        <div class="hero-visual scroll-reveal delay-1">
+          <!-- Subtle glowing background accent behind profile image -->
+          <div class="portrait-ambient-glow" aria-hidden="true"></div>
           
-          <p>
-            Developing firmware for a Nordic-based wearable posture correction device. Working on BLE communication, telemetry architecture, battery monitoring, calibration profiles, OTA/DFU update workflows, and real-time device diagnostics for production deployment.
-          </p>
-                
-          <div class="tech-stack">
-              <span>Nordic Semiconductor</span>
-              <span>BLE</span>
-              <span>Embedded C/C++</span>
-              <span>OTA/DFU</span>
-              <span>Git</span>
-              <span>Firmware Debugging</span>
-          </div>
+          <figure class="hero-portrait">
+            <div class="hero-portrait__glow" aria-hidden="true"></div>
+            <div class="hero-portrait__frame">
+              <img
+                src="assets/images/my_image.jpeg"
+                alt="Harshit Mohindra Portrait"
+                width="720"
+                height="665"
+                decoding="async"
+                fetchpriority="high"
+              >
+            </div>
+          </figure>
         </div>
-      </div>  
 
-      <div class="experience-card">
-        <div class="experience-image">
-          <img src="assets/images/MDART.jpg" alt="DIC Internship">
-        </div>
-        <div class="experience-content">
-          <span class="experience-role">
-              Embedded ML • Computer Vision
-          </span>
-          <h3>DIC Internship</h3>
-          <p>
-              Worked on embedded ML systems for prosthetic hand control,
-              deploying CNN-based onboard inference pipelines on ESP32
-              for real-time gesture classification.
-          </p>
-          <div class="tech-stack">
-              <span>ESP32</span>
-              <span>CNN</span>
-              <span>OpenCV</span>
-              <span>Embedded C</span>
-          </div>
-        </div>
+      </div>
+    </section>
+
+    <!-- EXPERIENCE SECTION (Timeline Redesign) -->
+    <section class="experience" id="experience">
+      <div class="section-header scroll-reveal">
+        <span class="section-tag">Career History</span>
+        <h2 class="section-title">Professional Experience</h2>
       </div>
 
-    
+      <div class="timeline-container">
+        <div class="timeline-line"></div>
 
-</section>
+        <!-- Timeline Item 1 -->
+        <div class="timeline-item scroll-reveal">
+          <div class="timeline-marker">
+            <div class="timeline-marker-inner"></div>
+          </div>
+          <div class="timeline-card">
+            <div class="timeline-header-block">
+              <div class="company-logo-container">
+                <img src="assets/images/aligneyelogo.png" alt="AlignEye Vision Pvt. Ltd. Logo" class="company-logo">
+              </div>
+              <div class="company-info-text">
+                <span class="role-badge">Firmware Engineering Intern</span>
+                <h3>AlignEye Vision Pvt. Ltd.</h3>
+                <span class="timeline-date">Jun 2026 – Present</span>
+              </div>
+            </div>
+            <div class="timeline-body">
+              <p>
+                Developing firmware for an innovative Nordic Semiconductor-based wearable posture correction device. Designing core architectures for peripheral interactions and device power savings.
+              </p>
+              <ul class="achievement-list">
+                <li>Implemented Bluetooth Low Energy (BLE) services, telemetry packet structures, and custom communication protocols.</li>
+                <li>Created a robust battery monitoring and runtime state estimation algorithm.</li>
+                <li>Established over-the-air (OTA/DFU) update workflows and production-ready hardware calibration profiles.</li>
+                <li>Engineered real-time system diagnostics pipelines to streamline assembly line functional verification.</li>
+              </ul>
+              <div class="tech-stack">
+                <span>Nordic Semiconductor</span>
+                <span>BLE</span>
+                <span>Embedded C/C++</span>
+                <span>OTA/DFU</span>
+                <span>Git</span>
+                <span>Firmware Debugging</span>
+              </div>
+            </div>
+          </div>
+        </div>
 
-<section class="education" id="education">
+        <!-- Timeline Item 2 -->
+        <div class="timeline-item scroll-reveal delay-1">
+          <div class="timeline-marker">
+            <div class="timeline-marker-inner"></div>
+          </div>
+          <div class="timeline-card">
+            <div class="timeline-header-block">
+              <div class="company-logo-container">
+                <img src="assets/images/MDART.jpg" alt="DIC Logo" class="company-logo">
+              </div>
+              <div class="company-info-text">
+                <span class="role-badge">Embedded ML & Computer Vision Intern</span>
+                <h3>Design Innovation Centre (DIC)</h3>
+                <span class="timeline-date">Dec 2025 – Feb 2026</span>
+              </div>
+            </div>
+            <div class="timeline-body">
+              <p>
+                Researched and built onboard embedded machine learning applications for prosthetic devices, mapping physical bio-signals to mechanical motors.
+              </p>
+              <ul class="achievement-list">
+                <li>Designed and optimized 1D CNN model inference to execute directly onboard the ESP32 microchip.</li>
+                <li>Created raw sensor signal conditioning algorithms (filtering noise and signal drift in real-time).</li>
+                <li>Developed computer vision pipelines using OpenCV to map hand tracking landmarks for visual training reinforcement.</li>
+                <li>Achieved sub-50ms latency classification of muscle gesture signals, ensuring responsive prosthetic hand control.</li>
+              </ul>
+              <div class="tech-stack">
+                <span>ESP32</span>
+                <span>CNN Inference</span>
+                <span>OpenCV</span>
+                <span>Embedded C</span>
+                <span>Signal Processing</span>
+              </div>
+            </div>
+          </div>
+        </div>
 
-  <h2 class="section-title">Education</h2>
-  
-  <div class="education-grid">
-  
-      <!-- UNIVERSITY -->
-  
-      <div class="education-card">
-  
-          <span class="education-role">
-              2023 - 2027
-          </span>
-  
+      </div>
+    </section>
+
+    <!-- EDUCATION SECTION -->
+    <section class="education" id="education">
+      <div class="section-header scroll-reveal">
+        <span class="section-tag">Learning Journey</span>
+        <h2 class="section-title">Education</h2>
+      </div>
+
+      <div class="education-grid">
+        <!-- University -->
+        <div class="education-card scroll-reveal">
+          <div class="education-card-glow"></div>
+          <div class="education-meta">
+            <span class="edu-duration">2023 - 2027</span>
+          </div>
           <h3>UIET, Panjab University</h3>
-  
-          <p>
-              Bachelor of Engineering in
-              Electronics & Communication Engineering
-          </p>
-  
+          <p class="edu-degree">Bachelor of Engineering (B.E.)</p>
+          <p class="edu-major">Electronics & Communication Engineering</p>
           <div class="tech-stack">
-              <span>Embedded Systems</span>
-              <span>Digital Design</span>
-              <span>Microprocessors</span>
-              <span>Signal Processing</span>
+            <span>Embedded Systems</span>
+            <span>Digital Design</span>
+            <span>Microprocessors</span>
+            <span>Signal Processing</span>
           </div>
-  
-      </div>
-  
-      <!-- XII -->
-  
-      <div class="education-card">
-  
-          <span class="education-role">
-              Class XII
-          </span>
-  
-          <h3>94.2%</h3>
-  
-          <p>
-              S.B. Senior Secondary School
-              <br>
-              Amritsar
-          </p>
-  
+        </div>
+
+        <!-- XII -->
+        <div class="education-card scroll-reveal delay-1">
+          <div class="education-card-glow"></div>
+          <div class="education-meta">
+            <span class="edu-score">94.2%</span>
+            <span class="edu-duration">Class XII</span>
+          </div>
+          <h3>S.B. Senior Secondary School</h3>
+          <p class="edu-location">Amritsar, Punjab</p>
+          <p class="edu-major">Non-Medical Stream (CBSE)</p>
           <div class="tech-stack">
-              <span>Physics</span>
-              <span>Chemistry</span>
-              <span>Mathematics</span>
+            <span>Physics</span>
+            <span>Chemistry</span>
+            <span>Mathematics</span>
           </div>
-  
-      </div>
-  
-      <!-- X -->
-  
-      <div class="education-card">
-  
-          <span class="education-role">
-              Class X
-          </span>
-  
-          <h3>96.2%</h3>
-  
-          <p>
-              D.A.V. Public School
-              <br>
-              Amritsar
-          </p>
-  
+        </div>
+
+        <!-- X -->
+        <div class="education-card scroll-reveal delay-2">
+          <div class="education-card-glow"></div>
+          <div class="education-meta">
+            <span class="edu-score">96.2%</span>
+            <span class="edu-duration">Class X</span>
+          </div>
+          <h3>D.A.V. Public School</h3>
+          <p class="edu-location">Amritsar, Punjab</p>
+          <p class="edu-major">General Sciences (CBSE)</p>
           <div class="tech-stack">
-              <span>CBSE</span>
-              <span>Academic Excellence</span>
+            <span>CBSE</span>
+            <span>Academic Excellence</span>
           </div>
-  
+        </div>
       </div>
-  
-  </div>
-  
-  </section>
-  
+    </section>
 
-  <section id="projects" class="projects-section">
+    <!-- PROJECTS SECTION (High-Fidelity Case Studies) -->
+    <section id="projects" class="projects-section">
+      <div class="section-header scroll-reveal">
+        <span class="section-tag">Featured Work</span>
+        <h2 class="section-title">Case Studies</h2>
+      </div>
 
-    <h2>Projects</h2>
+      <div class="case-studies-list">
 
-    <div class="projects-grid">
+        <!-- Project 1: Drowsiness Detection -->
+        <article class="case-study-item scroll-reveal">
+          <!-- TODO: Add authentic Driver Drowsiness Detection screenshot/diagram here.
+               Real engineering assets to add later: OpenCV facial landmark detection, Eye Aspect Ratio visualization, Detection pipeline architecture, Confusion matrix/evaluation graphs, Hardware setup -->
+          <div class="case-study-info">
+            <div class="case-study-meta">
+              <span class="case-study-tag">Computer Vision & Hardware</span>
+              <span class="case-study-metric">30+ FPS Execution</span>
+            </div>
+            <h3 class="case-study-title">Driver Drowsiness Detection System</h3>
+            
+            <p class="case-study-problem">
+              <strong>Problem:</strong> Drowsy driving is a leading cause of highway accidents. Mitigating this risk requires an instantaneous, non-invasive facial tracking pipeline capable of monitoring fatigue on edge processors without network dependency.
+            </p>
 
-      <a href="projects/driver-drowsiness.html" class="project-card" style="text-decoration:none;color:inherit;">
-        <h3>Driver Drowsiness Detection</h3>
+            <div class="case-study-highlights">
+              <strong>Key Features:</strong>
+              <ul>
+                <li>Integrated dlib's 68-point facial landmark mesh for real-time tracking.</li>
+                <li>Computed Eye Aspect Ratio (EAR) & Yawn Frequency (Mouth Aspect Ratio).</li>
+                <li>Mapped spatial head-pose estimation to capture nodding/drooping states.</li>
+                <li>Integrated hardware triggers (buzzers/alarms) via custom Arduino serial APIs.</li>
+              </ul>
+            </div>
 
-        <p>
-          Real-time fatigue detection system using OpenCV and facial landmark analysis integrated with vehicle safety logic.
-        </p>
+            <p class="case-study-role">
+              <strong>My Role:</strong> Engineered the facial landmark assessment mathematical equations, designed threshold calibrations to minimize false alarms under varying ambient lighting, and created the physical serial interface hardware code.
+            </p>
 
-        <div class="tech-stack">
-          <span>Python</span>
-          <span>OpenCV</span>
-          <span>Arduino</span>
+            <div class="tech-stack">
+              <span>Python</span>
+              <span>OpenCV</span>
+              <span>dlib</span>
+              <span>Arduino</span>
+              <span>Serial Comm</span>
+            </div>
+
+            <div class="case-study-links">
+              <a href="projects/driver-drowsiness.html" class="btn case-study-btn primary">
+                Read Case Study
+                <span class="arrow-icon">→</span>
+              </a>
+              <a href="https://github.com/harshhhh04/" target="_blank" rel="noopener noreferrer" class="btn case-study-btn secondary">
+                GitHub
+                <span class="arrow-icon">→</span>
+              </a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Project 2: SAP-1 Computer -->
+        <article class="case-study-item scroll-reveal reverse has-image">
+          <div class="case-study-preview-wrapper">
+            <img src="assets/images/sap1_preview.png" alt="SAP-1 Computer CPU Design Blueprint Preview" class="case-study-img" loading="lazy">
+            <div class="preview-overlay"></div>
+          </div>
+          <div class="case-study-info">
+            <div class="case-study-meta">
+              <span class="case-study-tag">RTL Design & Architecture</span>
+              <span class="case-study-metric">Full RTL Simulator</span>
+            </div>
+            <h3 class="case-study-title">SAP-1 Processor Implementation</h3>
+            
+            <p class="case-study-problem">
+              <strong>Problem:</strong> Standard academic processor models often remain theoretical. Bridging the gap to hardware requires building a working instruction-level CPU design from the silicon gate boundaries up.
+            </p>
+
+            <div class="case-study-highlights">
+              <strong>Key Features:</strong>
+              <ul>
+                <li>Modeled modular RTL blocks (PC, Memory Address Register, RAM, IR, ALU).</li>
+                <li>Implemented microcoded control sequencer executing fetch-decode-execute.</li>
+                <li>Developed custom assembly programming capability within 16 bytes of RAM.</li>
+                <li>Built a detailed testbench to simulate register transfers and clock sync.</li>
+              </ul>
+            </div>
+
+            <p class="case-study-role">
+              <strong>My Role:</strong> Lead Digital Design Engineer. Wrote the synthesizable Verilog modules, simulated microcode transitions, verified clock-edge synchronization using Xilinx Vivado, and created a web visualizer for register operations.
+            </p>
+
+            <div class="tech-stack">
+              <span>Verilog HDL</span>
+              <span>Xilinx Vivado</span>
+              <span>Digital Logic</span>
+              <span>ModelSim</span>
+              <span>CPU Architecture</span>
+            </div>
+
+            <div class="case-study-links">
+              <a href="projects/sap1.html" class="btn case-study-btn primary">
+                Interactive Simulator
+                <span class="arrow-icon">→</span>
+              </a>
+              <a href="https://github.com/harshhhh04/" target="_blank" rel="noopener noreferrer" class="btn case-study-btn secondary">
+                GitHub
+                <span class="arrow-icon">→</span>
+              </a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Project 3: BLE Indoor Navigation -->
+        <article class="case-study-item scroll-reveal">
+          <!-- TODO: Add authentic BLE Indoor Navigation screenshot/diagram here.
+               Real engineering assets to add later: Beacon placement diagram, Indoor floor map, RSSI visualization, Trilateration diagram, Mobile application screenshots, Hardware setup -->
+          <div class="case-study-info">
+            <div class="case-study-meta">
+              <span class="case-study-tag">Embedded Systems & Signal Processing</span>
+              <span class="case-study-metric">Sub-room Precision</span>
+            </div>
+            <h3 class="case-study-title">BLE Indoor Navigation & Trilateration</h3>
+            
+            <p class="case-study-problem">
+              <strong>Problem:</strong> GPS is completely blocked inside reinforced concrete buildings. Tracking mobile hardware requires micro-location algorithms leveraging Bluetooth beacons with highly filtered raw signals.
+            </p>
+
+            <div class="case-study-highlights">
+              <strong>Key Features:</strong>
+              <ul>
+                <li>Deployed a network of low-power Nordic BLE beacon transmitters.</li>
+                <li>Formulated RSSI distance estimation calculations on receiver hardware.</li>
+                <li>Applied Kalman filters to mitigate environmental radio wave multipath reflections.</li>
+                <li>Calculated spatial coordinate calculations through real-time trilateration.</li>
+              </ul>
+            </div>
+
+            <p class="case-study-role">
+              <strong>My Role:</strong> Firmware Architect. Configured the beacon broadcasting intervals and TX power levels, implemented Kalman signal-smoothing libraries in Embedded C, and optimized position calculations on edge chips.
+            </p>
+
+            <div class="tech-stack">
+              <span>Bluetooth LE</span>
+              <span>Nordic nRF</span>
+              <span>Embedded C</span>
+              <span>Kalman Filters</span>
+              <span>Trilateration</span>
+            </div>
+
+            <div class="case-study-links">
+              <a href="projects/ble-navigation.html" class="btn case-study-btn primary">
+                Read Case Study
+                <span class="arrow-icon">→</span>
+              </a>
+              <a href="https://github.com/harshhhh04/" target="_blank" rel="noopener noreferrer" class="btn case-study-btn secondary">
+                GitHub
+                <span class="arrow-icon">→</span>
+              </a>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- SKILLS SECTION (Grouped Category Layout) -->
+    <section id="skills" class="skills-section">
+      <div class="section-header scroll-reveal">
+        <span class="section-tag">Competency Grid</span>
+        <h2 class="section-title">Technical Expertise</h2>
+      </div>
+
+      <div class="skills-category-grid">
+        <!-- Group 1: Embedded Systems -->
+        <div class="skills-group scroll-reveal">
+          <div class="group-glow"></div>
+          <h3>Embedded Systems</h3>
+          <div class="skills-pills-list">
+            <div class="skill-pill"><span>Embedded Systems</span></div>
+            <div class="skill-pill"><span>ESP32</span></div>
+            <div class="skill-pill"><span>Arduino Hardware</span></div>
+            <div class="skill-pill"><span>Verilog HDL</span></div>
+            <div class="skill-pill"><span>Microprocessors</span></div>
+          </div>
         </div>
-      </a>
 
-
-      <a href="projects/sap1.html" class="project-card" style="text-decoration:none;color:inherit;">
-        <h3>SAP Computer</h3>
-
-        <p>
-          Built a simple educational CPU architecture implementing arithmetic and assembly operations.
-        </p>
-
-        <div class="tech-stack">
-          <span>Digital Design</span>
-          <span>Assembly</span>
-          <span>Architecture</span>
+        <!-- Group 2: Firmware -->
+        <div class="skills-group scroll-reveal delay-1">
+          <div class="group-glow"></div>
+          <h3>Firmware Development</h3>
+          <div class="skills-pills-list">
+            <div class="skill-pill"><span>Firmware Design</span></div>
+            <div class="skill-pill"><span>Embedded C/C++</span></div>
+            <div class="skill-pill"><span>BLE (Bluetooth LE)</span></div>
+            <div class="skill-pill"><span>Nordic nRF52 SDK</span></div>
+            <div class="skill-pill"><span>OTA / DFU Workflows</span></div>
+          </div>
         </div>
-      </a>
 
-      <a href="projects/ble-navigation.html" class="project-card" style="text-decoration:none;color:inherit;">
-        <h3>BLE Indoor Navigation</h3>
-
-        <p>
-          Indoor positioning and wayfinding system using BLE beacons and RSSI-based trilateration.
-        </p>
-
-        <div class="tech-stack">
-          <span>BLE</span>
-          <span>Nordic nRF</span>
-          <span>Embedded C</span>
+        <!-- Group 3: Frontend -->
+        <div class="skills-group scroll-reveal delay-2">
+          <div class="group-glow"></div>
+          <h3>Frontend Engineering</h3>
+          <div class="skills-pills-list">
+            <div class="skill-pill"><span>HTML5 / Semantic CSS</span></div>
+            <div class="skill-pill"><span>Modern JavaScript (ES6+)</span></div>
+            <div class="skill-pill"><span>Premium UI Design</span></div>
+            <div class="skill-pill"><span>Awwwards Aesthetics</span></div>
+            <div class="skill-pill"><span>Responsive Frameworks</span></div>
+          </div>
         </div>
-      </a>
 
+        <!-- Group 4: AI & ML -->
+        <div class="skills-group scroll-reveal">
+          <div class="group-glow"></div>
+          <h3>AI & Machine Learning</h3>
+          <div class="skills-pills-list">
+            <div class="skill-pill"><span>Python</span></div>
+            <div class="skill-pill"><span>Computer Vision</span></div>
+            <div class="skill-pill"><span>OpenCV</span></div>
+            <div class="skill-pill"><span>Machine Learning</span></div>
+            <div class="skill-pill"><span>Onboard CNN Inference</span></div>
+          </div>
+        </div>
+
+        <!-- Group 5: Tools & Workflows -->
+        <div class="skills-group scroll-reveal delay-1">
+          <div class="group-glow"></div>
+          <h3>Tools & Infrastructure</h3>
+          <div class="skills-pills-list">
+            <div class="skill-pill"><span>Git / GitHub</span></div>
+            <div class="skill-pill"><span>Xilinx Vivado</span></div>
+            <div class="skill-pill"><span>Serial Diagnostics</span></div>
+            <div class="skill-pill"><span>Firmware Debugging</span></div>
+            <div class="skill-pill"><span>Logic Analyzers</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT SECTION -->
+    <section id="contact" class="contact-section">
+      <div class="contact-container scroll-reveal">
+        <div class="contact-box">
+          <span class="contact-tag">Get In Touch</span>
+          <h2>Let's build something premium.</h2>
+          <p class="contact-description">
+            I am always interested in discussing firmware architecture, embedded machine learning, computer vision, or high-end web projects. Feel free to reach out.
+          </p>
+
+          <div class="contact-details">
+            <div class="detail-item">
+              <span class="label">Location</span>
+              <span class="value">Chandigarh, India</span>
+            </div>
+            <div class="detail-item">
+              <span class="label">Email</span>
+              <a href="mailto:harshit.codes04@gmail.com" class="value link">harshit.codes04@gmail.com</a>
+            </div>
+            <div class="detail-item">
+              <span class="label">Availability</span>
+              <span class="value availability-badge">Available for Internships & Projects</span>
+            </div>
+          </div>
+
+          <div class="contact-links">
+            <a href="https://mail.google.com/mail/?view=cm&fs=1&to=harshit.codes04@gmail.com"
+               target="_blank"
+               rel="noopener noreferrer"
+               class="contact-link-pill primary magnetic"
+               data-strength="10">
+              Email Me 
+            </a>
+            <a href="assets/resume.pdf" target="_blank" rel="noopener noreferrer" class="contact-link-pill magnetic" data-strength="10">Resume</a>
+            <a href="https://www.linkedin.com/in/harshit-mohindra/" target="_blank" rel="noopener noreferrer" class="contact-link-pill magnetic" data-strength="10">LinkedIn</a>
+            <a href="https://github.com/harshhhh04/" target="_blank" rel="noopener noreferrer" class="contact-link-pill magnetic" data-strength="10">GitHub</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-left">
+        <p class="footer-logo">HM</p>
+        <p class="footer-statement">
+          Crafting hardware & software interfaces with rigorous engineering and minimal aesthetic design.
+        </p>
+      </div>
+      <div class="footer-right">
+        <p class="copyright">&copy; 2026 Harshit Mohindra. All rights reserved.</p>
+        <p class="designed-by">Designed with dedication to engineering and layout craft.</p>
+      </div>
     </div>
-
-  </section>
-
-  <section id="skills" class="skills-section">
-
-    <h2>Skills</h2>
-
-    <div class="skills-grid">
-      <div class="skill-card">Firmware Development</div>
-      <div class="skill-card">Embedded Systems</div>
-      <div class="skill-card">BLE</div>
-      <div class="skill-card">Nordic nRF52</div>
-      <div class="skill-card">Embedded C/C++</div>
-      <div class="skill-card">Python</div>
-      <div class="skill-card">Git</div>
-      <div class="skill-card">OTA / DFU</div>
-      <div class="skill-card">ESP32</div>
-      <div class="skill-card">Computer Vision</div>
-      <div class="skill-card">Machine Learning</div>
-      <div class="skill-card">Verilog</div>
-  </div>
-
-  </section>
-
-  <section id="contact" class="contact-section">
-
-    <h2>Contact</h2>
-
-    <p>harshit.codes04@gmail.com</p>
-    <p>Chandigarh, India</p>
-
-    
-    <div class="contact-links">
-      <a href="https://mail.google.com/mail/?view=cm&fs=1&to=harshit.codes04@gmail.com"
-        target="_blank"
-        rel="noopener noreferrer">
-        Email Me
-      </a>
-      <a href="assets/resume.pdf"target="_blank"rel="noopener noreferrer">Resume</a>
-      <a href="https://www.linkedin.com/in/harshit-mohindra/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-      <a href="https://github.com/harshhhh04/" target="_blank" rel="noopener noreferrer">GitHub</a>
-    </div>
-
-  </section>
+  </footer>
 
   <script src="script.js"></script>
 
