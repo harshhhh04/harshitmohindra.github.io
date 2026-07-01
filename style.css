@@ -89,10 +89,12 @@
     background: radial-gradient(circle, rgba(255, 255, 255, 0.02) 0%, transparent 70%);
     border-radius: 50%;
     pointer-events: none;
-    transform: translate(-50%, -50%);
+    /* Positioned via JS transform: translate3d() — compositor-only, zero layout cost */
+    top: 0;
+    left: 0;
+    transform: translate3d(0, 0, 0);
     z-index: -1;
-    will-change: left, top;
-    transition: left 0.15s cubic-bezier(0.25, 1, 0.5, 1), top 0.15s cubic-bezier(0.25, 1, 0.5, 1);
+    will-change: transform;
   }
   
   /* Particles background */
@@ -109,7 +111,7 @@
     background: rgba(255, 255, 255, 0.15);
     border-radius: 50%;
     pointer-events: none;
-    will-change: transform, opacity;
+    will-change: transform; /* only transform is animated — correct hint */
   }
   
   /* Scroll Progress Bar */
@@ -222,7 +224,10 @@
     border-radius: 999px;
     z-index: 1;
     pointer-events: none;
-    transition: all 0.35s cubic-bezier(0.25, 1, 0.5, 1);
+    /* Only transition the properties that actually change — avoids triggering full composite */
+    transition: left 0.35s cubic-bezier(0.25, 1, 0.5, 1),
+                width 0.35s cubic-bezier(0.25, 1, 0.5, 1),
+                opacity 0.35s cubic-bezier(0.25, 1, 0.5, 1);
     opacity: 0;
   }
   
@@ -1298,10 +1303,7 @@
     white-space: pre;
     word-wrap: normal;
   }
-  .code-container pre {
-    white-space: pre;
-    overflow-x: auto;
-  }
+  /* .code-container pre inherits overflow-x:auto and white-space:pre from base pre rule */
   .code-container code {
     display: block;
     width: max-content;

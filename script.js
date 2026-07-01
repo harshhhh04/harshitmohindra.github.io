@@ -60,11 +60,11 @@ document.addEventListener('DOMContentLoaded', () => {
       mouseY = e.clientY;
     }, { passive: true });
 
+    // Use transform instead of left/top to keep animation on the compositor thread
     function animateGlow() {
       glowX += (mouseX - glowX) * 0.08;
       glowY += (mouseY - glowY) * 0.08;
-      cursorGlow.style.left = `${glowX}px`;
-      cursorGlow.style.top  = `${glowY}px`;
+      cursorGlow.style.transform = `translate3d(${glowX}px, ${glowY}px, 0)`;
       requestAnimationFrame(animateGlow);
     }
     requestAnimationFrame(animateGlow);
@@ -83,12 +83,17 @@ document.addEventListener('DOMContentLoaded', () => {
       const particle = document.createElement('div');
       particle.classList.add('particle');
       const size = Math.random() * 3 + 1;
+      // Store logical vw/vh position as data attributes; animate via transform (compositor-only)
+      const startX = Math.random() * 100;
+      const startY = Math.random() * 100;
+      particle.dataset.x = startX;
+      particle.dataset.y = startY;
       particle.style.cssText = [
         `width:${size}px`,
         `height:${size}px`,
-        `left:${Math.random() * 100}vw`,
-        `top:${Math.random() * 100}vh`,
         `opacity:${Math.random() * 0.12 + 0.03}`,
+        // Position via transform — avoids layout, runs on compositor thread
+        `transform:translate(${startX}vw,${startY}vh)`,
       ].join(';');
       fragment.appendChild(particle);
     }
@@ -99,19 +104,19 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function animateDrift(p) {
-    let y     = parseFloat(p.style.top);
-    let x     = parseFloat(p.style.left);
+    let y     = parseFloat(p.dataset.y);
+    let x     = parseFloat(p.dataset.x);
     const speed = Math.random() * 0.04 + 0.015;
     const drift = Math.random() * 0.02 - 0.01;
 
+    // transform: translate() keeps animation on compositor — no layout recalculation
     function step() {
       y -= speed;
       x += drift;
       if (y < -5)   { y = 105; x = Math.random() * 100; }
       if (x < -5)   x = 105;
       if (x > 105)  x = -5;
-      p.style.top  = `${y}vh`;
-      p.style.left = `${x}vw`;
+      p.style.transform = `translate(${x}vw, ${y}vh)`;
       requestAnimationFrame(step);
     }
     requestAnimationFrame(step);
