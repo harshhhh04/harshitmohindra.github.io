@@ -92,6 +92,345 @@
       font-size: 0.8rem;
       color: #48484a;
     }
+
+    /* --- System Architecture Diagram Styles --- */
+    .system-architecture-section {
+      margin: 64px 0;
+      position: relative;
+    }
+
+    .section-header-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 48px 0 16px;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .section-header-container h2 {
+      margin: 0 !important;
+    }
+
+    .run-demo-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: transparent;
+      border: 1px solid rgba(0, 240, 255, 0.3);
+      color: #00f0ff;
+      padding: 10px 20px;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-family: var(--font-sans);
+    }
+
+    .run-demo-btn:hover:not(:disabled) {
+      background: rgba(0, 240, 255, 0.08);
+      box-shadow: 0 0 15px rgba(0, 240, 255, 0.25);
+      border-color: #00f0ff;
+    }
+
+    .run-demo-btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      border-color: rgba(255, 255, 255, 0.1);
+      color: var(--text-secondary);
+    }
+
+    .diagram-intro {
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+      margin-bottom: 32px;
+      line-height: 1.6;
+    }
+
+    .diagram-flow-container {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      position: relative;
+      margin: 32px 0 64px;
+      padding: 10px 0;
+    }
+
+    .svg-connections {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .connection-path {
+      fill: none;
+      stroke: rgba(255, 255, 255, 0.06);
+      stroke-width: 2;
+      transition: stroke 0.3s ease, stroke-width 0.3s ease, filter 0.3s ease;
+      marker-end: url(#arrow);
+    }
+
+    .connection-path.highlighted {
+      stroke: rgba(0, 240, 255, 0.5);
+      stroke-width: 2.5;
+      filter: drop-shadow(0 0 3px rgba(0, 240, 255, 0.4));
+      marker-end: url(#arrow-highlighted);
+    }
+
+    .connection-path.active-flow {
+      stroke: #00f0ff;
+      stroke-width: 2.5;
+      stroke-dasharray: 6, 6;
+      animation: flowDash 0.8s linear infinite;
+      filter: drop-shadow(0 0 5px rgba(0, 240, 255, 0.8));
+      marker-end: url(#arrow-active);
+    }
+
+    @keyframes flowDash {
+      to {
+        stroke-dashoffset: -20;
+      }
+    }
+
+    .connection-label {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      fill: rgba(0, 240, 255, 0.85);
+      font-weight: 600;
+      letter-spacing: 0.05em;
+    }
+
+    .diagram-column {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      width: 18.5%;
+      position: relative;
+      z-index: 2;
+    }
+
+    .diagram-column.wide {
+      width: 24%;
+    }
+
+    .column-title {
+      font-family: var(--font-sans);
+      font-size: 0.68rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+      padding-bottom: 6px;
+    }
+
+    .diag-node-row {
+      display: flex;
+      gap: 12px;
+      width: 100%;
+    }
+
+    .diag-node-row .diag-node {
+      flex: 1;
+      padding: 12px 10px;
+    }
+
+    .diag-node {
+      background: rgba(10, 10, 10, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 10px;
+      padding: 14px 16px;
+      transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      cursor: pointer;
+      position: relative;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+      user-select: none;
+    }
+
+    .diag-node:hover {
+      transform: translateY(-3px);
+      border-color: rgba(0, 240, 255, 0.7);
+      box-shadow: 0 8px 30px rgba(0, 240, 255, 0.12), 0 0 10px rgba(0, 240, 255, 0.05);
+    }
+
+    .diag-node.active-step {
+      border-color: #00f0ff;
+      background: rgba(0, 240, 255, 0.04);
+      box-shadow: 0 0 25px rgba(0, 240, 255, 0.22), inset 0 0 10px rgba(0, 240, 255, 0.05);
+      transform: scale(1.02);
+    }
+
+    .diag-node.decision {
+      border-color: rgba(255, 255, 255, 0.09);
+    }
+    
+    .diag-node.decision::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 3px;
+      height: 60%;
+      background: #00f0ff;
+      border-radius: 0 2px 2px 0;
+    }
+
+    .diag-node.passive {
+      opacity: 0.55;
+      border-style: dashed;
+    }
+
+    .diag-node.passive:hover {
+      opacity: 0.95;
+    }
+
+    .node-label {
+      font-family: var(--font-sans);
+      font-size: 0.65rem;
+      font-weight: 700;
+      color: #00f0ff;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+
+    .node-title {
+      font-family: var(--font-sans);
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: #ffffff;
+      margin-bottom: 4px;
+      line-height: 1.25;
+    }
+
+    .node-tech {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: var(--text-secondary);
+      letter-spacing: -0.01em;
+    }
+
+    /* Production deployment styles */
+    .production-vision-section {
+      background: rgba(255, 255, 255, 0.01);
+      border: 1px dashed rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      padding: 32px;
+      margin-top: 48px;
+    }
+
+    .production-header {
+      margin-bottom: 28px;
+    }
+
+    .vision-badge {
+      display: inline-block;
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      color: #00f0ff;
+      background: rgba(0, 240, 255, 0.08);
+      padding: 4px 10px;
+      border-radius: 12px;
+      margin-bottom: 12px;
+      border: 1px solid rgba(0, 240, 255, 0.15);
+    }
+
+    .production-header h3 {
+      font-size: 1.35rem;
+      margin-bottom: 8px;
+    }
+
+    .production-desc {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      margin: 0;
+      max-width: 800px;
+    }
+
+    .production-node {
+      border-style: dashed;
+      background: rgba(255, 255, 255, 0.01);
+    }
+
+    .node-bullets {
+      margin: 8px 0 0 0 !important;
+      padding-left: 16px !important;
+      color: var(--text-secondary) !important;
+      font-size: 0.8rem !important;
+      line-height: 1.45 !important;
+    }
+
+    .node-bullets li {
+      margin-bottom: 4px;
+    }
+
+    /* Target highlight flash animation */
+    @keyframes highlightFlash {
+      0% {
+        background-color: rgba(0, 240, 255, 0.12);
+        box-shadow: inset 3px 0 0 #00f0ff;
+      }
+      100% {
+        background-color: transparent;
+        box-shadow: inset 0 0 0 transparent;
+      }
+    }
+    
+    .flash-highlight {
+      animation: highlightFlash 1.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    /* Scrollspy target helper */
+    .pipeline-list li {
+      transition: all 0.3s ease;
+      border-radius: 6px;
+      padding: 6px 12px;
+      margin-left: -12px;
+    }
+
+    /* Responsive media query */
+    @media (max-width: 1024px) {
+      .diagram-flow-container {
+        flex-direction: column;
+        align-items: center;
+        gap: 48px;
+        padding: 20px 0;
+      }
+
+      .diagram-column, .diagram-column.wide {
+        width: 100%;
+        max-width: 480px;
+        gap: 16px;
+      }
+
+      .column-title {
+        text-align: center;
+      }
+
+      .diag-node {
+        width: 100%;
+        box-sizing: border-box;
+      }
+
+      .diag-node-row {
+        flex-direction: column;
+      }
+      
+      .production-vision-section {
+        padding: 24px 16px;
+      }
+    }
   </style>
 </head>
 
@@ -132,17 +471,234 @@
         to request an appropriate safety intervention. This future deployment architecture is a long-term goal, while the current physical actuation uses a simulated motor setup.
       </p>
 
+      <!-- System Architecture Diagram Section -->
+      <section class="system-architecture-section">
+        <div class="section-header-container">
+          <h2>Interactive System Architecture</h2>
+          <button id="run-demo-btn" class="run-demo-btn">
+            <svg class="play-icon" viewBox="0 0 24 24" width="16" height="16">
+              <polygon points="5,3 19,12 5,21" fill="currentColor"/>
+            </svg>
+            Run Demo
+          </button>
+        </div>
+        <p class="diagram-intro">
+          Click any block in the schematic below to view its specific documentation. Hover over blocks to highlight data paths. Run the demo to simulate real-time drowsiness detection and safety intervention.
+        </p>
+
+        <!-- Prototype Flow Diagram -->
+        <div class="diagram-flow-container" id="prototype-flow">
+          <svg class="svg-connections" id="prototype-connections">
+            <defs>
+              <marker id="arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+                <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="rgba(255,255,255,0.15)"/>
+              </marker>
+              <marker id="arrow-highlighted" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+                <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="rgba(0, 240, 255, 0.6)"/>
+              </marker>
+              <marker id="arrow-active" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+                <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#00f0ff"/>
+              </marker>
+            </defs>
+          </svg>
+
+          <!-- Column 1: Perception -->
+          <div class="diagram-column">
+            <div class="column-title">PERCEPTION LAYER</div>
+            
+            <div class="diag-node" id="node-webcam" data-target="webcam-section">
+              <div class="node-label">INPUT</div>
+              <div class="node-title">Webcam</div>
+              <div class="node-tech">640x480 | 30 FPS</div>
+            </div>
+            
+            <div class="diag-node" id="node-opencv" data-target="cv-section">
+              <div class="node-label">OPENCV</div>
+              <div class="node-title">Face Detection</div>
+              <div class="node-tech">Haar Cascades</div>
+            </div>
+
+            <div class="diag-node" id="node-eye-detect" data-target="cv-section">
+              <div class="node-label">OPENCV</div>
+              <div class="node-title">Eye Detection</div>
+              <div class="node-tech">Region of Interest</div>
+            </div>
+
+            <div class="diag-node" id="node-eye-classify" data-target="cv-section">
+              <div class="node-label">CLASSIFIER</div>
+              <div class="node-title">Eye State</div>
+              <div class="node-tech">Open / Closed</div>
+            </div>
+          </div>
+
+          <!-- Column 2: Temporal Filter -->
+          <div class="diagram-column">
+            <div class="column-title">TEMPORAL FILTERING</div>
+
+            <div class="diag-node" id="node-smoothing" data-target="noise-reduction-section">
+              <div class="node-label">FILTER</div>
+              <div class="node-title">Temporal Smoothing</div>
+              <div class="node-tech">15 Frame Window</div>
+            </div>
+
+            <div class="diag-node decision" id="node-decision-closed" data-target="noise-reduction-section">
+              <div class="node-label">DECISION</div>
+              <div class="node-title">Eyes Closed?</div>
+              <div class="node-tech">60% Threshold</div>
+            </div>
+
+            <div class="diag-node passive" id="node-continue-monitoring" data-target="noise-reduction-section">
+              <div class="node-title">Continue Monitoring</div>
+              <div class="node-tech">Loop Pipeline</div>
+            </div>
+          </div>
+
+          <!-- Column 3: Communication -->
+          <div class="diagram-column">
+            <div class="column-title">COMMUNICATION</div>
+
+            <div class="diag-node" id="node-serial" data-target="serial-section">
+              <div class="node-label">SERIAL</div>
+              <div class="node-title">Serial Comms</div>
+              <div class="node-tech">9600 Baud | Serial</div>
+            </div>
+          </div>
+
+          <!-- Column 4: Embedded Control -->
+          <div class="diagram-column">
+            <div class="column-title">EMBEDDED CONTROL</div>
+
+            <div class="diag-node" id="node-arduino" data-target="embedded-controller-section">
+              <div class="node-label">MICROCONTROLLER</div>
+              <div class="node-title">Arduino Uno</div>
+              <div class="node-tech">ATmega328P | HIGH / LOW</div>
+            </div>
+
+            <div class="diag-node" id="node-timer" data-target="embedded-controller-section">
+              <div class="node-label">TIMER</div>
+              <div class="node-title">2s Safety Timer</div>
+              <div class="node-tech">Continuous Closed</div>
+            </div>
+
+            <div class="diag-node decision" id="node-decision-embedded" data-target="embedded-controller-section">
+              <div class="node-label">DECISION</div>
+              <div class="node-title">Trigger Alarm?</div>
+              <div class="node-tech">Time >= 2.0s</div>
+            </div>
+          </div>
+
+          <!-- Column 5: Actuation -->
+          <div class="diagram-column">
+            <div class="column-title">ACTUATION</div>
+
+            <div class="diag-node-row">
+              <div class="diag-node" id="node-buzzer" data-target="hardware-section">
+                <div class="node-label">ALARM</div>
+                <div class="node-title">Buzzer</div>
+                <div class="node-tech">Active High</div>
+              </div>
+
+              <div class="diag-node" id="node-motor-driver" data-target="hardware-section">
+                <div class="node-label">DRIVER</div>
+                <div class="node-title">L298N Driver</div>
+                <div class="node-tech">PWM</div>
+              </div>
+            </div>
+
+            <div class="diag-node" id="node-dc-motor" data-target="hardware-section">
+              <div class="node-label">ACTUATOR</div>
+              <div class="node-title">DC Motor Stops</div>
+              <div class="node-tech">Drivetrain Cut</div>
+            </div>
+
+            <div class="diag-node" id="node-safety-sim" data-target="hardware-section">
+              <div class="node-label">SIMULATION</div>
+              <div class="node-title">Safety Simulation</div>
+              <div class="node-tech">Powertrain Cutoff</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Production Deployment Vision -->
+        <div class="production-vision-section">
+          <div class="production-header">
+            <span class="vision-badge">PROPOSED DEPLOYMENT VISION (FUTURE ARCHITECTURE)</span>
+            <h3>Automotive ECU Integration</h3>
+            <p class="production-desc">
+              Conceptual system scaling: rather than direct DC motor cut-off, safety alerts trigger ECU instructions transmitted across a vehicle CAN Bus network.
+            </p>
+          </div>
+          
+          <div class="diagram-flow-container production" id="production-flow">
+            <svg class="svg-connections" id="production-connections">
+              <defs>
+                <marker id="arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+                  <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="rgba(255,255,255,0.15)"/>
+                </marker>
+                <marker id="arrow-highlighted" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+                  <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="rgba(0, 240, 255, 0.6)"/>
+                </marker>
+                <marker id="arrow-active" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+                  <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#00f0ff"/>
+                </marker>
+              </defs>
+            </svg>
+
+            <!-- Step 1: Controller -->
+            <div class="diagram-column">
+              <div class="diag-node production-node" id="prod-controller">
+                <div class="node-label">CONTROLLER</div>
+                <div class="node-title">Arduino Controller</div>
+                <div class="node-tech">Safety Firmware</div>
+              </div>
+            </div>
+
+            <!-- Step 2: CAN Bus -->
+            <div class="diagram-column">
+              <div class="diag-node production-node" id="prod-can">
+                <div class="node-label">BUS INTERFACE</div>
+                <div class="node-title">CAN Bus</div>
+                <div class="node-tech">ISO 11898 standard</div>
+              </div>
+            </div>
+
+            <!-- Step 3: Vehicle ECU -->
+            <div class="diagram-column">
+              <div class="diag-node production-node" id="prod-ecu">
+                <div class="node-label">DECISION LAYER</div>
+                <div class="node-title">Vehicle ECU</div>
+                <div class="node-tech">Central Safety Manager</div>
+              </div>
+            </div>
+
+            <!-- Step 4: Safety Functions -->
+            <div class="diagram-column wide">
+              <div class="diag-node production-node list-node" id="prod-functions">
+                <div class="node-label">INTERVENTIONS</div>
+                <div class="node-title">Safety Functions</div>
+                <ul class="node-bullets">
+                  <li>Engine Torque Reduction</li>
+                  <li>Controlled Deceleration</li>
+                  <li>Driver Alert</li>
+                  <li>Emergency Assistance</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <h2>System Pipeline & Technical Details</h2>
       <p>
         The prototype functions through a serialized data flow across hardware and software components:
       </p>
-      <ul>
-        <li><strong>Webcam Input:</strong> Captures real-time video frames of the driver.</li>
-        <li><strong>Computer Vision:</strong> Processes frames in Python using OpenCV Haar Cascade classifiers, performing face detection followed by localized eye detection within the face region. Eye states are classified as Open or Closed.</li>
-        <li><strong>Temporal Smoothing:</strong> Maintains a sliding window of the last 15 frame classifications. The driver is flagged as drowsy only if at least 60% (9 of 15) of these frames indicate closed eyes, preventing normal blinks from triggering the safety system.</li>
-        <li><strong>Serial Communication:</strong> Transmits binary eye state classifications from Python to the microcontroller.</li>
-        <li><strong>Embedded Controller:</strong> An Arduino tracks continuous eye closure duration. If closure exceeds two seconds, it activates the buzzer and disables the motor driver.</li>
-        <li><strong>Safety Actuation:</strong> Silences the buzzer and restores power to the DC motor immediately upon detecting that the eyes have reopened.</li>
+      <ul class="pipeline-list">
+        <li id="webcam-section"><strong>Webcam Input:</strong> Captures real-time video frames of the driver.</li>
+        <li id="cv-section"><strong>Computer Vision:</strong> Processes frames in Python using OpenCV Haar Cascade classifiers, performing face detection followed by localized eye detection within the face region. Eye states are classified as Open or Closed.</li>
+        <li id="noise-reduction-section"><strong>Temporal Smoothing:</strong> Maintains a sliding window of the last 15 frame classifications. The driver is flagged as drowsy only if at least 60% (9 of 15) of these frames indicate closed eyes, preventing normal blinks from triggering the safety system.</li>
+        <li id="serial-section"><strong>Serial Communication:</strong> Transmits binary eye state classifications from Python to the microcontroller.</li>
+        <li id="embedded-controller-section"><strong>Embedded Controller:</strong> An Arduino tracks continuous eye closure duration. If closure exceeds two seconds, it activates the buzzer and disables the motor driver.</li>
+        <li id="hardware-section"><strong>Safety Actuation:</strong> Silences the buzzer and restores power to the DC motor immediately upon detecting that the eyes have reopened. Utilizes an L298N motor driver and DC motor setup to represent drivetrain interventions.</li>
       </ul>
 
       <h2>Engineering Decisions</h2>
@@ -194,5 +750,279 @@
 
   <script src="../script.js"></script>
 
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // 1. Connection Configs
+      const prototypeConnections = [
+        { from: 'node-webcam', to: 'node-opencv' },
+        { from: 'node-opencv', to: 'node-eye-detect' },
+        { from: 'node-eye-detect', to: 'node-eye-classify' },
+        { from: 'node-eye-classify', to: 'node-smoothing' },
+        { from: 'node-smoothing', to: 'node-decision-closed' },
+        { from: 'node-decision-closed', to: 'node-continue-monitoring', label: 'NO' },
+        { from: 'node-decision-closed', to: 'node-serial', label: 'YES' },
+        { from: 'node-serial', to: 'node-arduino' },
+        { from: 'node-arduino', to: 'node-timer' },
+        { from: 'node-timer', to: 'node-decision-embedded' },
+        { from: 'node-decision-embedded', to: 'node-buzzer' },
+        { from: 'node-decision-embedded', to: 'node-motor-driver' },
+        { from: 'node-motor-driver', to: 'node-dc-motor' },
+        { from: 'node-dc-motor', to: 'node-safety-sim' }
+      ];
+
+      const productionConnections = [
+        { from: 'prod-controller', to: 'prod-can' },
+        { from: 'prod-can', to: 'prod-ecu' },
+        { from: 'prod-ecu', to: 'prod-functions' }
+      ];
+
+      // Helper to calculate port coordinate relative to container
+      function getPortCoords(container, node, port) {
+        const containerRect = container.getBoundingClientRect();
+        const nodeRect = node.getBoundingClientRect();
+        const x = nodeRect.left - containerRect.left;
+        const y = nodeRect.top - containerRect.top;
+
+        if (port === 'top') {
+          return { x: x + nodeRect.width / 2, y: y };
+        } else if (port === 'bottom') {
+          return { x: x + nodeRect.width / 2, y: y + nodeRect.height };
+        } else if (port === 'left') {
+          return { x: x, y: y + nodeRect.height / 2 };
+        } else if (port === 'right') {
+          return { x: x + nodeRect.width, y: y + nodeRect.height / 2 };
+        }
+        return { x: x + nodeRect.width / 2, y: y + nodeRect.height / 2 };
+      }
+
+      // Draw connections for a specific group
+      function drawGroupConnections(containerId, svgId, connections, isDashed = false) {
+        const container = document.getElementById(containerId);
+        const svg = document.getElementById(svgId);
+        if (!container || !svg) return;
+
+        // Reset height/width dynamically
+        const containerRect = container.getBoundingClientRect();
+        svg.setAttribute('width', containerRect.width);
+        svg.setAttribute('height', containerRect.height);
+
+        // Keep standard definition elements (defs with markers) and remove old paths/labels
+        const defs = svg.querySelector('defs');
+        svg.innerHTML = '';
+        if (defs) svg.appendChild(defs);
+
+        connections.forEach(conn => {
+          const elA = document.getElementById(conn.from);
+          const elB = document.getElementById(conn.to);
+          if (!elA || !elB) return;
+
+          const rectA = elA.getBoundingClientRect();
+          const rectB = elB.getBoundingClientRect();
+
+          let portA = 'right';
+          let portB = 'left';
+
+          // Adaptive routing logic based on actual layout flow direction (responsive flex wrap/stack support)
+          if (rectB.top >= rectA.bottom - 10) {
+            portA = 'bottom';
+            portB = 'top';
+          } else if (rectB.bottom <= rectA.top + 10) {
+            portA = 'top';
+            portB = 'bottom';
+          }
+
+          const p1 = getPortCoords(container, elA, portA);
+          const p2 = getPortCoords(container, elB, portB);
+
+          let d = '';
+          if (portA === 'right' && portB === 'left') {
+            const dx = (p2.x - p1.x) / 2;
+            d = `M ${p1.x} ${p1.y} H ${p1.x + dx} V ${p2.y} H ${p2.x}`;
+          } else if (portA === 'bottom' && portB === 'top') {
+            const dy = (p2.y - p1.y) / 2;
+            d = `M ${p1.x} ${p1.y} V ${p1.y + dy} H ${p2.x} V ${p2.y}`;
+          } else {
+            d = `M ${p1.x} ${p1.y} L ${p2.x} ${p2.y}`;
+          }
+
+          const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+          path.setAttribute('d', d);
+          path.setAttribute('class', 'connection-path');
+          path.setAttribute('data-from', conn.from);
+          path.setAttribute('data-to', conn.to);
+          if (isDashed) {
+            path.setAttribute('stroke-dasharray', '4, 4');
+          }
+          svg.appendChild(path);
+
+          if (conn.label) {
+            const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+            text.setAttribute('class', 'connection-label');
+            if (conn.label === 'YES') {
+              text.setAttribute('x', p1.x + 12);
+              text.setAttribute('y', p1.y - 6);
+            } else if (conn.label === 'NO') {
+              text.setAttribute('x', p1.x + 8);
+              text.setAttribute('y', p1.y + 16);
+            } else {
+              text.setAttribute('x', (p1.x + p2.x) / 2);
+              text.setAttribute('y', (p1.y + p2.y) / 2 - 4);
+            }
+            text.textContent = conn.label;
+            svg.appendChild(text);
+          }
+        });
+      }
+
+      function updateAllConnections() {
+        drawGroupConnections('prototype-flow', 'prototype-connections', prototypeConnections);
+        drawGroupConnections('production-flow', 'production-connections', productionConnections, true);
+      }
+
+      // 2. Click scroll to documentation
+      document.querySelectorAll('.diag-node').forEach(node => {
+        const targetId = node.dataset.target;
+        if (targetId) {
+          node.addEventListener('click', () => {
+            const targetEl = document.getElementById(targetId);
+            if (targetEl) {
+              targetEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+              
+              // Apply visual highlight flash effect
+              targetEl.classList.remove('flash-highlight');
+              void targetEl.offsetWidth; // trigger reflow
+              targetEl.classList.add('flash-highlight');
+            }
+          });
+        }
+
+        // 3. Hover paths highlighting (works for all nodes)
+        node.addEventListener('mouseenter', () => {
+          const id = node.id;
+          document.querySelectorAll(`.connection-path[data-from="${id}"], .connection-path[data-to="${id}"]`).forEach(path => {
+            path.classList.add('highlighted');
+          });
+        });
+
+        node.addEventListener('mouseleave', () => {
+          const id = node.id;
+          document.querySelectorAll(`.connection-path[data-from="${id}"], .connection-path[data-to="${id}"]`).forEach(path => {
+            path.classList.remove('highlighted');
+          });
+        });
+      });
+
+      // 4. Run Demo sequential flow logic
+      const runDemoBtn = document.getElementById('run-demo-btn');
+      let demoIsRunning = false;
+      const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
+
+      function resetDemoStates() {
+        document.querySelectorAll('.diag-node').forEach(node => {
+          node.classList.remove('active-step');
+        });
+        document.querySelectorAll('.connection-path').forEach(path => {
+          path.classList.remove('active-flow');
+        });
+      }
+
+      async function runDemo() {
+        if (demoIsRunning) return;
+        demoIsRunning = true;
+        runDemoBtn.disabled = true;
+
+        resetDemoStates();
+
+        const steps = [
+          { type: 'node', id: 'node-webcam', duration: 400 },
+          { type: 'path', from: 'node-webcam', to: 'node-opencv', duration: 300 },
+          { type: 'node', id: 'node-opencv', duration: 400 },
+          { type: 'path', from: 'node-opencv', to: 'node-eye-detect', duration: 300 },
+          { type: 'node', id: 'node-eye-detect', duration: 400 },
+          { type: 'path', from: 'node-eye-detect', to: 'node-eye-classify', duration: 300 },
+          { type: 'node', id: 'node-eye-classify', duration: 400 },
+          { type: 'path', from: 'node-eye-classify', to: 'node-smoothing', duration: 450 },
+          { type: 'node', id: 'node-smoothing', duration: 500 },
+          { type: 'path', from: 'node-smoothing', to: 'node-decision-closed', duration: 400 },
+          { type: 'node', id: 'node-decision-closed', duration: 500 },
+          { type: 'path', from: 'node-decision-closed', to: 'node-serial', duration: 400 },
+          { type: 'node', id: 'node-serial', duration: 500 },
+          { type: 'path', from: 'node-serial', to: 'node-arduino', duration: 400 },
+          { type: 'node', id: 'node-arduino', duration: 500 },
+          { type: 'path', from: 'node-arduino', to: 'node-timer', duration: 400 },
+          { type: 'node', id: 'node-timer', duration: 1200, action: 'tick' },
+          { type: 'path', from: 'node-timer', to: 'node-decision-embedded', duration: 400 },
+          { type: 'node', id: 'node-decision-embedded', duration: 500 },
+          { type: 'paths', paths: [
+              { from: 'node-decision-embedded', to: 'node-buzzer' },
+              { from: 'node-decision-embedded', to: 'node-motor-driver' }
+            ], duration: 400 },
+          { type: 'nodes', ids: ['node-buzzer', 'node-motor-driver'], duration: 600 },
+          { type: 'path', from: 'node-motor-driver', to: 'node-dc-motor', duration: 400 },
+          { type: 'node', id: 'node-dc-motor', duration: 600 },
+          { type: 'path', from: 'node-dc-motor', to: 'node-safety-sim', duration: 400 },
+          { type: 'node', id: 'node-safety-sim', duration: 800 }
+        ];
+
+        for (const step of steps) {
+          if (step.type === 'node') {
+            const node = document.getElementById(step.id);
+            if (node) {
+              node.classList.add('active-step');
+              if (step.action === 'tick') {
+                const techLabel = node.querySelector('.node-tech');
+                const originalText = techLabel.textContent;
+                techLabel.textContent = 't = 0.0s';
+                await sleep(300);
+                techLabel.textContent = 't = 1.0s';
+                await sleep(300);
+                techLabel.textContent = 't = 2.0s [INTERVENE]';
+                await sleep(600);
+                techLabel.textContent = originalText;
+              } else {
+                await sleep(step.duration);
+              }
+            }
+          } else if (step.type === 'nodes') {
+            step.ids.forEach(id => {
+              const node = document.getElementById(id);
+              if (node) node.classList.add('active-step');
+            });
+            await sleep(step.duration);
+          } else if (step.type === 'path') {
+            const path = document.querySelector(`.connection-path[data-from="${step.from}"][data-to="${step.to}"]`);
+            if (path) path.classList.add('active-flow');
+            await sleep(step.duration);
+          } else if (step.type === 'paths') {
+            step.paths.forEach(p => {
+              const path = document.querySelector(`.connection-path[data-from="${p.from}"][data-to="${p.to}"]`);
+              if (path) path.classList.add('active-flow');
+            });
+            await sleep(step.duration);
+          }
+        }
+
+        // Keep all active nodes illuminated for a short period, then reset
+        await sleep(1500);
+        resetDemoStates();
+        
+        demoIsRunning = false;
+        runDemoBtn.disabled = false;
+      }
+
+      runDemoBtn.addEventListener('click', runDemo);
+
+      // 5. Setup Resize Observer to adapt connection lines layout
+      const resizeObserver = new ResizeObserver(() => {
+        updateAllConnections();
+      });
+      resizeObserver.observe(document.getElementById('prototype-flow'));
+      const prodFlow = document.getElementById('production-flow');
+      if (prodFlow) resizeObserver.observe(prodFlow);
+
+      // Delay initial calculation slightly to ensure CSS fonts and dimensions are computed
+      setTimeout(updateAllConnections, 200);
+    });
+  </script>
 </body>
 </html>
