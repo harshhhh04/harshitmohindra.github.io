@@ -220,14 +220,17 @@
 
     .column-title {
       font-family: var(--font-sans);
-      font-size: 0.68rem;
+      font-size: 0.6rem;
       font-weight: 700;
       color: var(--text-muted);
-      letter-spacing: 0.12em;
+      letter-spacing: 0.08em;
       text-transform: uppercase;
       margin-bottom: 8px;
       border-bottom: 1px solid rgba(255, 255, 255, 0.04);
       padding-bottom: 6px;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
     }
 
     .diag-node-row {
@@ -295,10 +298,10 @@
 
     .node-label {
       font-family: var(--font-sans);
-      font-size: 0.65rem;
+      font-size: 0.58rem;
       font-weight: 700;
       color: #00f0ff;
-      letter-spacing: 0.08em;
+      letter-spacing: 0.05em;
       text-transform: uppercase;
       margin-bottom: 4px;
     }
@@ -504,7 +507,7 @@
 
           <!-- Column 1: Perception -->
           <div class="diagram-column">
-            <div class="column-title">PERCEPTION LAYER</div>
+            <div class="column-title">PERCEPTION</div>
             
             <div class="diag-node" id="node-webcam" data-target="webcam-section">
               <div class="node-label">INPUT</div>
@@ -533,7 +536,7 @@
 
           <!-- Column 2: Temporal Filter -->
           <div class="diagram-column">
-            <div class="column-title">TEMPORAL FILTERING</div>
+            <div class="column-title">FILTERING</div>
 
             <div class="diag-node" id="node-smoothing" data-target="noise-reduction-section">
               <div class="node-label">FILTER</div>
@@ -555,7 +558,7 @@
 
           <!-- Column 3: Communication -->
           <div class="diagram-column">
-            <div class="column-title">COMMUNICATION</div>
+            <div class="column-title">COMMS</div>
 
             <div class="diag-node" id="node-serial" data-target="serial-section">
               <div class="node-label">SERIAL</div>
@@ -566,10 +569,10 @@
 
           <!-- Column 4: Embedded Control -->
           <div class="diagram-column">
-            <div class="column-title">EMBEDDED CONTROL</div>
+            <div class="column-title">CONTROL</div>
 
             <div class="diag-node" id="node-arduino" data-target="embedded-controller-section">
-              <div class="node-label">MICROCONTROLLER</div>
+              <div class="node-label">MCU</div>
               <div class="node-title">Arduino Uno</div>
               <div class="node-tech">ATmega328P | HIGH / LOW</div>
             </div>
@@ -665,7 +668,7 @@
             <!-- Step 3: Vehicle ECU -->
             <div class="diagram-column">
               <div class="diag-node production-node" id="prod-ecu">
-                <div class="node-label">DECISION LAYER</div>
+                <div class="node-label">DECISION</div>
                 <div class="node-title">Vehicle ECU</div>
                 <div class="node-tech">Central Safety Manager</div>
               </div>
