@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Driver Drowsiness Detection – Harshit Mohindra</title>
-  <meta name="description" content="Real-time driver fatigue detection system using OpenCV and facial landmark analysis integrated with vehicle safety logic, built by Harshit Mohindra." />
+  <meta name="description" content="Real-time driver drowsiness detection prototype combining OpenCV Haar Cascades and an Arduino embedded controller with simulated powertrain safety intervention." />
 
   <link rel="stylesheet" href="../style.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -120,45 +120,72 @@
 
       <h2>Overview</h2>
       <p>
-        Built a real-time fatigue detection system that uses computer vision and facial
-        landmark analysis to detect driver drowsiness. The system monitors eye aspect ratio
-        (EAR) and mouth aspect ratio (MAR) to determine fatigue levels and triggers
-        alerts through an Arduino-controlled hardware interface.
+        Developed an engineering prototype to detect driver fatigue and execute safety interventions.
+        The system consists of a Python-based computer vision application and an Arduino-based embedded safety controller.
+        The vision pipeline monitors driver eye states in real time, transmitting detection results over Serial
+        to the Arduino. If eyes remain closed for more than two seconds, the controller activates an audible buzzer
+        and cuts power to a DC motor representing a simulated vehicle drivetrain.
+      </p>
+      <p>
+        This prototype demonstrates a complete perception &rarr; decision &rarr; actuation pipeline using accessible hardware.
+        The long-term engineering vision is that, instead of controlling a DC motor, the controller could communicate with an automotive ECU over the CAN bus
+        to request an appropriate safety intervention. This future deployment architecture is a long-term goal, while the current physical actuation uses a simulated motor setup.
       </p>
 
-      <h2>How It Works</h2>
+      <h2>System Pipeline & Technical Details</h2>
       <p>
-        A camera captures the driver's face in real-time. OpenCV with dlib's 68-point facial
-        landmark detector extracts key facial features. The system continuously computes:
+        The prototype functions through a serialized data flow across hardware and software components:
       </p>
       <ul>
-        <li>Eye Aspect Ratio (EAR) – detects prolonged eye closure</li>
-        <li>Mouth Aspect Ratio (MAR) – detects yawning</li>
-        <li>Head pose estimation – detects head drooping</li>
-        <li>Temporal analysis – distinguishes blinks from drowsiness</li>
+        <li><strong>Webcam Input:</strong> Captures real-time video frames of the driver.</li>
+        <li><strong>Computer Vision:</strong> Processes frames in Python using OpenCV Haar Cascade classifiers, performing face detection followed by localized eye detection within the face region. Eye states are classified as Open or Closed.</li>
+        <li><strong>Temporal Smoothing:</strong> Maintains a sliding window of the last 15 frame classifications. The driver is flagged as drowsy only if at least 60% (9 of 15) of these frames indicate closed eyes, preventing normal blinks from triggering the safety system.</li>
+        <li><strong>Serial Communication:</strong> Transmits binary eye state classifications from Python to the microcontroller.</li>
+        <li><strong>Embedded Controller:</strong> An Arduino tracks continuous eye closure duration. If closure exceeds two seconds, it activates the buzzer and disables the motor driver.</li>
+        <li><strong>Safety Actuation:</strong> Silences the buzzer and restores power to the DC motor immediately upon detecting that the eyes have reopened.</li>
       </ul>
 
-      <h2>Hardware Integration</h2>
+      <h2>Engineering Decisions</h2>
       <p>
-        When drowsiness is detected beyond a configurable threshold, the Python application
-        sends serial commands to an Arduino board which activates a buzzer alarm and can
-        interface with vehicle safety systems (e.g., seat vibration, dashboard warning).
+        <strong>Temporal Smoothing vs. Frame-by-Frame Reaction:</strong> Implementing a 15-frame sliding window reduces false positives caused by natural blinking or transient face/eye tracking failures. This ensures safety interventions are only triggered by persistent fatigue rather than high-frequency noise.
+      </p>
+      <p>
+        <strong>Independent Controller Threshold Validation:</strong> The embedded controller independently runs the safety timer and verifies the two-second threshold rather than relying on the computer vision script. This design pattern separates safety-critical timing and actuation logic from the non-deterministic operating system environment of the host PC. If the Python script crashes or suffers latency spikes, the microcontroller maintains deterministic timing and safety control.
       </p>
 
-      <h2>Results</h2>
+      <h2>Limitations & Future Improvements</h2>
       <p>
-        The system achieves reliable detection with minimal false positives under varying
-        lighting conditions. Frame processing runs at 30+ FPS on standard hardware,
-        making it practical for real-world deployment.
+        <strong>Prototype Limitations:</strong>
       </p>
+      <ul>
+        <li>Haar Cascade classifiers are highly sensitive to driver viewing angles and changes in ambient lighting.</li>
+        <li>The alarm implementation utilizes blocking delays in the embedded code, which restricts concurrent controller tasks.</li>
+        <li>The serial COM port configuration is hardcoded within the Python source code.</li>
+        <li>The prototype uses a DC motor and L298N driver to simulate vehicle safety actuation rather than actual automotive interfaces.</li>
+      </ul>
+      <p>
+        <strong>Future Work:</strong>
+      </p>
+      <ul>
+        <li>Replace Haar Cascades with MediaPipe Face Mesh or Eye Aspect Ratio (EAR) tracking to improve feature localization.</li>
+        <li>Refactor the buzzer control logic into a non-blocking state machine using millis() timing.</li>
+        <li>Enhance detection reliability in low-light environments by integrating infrared illumination.</li>
+        <li>Transition from direct motor control to CAN bus integration to support testing with actual automotive ECUs.</li>
+        <li>Incorporate redundant sensors, such as steering angle sensors, to improve system reliability.</li>
+      </ul>
 
       <div class="tech-stack" style="margin-top: 48px;">
         <span>Python</span>
         <span>OpenCV</span>
-        <span>dlib</span>
+        <span>Haar Cascade Face Detection</span>
+        <span>Haar Cascade Eye Detection</span>
         <span>Arduino</span>
         <span>Serial Communication</span>
-        <span>Computer Vision</span>
+        <span>Embedded C++</span>
+        <span>L298N Motor Driver</span>
+        <span>DC Motor</span>
+        <span>State Machine Logic</span>
+        <span>Time-based Safety Control</span>
       </div>
 
     </div>
