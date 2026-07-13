@@ -232,7 +232,8 @@ document.addEventListener('DOMContentLoaded', () => {
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
         entry.target.classList.add('animate-pulse');
-        observer.unobserve(entry.target);
+      } else {
+        entry.target.classList.remove('animate-pulse');
       }
     });
   }, { root: null, threshold: 0.1, rootMargin: '0px 0px -20px 0px' });
