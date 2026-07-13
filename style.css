@@ -1443,33 +1443,83 @@
     stroke: rgba(0, 240, 255, 0.85); /* Premium analog CRT phosphor cyan */
     stroke-width: 1.5px;
     fill: none;
-    filter: drop-shadow(0 0 2.5px rgba(0, 240, 255, 0.5));
+    filter: drop-shadow(0 0 2px rgba(0, 240, 255, 0.45));
+    opacity: 0;
+    will-change: opacity, mask-position;
     
-    /* Responsive linear gradient mask for the scan dot and phosphor trail decay */
-    -webkit-mask-image: linear-gradient(to right, transparent, rgba(0,0,0,0.1) 40%, rgba(0,0,0,1) 95%, #fff 100%);
-    mask-image: linear-gradient(to right, transparent, rgba(0,0,0,0.1) 40%, rgba(0,0,0,1) 95%, #fff 100%);
-    -webkit-mask-size: 240px 100%;
-    mask-size: 240px 100%;
+    /* Left half is white (visible), right half is transparent. Uncovers path behind head. */
+    -webkit-mask-image: linear-gradient(to right, #fff 50%, transparent 50%);
+    mask-image: linear-gradient(to right, #fff 50%, transparent 50%);
+    -webkit-mask-size: 200% 100%;
+    mask-size: 200% 100%;
     -webkit-mask-repeat: no-repeat;
     mask-repeat: no-repeat;
-    -webkit-mask-position: -240px 0;
-    mask-position: -240px 0;
-    will-change: mask-position;
+    -webkit-mask-position: 100% 0;
+    mask-position: 100% 0;
   }
   
-  /* Trigger the sweep animation once when container enters viewport */
+  /* The traveling scan head */
+  .divider-scan-head {
+    fill: #ffffff;
+    filter: drop-shadow(0 0 3px rgba(0, 240, 255, 0.95));
+    opacity: 0;
+    will-change: opacity, offset-distance;
+    offset-rotate: 0deg;
+  }
+  
+  /* Trigger the sweep and decay sequence on reveal */
   .section-divider.animate-pulse .divider-scan-line {
-    animation: oscilloscopeSweep 2.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+    animation: 
+      oscilloscopeReveal 1.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards,
+      oscilloscopeDecay 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94) 2.3s forwards;
   }
   
-  @keyframes oscilloscopeSweep {
+  .section-divider.animate-pulse .divider-scan-head {
+    animation: 
+      headTrace 1.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+  }
+  
+  /* Keyframes for sweep reveal */
+  @keyframes oscilloscopeReveal {
     0% {
-      -webkit-mask-position: -240px 0;
-      mask-position: -240px 0;
+      opacity: 0;
+      -webkit-mask-position: 100% 0;
+      mask-position: 100% 0;
+    }
+    3% {
+      opacity: 1;
     }
     100% {
-      -webkit-mask-position: 125% 0;
-      mask-position: 125% 0;
+      opacity: 1;
+      -webkit-mask-position: 0% 0;
+    }
+  }
+  
+  /* Trace head sweep */
+  @keyframes headTrace {
+    0% {
+      opacity: 0;
+      offset-distance: 0%;
+    }
+    3% {
+      opacity: 1;
+    }
+    97% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+      offset-distance: 100%;
+    }
+  }
+  
+  /* Fading phosphor decay */
+  @keyframes oscilloscopeDecay {
+    0% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
     }
   }
   

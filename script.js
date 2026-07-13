@@ -227,11 +227,100 @@ document.addEventListener('DOMContentLoaded', () => {
     revealObserver.observe(el);
   });
 
+  // Helper to generate mathematical oscilloscope waveforms with procedural variations
+  function generateWaveformPath(type, seed) {
+    const points = [];
+    const startX = 0;
+    const endX = 1200;
+    const step = 4; // High-resolution step width (px) for clean trace drawing
+    
+    // Slight procedural variation coefficients from seed
+    const ampVar = 0.85 + (seed * 0.3); // 85% to 115% amplitude
+    const phaseVar = (seed - 0.5) * 0.5; // Small phase shift
+    const freqVar = 0.9 + (seed * 0.2); // 90% to 110% frequency scale
+
+    for (let x = startX; x <= endX; x += step) {
+      let y = 30; // Center baseline
+      
+      if (type === 'sine') {
+        // Damped Sine Wave (underdamped step response overshoot/ringing)
+        if (x >= 350 && x <= 850) {
+          const dx = x - 350;
+          const amp = 20 * ampVar;
+          const decay = 0.007;
+          const freq = 0.038 * freqVar;
+          y = 30 - amp * Math.exp(-decay * dx) * Math.sin(freq * dx + phaseVar);
+        }
+      } else if (type === 'pulse-train') {
+        // Clock pulses with ringing transients on rising/falling transitions
+        if (x >= 400 && x <= 800) {
+          const subX = (x - 400) % 80;
+          const isHigh = subX < 40;
+          const targetY = isHigh ? 16 : 44;
+          
+          const dx = subX % 40;
+          const ringAmp = 10 * ampVar;
+          const ringDecay = 0.14;
+          const ringFreq = 0.55 * freqVar;
+          const ring = ringAmp * Math.exp(-ringDecay * dx) * Math.sin(ringFreq * dx);
+          
+          y = targetY + (isHigh ? -ring : ring);
+        }
+      } else if (type === 'step') {
+        // Underdamped logic step response
+        if (x >= 400 && x <= 800) {
+          const dx = x - 400;
+          const amp = 24 * ampVar;
+          const decay = 0.012;
+          const freq = 0.045 * freqVar;
+          y = 30 - amp * Math.exp(-decay * dx) * Math.sin(freq * dx + phaseVar);
+        }
+      } else if (type === 'packet') {
+        // High-frequency burst envelope
+        if (x >= 450 && x <= 750) {
+          const amp = 24 * ampVar;
+          const freq = 0.1 * freqVar;
+          const envelope = Math.exp(-Math.pow((x - 600) / 65, 2));
+          y = 30 - amp * envelope * Math.sin(freq * (x - 600) + phaseVar);
+        }
+      } else if (type === 'clean-pulse') {
+        // One clean bell-curve impulse
+        if (x >= 500 && x <= 700) {
+          const amp = 24 * ampVar;
+          const envelope = Math.exp(-Math.pow((x - 600) / 38, 2));
+          y = 30 - amp * envelope;
+        }
+      }
+      
+      // Safety bounds containment
+      y = Math.max(3, Math.min(57, y));
+      points.push(`${x} ${y.toFixed(1)}`);
+    }
+    
+    return `M ${points.join(' L ')}`;
+  }
+
   // 6b. SECTION DIVIDERS SIGNAL PULSE OBSERVER
   const dividerObserver = new IntersectionObserver((entries, observer) => {
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
-        entry.target.classList.add('animate-pulse');
+        const divider = entry.target;
+        const type = divider.getAttribute('data-waveform') || 'sine';
+        const scanLine = divider.querySelector('.divider-scan-line');
+        const scanHead = divider.querySelector('.divider-scan-head');
+        
+        if (scanLine) {
+          const seed = Math.random();
+          const pathString = generateWaveformPath(type, seed);
+          
+          scanLine.setAttribute('d', pathString);
+          if (scanHead) {
+            // Apply motion-path inline style to trace along SVG waveform
+            scanHead.style.offsetPath = `path("${pathString}")`;
+          }
+        }
+        
+        divider.classList.add('animate-pulse');
       } else {
         entry.target.classList.remove('animate-pulse');
       }
