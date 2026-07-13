@@ -394,6 +394,11 @@
       animation: highlightFlash 1.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     }
 
+    .faded-entrance {
+      opacity: 0.12 !important;
+      transition: opacity 0.5s ease;
+    }
+
     /* Scrollspy target helper */
     .pipeline-list li {
       transition: all 0.3s ease;
@@ -1014,6 +1019,55 @@
       }
 
       runDemoBtn.addEventListener('click', runDemo);
+
+      // Flowchart sequential entrance animations on scroll
+      const flowchartObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            animateFlowchartSequential(entry.target);
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.15 });
+
+      const protoFlow = document.getElementById('prototype-flow');
+      const prodFlowEl = document.getElementById('production-flow');
+      if (protoFlow) flowchartObserver.observe(protoFlow);
+      if (prodFlowEl) flowchartObserver.observe(prodFlowEl);
+
+      async function animateFlowchartSequential(container) {
+        const nodes = container.querySelectorAll('.diag-node');
+        const paths = container.querySelectorAll('.connection-path');
+
+        nodes.forEach(node => node.classList.add('faded-entrance'));
+        paths.forEach(path => path.classList.add('faded-entrance'));
+
+        for (let i = 0; i < nodes.length; i++) {
+          const node = nodes[i];
+          node.classList.remove('faded-entrance');
+          node.classList.add('active-step');
+          
+          const nodeId = node.id;
+          const incomingPaths = container.querySelectorAll(`.connection-path[data-to="${nodeId}"]`);
+          incomingPaths.forEach(path => {
+            path.classList.remove('faded-entrance');
+            path.classList.add('active-flow');
+          });
+
+          await new Promise(r => setTimeout(r, 300));
+          node.classList.remove('active-step');
+          incomingPaths.forEach(path => path.classList.remove('active-flow'));
+        }
+
+        nodes.forEach(node => {
+          node.classList.remove('faded-entrance');
+          node.classList.remove('active-step');
+        });
+        paths.forEach(path => {
+          path.classList.remove('faded-entrance');
+          path.classList.remove('active-flow');
+        });
+      }
 
       // 5. Setup Resize Observer to adapt connection lines layout
       const resizeObserver = new ResizeObserver(() => {

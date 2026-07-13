@@ -496,6 +496,11 @@
       filter: grayscale(0.5);
     }
 
+    .faded-entrance {
+      opacity: 0.12 !important;
+      transition: opacity 0.5s ease;
+    }
+
     .arrow-glow {
       background: #ffffff !important;
       box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
@@ -1759,6 +1764,74 @@ uut (
 
       runStep();
       demoInterval = setInterval(runStep, 1500); // 1.5s steps for clean legibility
+    }
+
+    // Flowchart sequential entrance animations on scroll
+    const flowchartObserver = new IntersectionObserver((entries, observer) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          animateFlowchartSequential(entry.target);
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15 });
+
+    const archFlow = document.querySelector('.architecture-flow');
+    if (archFlow) flowchartObserver.observe(archFlow);
+
+    async function animateFlowchartSequential(container) {
+      if (demoInterval) return;
+      const elementsToFade = container.querySelectorAll('.arch-node, .arrow-down, .horiz-arrow, .line-vertical-short, .line-horizontal, .line-down-arrow, .line-up-branch, .line-horizontal-merge, .arrow-down-center');
+      
+      elementsToFade.forEach(el => el.classList.add('faded-entrance'));
+
+      const sequence = [
+        'node-clock',
+        'node-pc',
+        'node-mar',
+        'node-ram',
+        'node-ir',
+        'node-ctrl',
+        'node-rega',
+        'node-regb',
+        'node-alu',
+        'node-out'
+      ];
+
+      for (const nodeId of sequence) {
+        if (demoInterval) break;
+        const node = document.getElementById(nodeId);
+        if (node) {
+          node.classList.remove('faded-entrance');
+          node.classList.add('highlight-glow');
+        }
+        
+        const conn = connections[nodeId];
+        if (conn) {
+          conn.arrows.forEach(arrowId => {
+            const arrow = document.getElementById(arrowId) || document.querySelector('.' + arrowId);
+            if (arrow) {
+              arrow.classList.remove('faded-entrance');
+              arrow.classList.add('arrow-glow');
+            }
+          });
+        }
+
+        await new Promise(r => setTimeout(r, 300));
+        if (node) node.classList.remove('highlight-glow');
+        if (conn) {
+          conn.arrows.forEach(arrowId => {
+            const arrow = document.getElementById(arrowId) || document.querySelector('.' + arrowId);
+            if (arrow) arrow.classList.remove('arrow-glow');
+          });
+        }
+      }
+
+      elementsToFade.forEach(el => {
+        el.classList.remove('faded-entrance');
+        el.classList.remove('highlight-glow');
+        el.classList.remove('arrow-glow');
+      });
     }
   </script>
 

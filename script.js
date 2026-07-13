@@ -7,13 +7,15 @@
 document.addEventListener('DOMContentLoaded', () => {
 
   // ── Cached DOM references ──────────────────────────────────────────────────
-  const scrollProgress = document.getElementById('scroll-progress');
-  const navbar         = document.getElementById('navbar');
-  const navIndicator   = document.getElementById('nav-indicator');
-  const hamburger      = document.getElementById('nav-hamburger');
-  const drawer         = document.getElementById('nav-drawer');
-  const sections       = document.querySelectorAll('section[id]');
-  const navLinks       = document.querySelectorAll('.nav-links a');
+  const scrollProgress    = document.getElementById('scroll-progress');
+  const navbar            = document.getElementById('navbar');
+  const navIndicator      = document.getElementById('nav-indicator');
+  const hamburger         = document.getElementById('nav-hamburger');
+  const drawer            = document.getElementById('nav-drawer');
+  const sections          = document.querySelectorAll('section[id]');
+  const navLinks          = document.querySelectorAll('.nav-links a');
+  const timelineContainer = document.querySelector('.timeline-container');
+  const timelinePulse     = document.querySelector('.timeline-pulse');
 
 
   // 1. SCROLL PROGRESS INDICATOR & NAVBAR SCROLLED STATE
@@ -39,6 +41,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Scrollspy (was a separate listener — merged here to avoid double layout reads)
     checkScrollspy(winScroll);
+
+    // Timeline vertical oscilloscope pulse logic
+    if (timelineContainer && timelinePulse) {
+      const rect = timelineContainer.getBoundingClientRect();
+      const viewHeight = window.innerHeight;
+      if (rect.top < viewHeight && rect.bottom > 0) {
+        const totalDist = rect.height + viewHeight;
+        const scrolledDist = viewHeight - rect.top;
+        const scrolledRatio = scrolledDist / totalDist;
+        const pulseY = Math.max(-80, Math.min(rect.height, (scrolledRatio * rect.height) - 40));
+        timelinePulse.style.transform = `translate3d(0, ${pulseY}px, 0)`;
+      }
+    }
   }
 
   window.addEventListener('scroll', onScroll, { passive: true });
@@ -210,6 +225,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
   document.querySelectorAll('.scroll-reveal').forEach((el) => {
     revealObserver.observe(el);
+  });
+
+  // 6b. SECTION DIVIDERS SIGNAL PULSE OBSERVER
+  const dividerObserver = new IntersectionObserver((entries, observer) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('animate-pulse');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { root: null, threshold: 0.1, rootMargin: '0px 0px -20px 0px' });
+
+  document.querySelectorAll('.section-divider').forEach((el) => {
+    dividerObserver.observe(el);
   });
 
 
